@@ -1,4 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:voyagedifiant/core/constants/app_colors.dart';
+import 'package:voyagedifiant/core/routes/app_pages.dart';
+import 'package:voyagedifiant/views/controllers/Main/bindings/main.binding.dart';
 
 void main() {
   runApp(const MyApp());
@@ -7,64 +14,46 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
+    return ScreenUtilInit(
+        designSize: const Size(375, 812),
+        builder: (context, child) {
+          return RefreshConfiguration(
+            footerBuilder: () => const ClassicFooter(
+              idleIcon: SizedBox(),
+              idleText: "",
+              noDataText: "",
             ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
+            headerBuilder: () => const WaterDropMaterialHeader(
+              backgroundColor: AppColors.white,
+              color: AppColors.textGrey,
             ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
-    );
+            child: GetMaterialApp(
+              debugShowCheckedModeBanner: false,
+              title: "Voyagedifiant",
+              initialRoute: AppPages.INITIAL,
+              getPages: AppPages.routes,
+              initialBinding: MainBinding(),
+              localizationsDelegates: const [
+                GlobalCupertinoLocalizations.delegate,
+                GlobalMaterialLocalizations.delegate,
+                GlobalWidgetsLocalizations.delegate,
+              ],
+              supportedLocales: const [
+                Locale('fr', 'FR'),
+              ],
+              locale: const Locale('fr'),
+              theme: ThemeData(
+                fontFamily: 'Cereal',
+                useMaterial3: false,
+                sliderTheme: SliderThemeData(
+                    overlayShape: SliderComponentShape.noOverlay,
+                    rangeThumbShape: RoundRangeSliderThumbShape()),
+              ),
+              themeMode: ThemeMode.light,
+            ),
+          );
+        });
   }
 }
