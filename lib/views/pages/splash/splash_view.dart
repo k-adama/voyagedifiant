@@ -42,14 +42,14 @@ class _SplashViewState extends State<SplashView>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.scaffoldWithBoxBackground,
+      backgroundColor: AppColors.primaryColor,
       body: Center(
         child: AnimatedBuilder(
           animation: _animation,
           builder: (context, child) {
             return Transform.translate(
               offset: Offset(0, _animation.value),
-              child: Text("jjfjfhjf"),
+              child: Image.asset('assets/icons/logo-voyage.png', width: 200),
               //Image.asset('assets/images/splash.png', width: 200),
             );
           },
