@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/route_manager.dart';
 import 'package:voyagedifiant/core/constants/app_colors.dart';
-import 'package:voyagedifiant/core/constants/app_defaults.dart';
+import 'package:voyagedifiant/core/routes/app_pages.dart';
 import 'package:voyagedifiant/core/widgets/components/app_login_register_header.dart';
 
 class NumberVerificationPage extends StatefulWidget {
@@ -91,7 +92,9 @@ class _NumberVerificationPageState extends State<NumberVerificationPage> {
                               style: AppColors.interNormal(),
                             ),
                             TextButton(
-                                onPressed: () {},
+                                onPressed: () {
+                                  Get.offAllNamed(Routes.HOME_PAGE);
+                                },
                                 child: Text(
                                   'Rééssayer',
                                   style: AppColors.interNormal(

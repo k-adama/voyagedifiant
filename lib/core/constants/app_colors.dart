@@ -25,6 +25,7 @@ class AppColors {
   static const Color black = Color(0xFF000000);
   static const Color outlinedColor = Color(0xFFDADADA);
   static const Color signUpColor = Color(0xFFF60FC0);
+  static const Color transparent = Color(0x00FFFFFF);
 
   static interBold(
           {double size = 20,

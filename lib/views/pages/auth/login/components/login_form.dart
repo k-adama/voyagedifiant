@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/route_manager.dart';
 import 'package:voyagedifiant/core/constants/app_colors.dart';
 import 'package:voyagedifiant/core/constants/app_defaults.dart';
+import 'package:voyagedifiant/core/routes/app_pages.dart';
 import 'package:voyagedifiant/core/themes/app_themes.dart';
 import 'package:voyagedifiant/core/utils/validators.dart';
 import 'package:voyagedifiant/core/widgets/buttons/app_button.dart';
@@ -85,7 +87,9 @@ class _LoginPageFormState extends State<LoginPageForm> {
               ),
               const SizedBox(height: 8),
               AppCustomButton(
-                onPressed: onLogin,
+                onPressed: () {
+                  Get.offAllNamed(Routes.HOME_PAGE);
+                },
                 buttonText: "SE CONNECTER",
                 textColor: AppColors.white,
                 buttonColor: AppColors.primaryColor,
