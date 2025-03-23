@@ -85,7 +85,7 @@ class _NumberVerificationPageState extends State<NumberVerificationPage> {
                               ),
                             ),
                             const SizedBox(height: 50),
-                            const OtpForm(),
+                           // const OtpForm(),
                             const SizedBox(height: 24),
                             Text(
                               "Vous n'avez pas reçu de code ?",

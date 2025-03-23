@@ -5,7 +5,8 @@ import 'package:get/route_manager.dart';
 import 'package:voyagedifiant/core/constants/app_colors.dart';
 import 'package:voyagedifiant/core/constants/app_defaults.dart';
 import 'package:voyagedifiant/core/routes/app_pages.dart';
-import 'package:voyagedifiant/core/widgets/components/appbar/components/drawer_page.component.dart';
+import 'package:voyagedifiant/core/widgets/components/appbar/app_bar.dart';
+import 'package:voyagedifiant/core/widgets/components/appbar/drawer_page.component.dart';
 import 'package:voyagedifiant/core/widgets/components/publicity_container.dart';
 import 'package:voyagedifiant/core/widgets/components/search_bar_component.dart';
 import 'package:voyagedifiant/views/pages/home/components/vehicule/vehicule_card.dart';
@@ -22,20 +23,9 @@ class _AllVehiculeItemsState extends State<AllVehiculeItems> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(kToolbarHeight),
-        child: AppBar(
-          title: Image.asset(
-            'assets/icons/logo-voyage.png',
-            height: 40,
-          ),
-          centerTitle: true,
-          elevation: 0,
-          automaticallyImplyLeading: true,
-          iconTheme: const IconThemeData(color: AppColors.white),
-          backgroundColor: AppColors.primaryColor,
-          // leading: ,
-        ),
+      appBar: const PreferredSize(
+        preferredSize: Size.fromHeight(kToolbarHeight),
+        child: AppBarComponent(),
       ),
       endDrawer: const Drawer(
         backgroundColor: AppColors.white,

@@ -4,7 +4,7 @@ import 'package:voyagedifiant/core/constants/app_colors.dart';
 import 'package:voyagedifiant/core/constants/app_defaults.dart';
 import 'package:voyagedifiant/core/routes/app_pages.dart';
 import 'package:voyagedifiant/core/widgets/components/app_login_register_header.dart';
-import 'package:voyagedifiant/core/widgets/components/appbar/components/drawer_page.component.dart';
+import 'package:voyagedifiant/core/widgets/components/appbar/drawer_page.component.dart';
 import 'package:voyagedifiant/views/pages/home/components/hotel_tourist_site/hotel_tourist_site_component.dart';
 import 'package:voyagedifiant/views/pages/home/components/services_options.dart';
 import 'package:voyagedifiant/views/pages/home/components/vehicule/vehicule_card.dart';

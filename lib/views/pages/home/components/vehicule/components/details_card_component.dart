@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:voyagedifiant/core/constants/app_colors.dart';
 import 'package:voyagedifiant/core/constants/app_defaults.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
-class DetailsCardComponent extends StatelessWidget {
+class DetailsCardComponent extends StatefulWidget {
   const DetailsCardComponent({
     super.key,
     this.couponBackground,
@@ -11,7 +12,6 @@ class DetailsCardComponent extends StatelessWidget {
     required this.person,
     required this.bag,
     this.color,
-    required this.onTap,
   });
 
   final String? couponBackground;
@@ -20,7 +20,19 @@ class DetailsCardComponent extends StatelessWidget {
   final String person;
   final String bag;
   final Color? color;
-  final void Function() onTap;
+
+  @override
+  State<DetailsCardComponent> createState() => _DetailsCardComponentState();
+}
+
+class _DetailsCardComponentState extends State<DetailsCardComponent> {
+  String? selectedClass;
+
+  void selectClass(String className) {
+    setState(() {
+      selectedClass = className;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -54,153 +66,243 @@ class DetailsCardComponent extends StatelessWidget {
       ),
       child: Column(
         children: [
-          Material(
-            color: Colors.transparent,
-            borderRadius: AppDefaults.borderRadius,
-            child: InkWell(
-              onTap: onTap,
-              borderRadius: AppDefaults.borderRadius,
-              child: Row(
-                children: [
-                  Expanded(
-                    flex: 5,
-                    child: Padding(
-                        padding: const EdgeInsets.all(AppDefaults.padding),
+          Container(
+            decoration: const BoxDecoration(
+              border: Border(
+                bottom: BorderSide(
+                  color: AppColors.gray,
+                  width: 2,
+                ),
+              ),
+            ),
+            child: Column(
+              children: [
+                Material(
+                  color: AppColors.transparent,
+                  borderRadius: AppDefaults.borderRadius,
+                  child: Row(
+                    children: [
+                      Expanded(
+                          flex: 5,
+                          child: Padding(
+                            padding: const EdgeInsets.all(AppDefaults.padding),
+                            child: Container(
+                                decoration: BoxDecoration(
+                                  color: widget.color ?? AppColors.transparent,
+                                  borderRadius: AppDefaults.borderRadius,
+                                ),
+                                child:
+                                    Image.asset(widget.couponBackground ?? '')),
+                          )),
+                      Expanded(
+                        flex: 5,
                         child: Container(
-                          decoration: BoxDecoration(
-                            color: color ?? Colors.blue,
-                            borderRadius: AppDefaults.borderRadius,
-                            image: DecorationImage(
-                              image: AssetImage(
-                              couponBackground ?? 'assets/icons/location-icon.png',
-                              ),
-                              // opacity: 0.25,
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                        )),
-                  ),
-                  Expanded(
-                    flex: 5,
-                    child: Padding(
-                      padding: const EdgeInsets.all(AppDefaults.padding),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(name,
-                              style: AppColors.interBold(
-                                size: 20,
-                              )),
-                          const SizedBox(
-                            height: 12,
-                          ),
-                          FractionallySizedBox(
-                            child: Row(
+                          color: AppColors.signUpColor,
+                          child: Padding(
+                            padding: const EdgeInsets.all(AppDefaults.padding),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Row(
-                                  children: [
-                                    Image.asset(
-                                        'assets/icons/person_place.png'),
-                                    const SizedBox(
-                                      width: 5,
-                                    ),
-                                    Text(person),
-                                  ],
-                                ),
+                                Text(widget.name,
+                                    style: AppColors.interBold(
+                                      size: 20,
+                                    )),
                                 const SizedBox(
-                                  width: 20,
+                                  height: 12,
                                 ),
-                                Row(
-                                  children: [
-                                    Image.asset('assets/icons/bagage.png'),
-                                    const SizedBox(
-                                      width: 5,
-                                    ),
-                                    Text(bag),
-                                  ],
+                                FractionallySizedBox(
+                                  child: Column(
+                                    children: [
+                                      Row(
+                                        children: [
+                                          Image.asset(
+                                            'assets/icons/person_place.png',
+                                            color: AppColors.white,
+                                          ),
+                                          const SizedBox(
+                                            width: 10,
+                                          ),
+                                          Text('${widget.person} passagers'),
+                                        ],
+                                      ),
+                                      const SizedBox(
+                                        height: 10,
+                                      ),
+                                      Row(
+                                        children: [
+                                          Image.asset(
+                                            'assets/icons/bagage.png',
+                                            color: AppColors.white,
+                                          ),
+                                          const SizedBox(
+                                            width: 16,
+                                          ),
+                                          Text('${widget.bag} valise(s)'),
+                                        ],
+                                      ),
+                                      const SizedBox(
+                                        height: 10,
+                                      ),
+                                      Row(
+                                        children: [
+                                          Image.asset(
+                                            'assets/icons/nature_16239240 1.png',
+                                            color: AppColors.white,
+                                            height: 15,
+                                          ),
+                                          const SizedBox(
+                                            width: 12,
+                                          ),
+                                          Text('${widget.bag} climatisation'),
+                                        ],
+                                      ),
+                                      const SizedBox(
+                                        height: 10,
+                                      ),
+                                      Row(
+                                        children: [
+                                          Image.asset(
+                                            'assets/icons/siege.png',
+                                            color: AppColors.white,
+                                            height: 15,
+                                          ),
+                                          const SizedBox(
+                                            width: 12,
+                                          ),
+                                          Text('${widget.bag} valise(s)'),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ],
                             ),
                           ),
-                          const SizedBox(
-                            height: 12,
-                          ),
-                          Text('A partir de $price',
-                              style: AppColors.interNormal(
-                                size: 14,
-                              )),
-                        ],
+                        ),
                       ),
-                    ),
+                    ],
                   ),
+                ),
+              ],
+            ),
+          ),
+          _buildClassButton('Economie', widget.price),
+          const Divider(thickness: 2, color: AppColors.gray),
+          _buildClassButton('Business', widget.price),
+          /*   FractionallySizedBox(
+            child: Padding(
+              padding: const EdgeInsets.all(AppDefaults.padding),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text('A partir de ${widget.price}',
+                          style: AppColors.interBold(
+                            size: 12,
+                          )),
+                      Text('Economie')
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 8,
+                  ),
+                  Text('Rating button')
                 ],
               ),
             ),
           ),
           const Divider(
-            thickness: 3,
-            color: Colors.red,
+            thickness: 2,
+            color: AppColors.gray,
           ),
           FractionallySizedBox(
             child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              padding: const EdgeInsets.all(AppDefaults.padding),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text('A partir de $price',
+                      Text('A partir de ${widget.price}',
                           style: AppColors.interBold(
                             size: 12,
                           )),
-                      const SizedBox(
-                        height: 8,
-                      ),
-                      Text('Rating button')
+                      Text('Business')
                     ],
                   ),
-                  Text('fjkfkff')
+                  const SizedBox(
+                    height: 8,
+                  ),
+                  const Text(
+                    'Chargeur à porter de main',
+                  )
                 ],
               ),
             ),
-          ),
-          const Divider(
-            thickness: 3,
-            color: Colors.red,
-          ),
-          FractionallySizedBox(
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text('A partir de $price',
-                          style: AppColors.interBold(
-                            size: 12,
-                          )),
-                      const SizedBox(
-                        height: 8,
-                      ),
-                      Text(
-                        'Chargeur à porter de main',
-                        style: AppColors.interBold(size: 10),
-                      )
-                    ],
-                  ),
-                  Text('fjkfkff')
-                ],
-              ),
-            ),
-          ),
-          const SizedBox(height: AppDefaults.padding,)
+          ),*/
+          const SizedBox(
+            height: AppDefaults.padding,
+          )
         ],
+      ),
+    );
+  }
+
+  Widget _buildClassButton(String className, String price) {
+    bool isSelected = selectedClass == className;
+    return FractionallySizedBox(
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text('A partir de $price',
+                    style: const TextStyle(
+                        fontWeight: FontWeight.bold, fontSize: 12)),
+                GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      selectedClass = isSelected ? null : className;
+                    });
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                      color: isSelected ? AppColors.signUpColor : AppColors.black,
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: Text(className,
+                        style: const TextStyle(color: AppColors.white)),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 8),
+            if (className == 'Economie')
+              RatingBar.builder(
+                initialRating: 3.5,
+                minRating: 1,
+                direction: Axis.horizontal,
+                allowHalfRating: true,
+                itemCount: 5,
+                itemSize: 20,
+                itemBuilder: (context, _) =>
+                    const Icon(Icons.star, color: Colors.amber),
+                onRatingUpdate: (rating) {},
+              ),
+            if (className == 'Business')
+              const Text('Chargeur à porter de main'),
+          ],
+        ),
       ),
     );
   }
