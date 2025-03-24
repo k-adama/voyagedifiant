@@ -9,6 +9,7 @@ abstract class Routes {
   static const LOGIN_PAGE = _Paths.LOGIN_PAGE;
   static const REGISTER_PAGE = _Paths.REGISTER_PAGE;
   static const NUMBER_VERIFICATION_PAGE = _Paths.NUMBER_VERIFICATION_PAGE;
+  static const HISTORIE_PAGE = _Paths.HISTORIE_PAGE;
 }
 
 abstract class _Paths {
@@ -20,4 +21,5 @@ abstract class _Paths {
   static const LOGIN_PAGE = "/login_page";
   static const REGISTER_PAGE = "/register_page";
   static const NUMBER_VERIFICATION_PAGE = "/number_verification_page";
+  static const HISTORIE_PAGE = "/historie_page";
 }

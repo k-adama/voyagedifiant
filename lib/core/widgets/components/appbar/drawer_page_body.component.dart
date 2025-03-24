@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
-import 'package:voyagedifiant/core/constants/app_colors.dart';
 import 'package:voyagedifiant/core/routes/app_pages.dart';
+
 import 'package:voyagedifiant/core/widgets/components/appbar/drawer_body_list_row.component.dart';
 
 class DrawerPageBodyComponent extends StatelessWidget {
@@ -17,7 +17,7 @@ class DrawerPageBodyComponent extends StatelessWidget {
             emoji: "assets/icons/location-icon.png",
           ),
           onTap: () {
-            // Get.toNamed(Routes.);
+             Get.toNamed(Routes.HISTORIE_PAGE);
           },
         ),
         ListTile(

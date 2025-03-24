@@ -5,6 +5,7 @@ import 'package:voyagedifiant/views/controllers/splash/bindings/splash_binding.d
 import 'package:voyagedifiant/views/pages/auth/login/login_page.dart';
 import 'package:voyagedifiant/views/pages/auth/number_verification.dart';
 import 'package:voyagedifiant/views/pages/auth/register/register_page.dart';
+import 'package:voyagedifiant/views/pages/drawer_items/orders/orders_historie_page.dart';
 import 'package:voyagedifiant/views/pages/home/components/vehicule/all_vehicule_item.dart';
 import 'package:voyagedifiant/views/pages/home/components/vehicule/vehicule_details.dart';
 import 'package:voyagedifiant/views/pages/splash/splash_view.dart';
@@ -49,6 +50,11 @@ abstract class AppPages {
     GetPage(
       name: _Paths.NUMBER_VERIFICATION_PAGE,
       page: () => const NumberVerificationPage(),
+      binding: AuthBinding(),
+    ),
+    GetPage(
+      name: _Paths.HISTORIE_PAGE,
+      page: () => const OrdersHistoriePage(),
       binding: AuthBinding(),
     ),
   ];

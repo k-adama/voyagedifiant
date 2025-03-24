@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:auto_height_grid_view/auto_height_grid_view.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
+import 'package:voyagedifiant/core/constants/app_colors.dart';
 
 class HotelTouristSiteItemsComponents extends StatelessWidget {
   //final Product product;
@@ -31,7 +32,7 @@ class HotelTouristSiteItemsComponents extends StatelessWidget {
               child: Container(
                 decoration: BoxDecoration(
                   borderRadius: const BorderRadius.all(Radius.circular(12)),
-                  color: Colors.white,
+                  color: AppColors.white,
                   boxShadow: [
                     BoxShadow(
                       color: Colors.grey[300]!,
