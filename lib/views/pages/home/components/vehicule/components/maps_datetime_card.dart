@@ -139,7 +139,10 @@ class _MapsDatetimeCardState extends State<MapsDatetimeCard> {
                   radius: 12,
                 );
               },
-            )
+            ),
+            const SizedBox(
+              height: 10,
+            ),
           ],
         ),
       );
