@@ -20,7 +20,7 @@ class PhoneInputField extends StatelessWidget {
       decoration: const InputDecoration(
         labelText: 'Numéro de téléphone',
         border: OutlineInputBorder(
-          borderSide: BorderSide(),
+        borderSide: BorderSide(),
         ),
       ),
       languageCode: "fr",

@@ -10,6 +10,8 @@ class PasswordChangePage extends StatefulWidget {
 class _PasswordChangePageState extends State<PasswordChangePage> {
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Scaffold(
+      
+    );
   }
 }

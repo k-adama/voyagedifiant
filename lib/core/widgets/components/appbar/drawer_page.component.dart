@@ -31,12 +31,12 @@ class DrawerPageComponent extends StatelessWidget {
         children: [
           const DrawerHeader(
               decoration: BoxDecoration(
-                color: AppColors.white,
+              color: AppColors.white,
               ),
-              child: Center(child: DrawerPageHearderComponent())),
+          child: Center(child: DrawerPageHearderComponent())),
           const DrawerPageBodyComponent(),
           const SizedBox(
-            height: 40,
+          height: 40,
           ),
           ListTile(
             title: InkWell(

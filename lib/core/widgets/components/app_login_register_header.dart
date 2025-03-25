@@ -8,9 +8,9 @@ class AppLoginRegisterHeader extends StatelessWidget {
     super.key,
     this.isLogo = true,
     this.isNotHome = true,
-     this.isLogin = true,
+    this.isLogin = true,
   });
-
+  
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -21,7 +21,7 @@ class AppLoginRegisterHeader extends StatelessWidget {
           image: isNotHome == true
               ? const AssetImage('assets/images/header.png')
               : const AssetImage('assets/images/home-header.png'),
-          fit: BoxFit.cover,
+         fit: BoxFit.cover,
         ),
       ),
       child: isLogo == true

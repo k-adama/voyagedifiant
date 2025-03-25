@@ -35,7 +35,7 @@ class DrawerPageBodyComponent extends StatelessWidget {
             emoji: "assets/icons/location-icon.png",
           ),
           onTap: () {
-            // Get.toNamed(Routes.);
+            Get.toNamed(Routes.PASSWORD_CHANGE_PAGE);
           },
         ),
         ListTile(
@@ -44,7 +44,7 @@ class DrawerPageBodyComponent extends StatelessWidget {
             emoji: "assets/icons/location-icon.png",
           ),
           onTap: () {
-            // Get.toNamed(Routes.);
+            // Get.toNamed(Routes.PASSWORD_CHANGE_PAGE);
           },
         ),
         ListTile(
@@ -53,7 +53,7 @@ class DrawerPageBodyComponent extends StatelessWidget {
             emoji: "assets/icons/location-icon.png",
           ),
           onTap: () {
-            // Get.toNamed(Routes.);
+            Get.toNamed(Routes.FAQS_PAGE);
           },
         ),
         ListTile(
