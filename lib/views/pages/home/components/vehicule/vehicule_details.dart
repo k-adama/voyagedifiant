@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/route_manager.dart';
 import 'package:voyagedifiant/core/constants/app_colors.dart';
 import 'package:voyagedifiant/core/constants/app_defaults.dart';
+import 'package:voyagedifiant/core/routes/app_pages.dart';
 import 'package:voyagedifiant/core/widgets/buttons/app_button.dart';
 import 'package:voyagedifiant/core/widgets/components/appbar/app_bar.dart';
 import 'package:voyagedifiant/core/widgets/components/appbar/drawer_page.component.dart';
@@ -44,7 +46,7 @@ class _VehiculeDetailsState extends State<VehiculeDetails> {
                 padding: const EdgeInsets.all(8.0),
                 child: AppCustomButton(
                   onPressed: () {
-                    //  Get.offAllNamed(Routes.HOME_PAGE);
+                    Get.toNamed(Routes.INVOICE_PAGE);
                   },
                   borderRadius: const BorderRadius.all(Radius.circular(8)),
                   buttonText: "Passer au paiement",

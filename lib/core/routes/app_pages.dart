@@ -7,6 +7,7 @@ import 'package:voyagedifiant/views/pages/auth/number_verification.dart';
 import 'package:voyagedifiant/views/pages/auth/register/register_page.dart';
 import 'package:voyagedifiant/views/pages/drawer_items/orders/orders_historie_page.dart';
 import 'package:voyagedifiant/views/pages/home/components/vehicule/all_vehicule_item.dart';
+import 'package:voyagedifiant/views/pages/home/components/vehicule/invoice_page.dart';
 import 'package:voyagedifiant/views/pages/home/components/vehicule/vehicule_details.dart';
 import 'package:voyagedifiant/views/pages/splash/splash_view.dart';
 import 'package:voyagedifiant/views/pages/home/home_page.dart';
@@ -35,6 +36,11 @@ abstract class AppPages {
     GetPage(
       name: _Paths.VEHICULE_DETAILS,
       page: () => const VehiculeDetails(),
+      binding: HomeBinding(),
+    ),
+     GetPage(
+      name: _Paths.INVOICE_PAGE,
+      page: () => const InvoicePage(),
       binding: HomeBinding(),
     ),
     GetPage(
