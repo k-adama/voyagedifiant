@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get/instance_manager.dart';
 import 'package:voyagedifiant/core/constants/app_colors.dart';
 import 'package:voyagedifiant/core/constants/app_defaults.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:voyagedifiant/views/controllers/home/controllers/home.controllers.dart';
 
 class DetailsCardComponent extends StatefulWidget {
   const DetailsCardComponent({
@@ -34,6 +36,8 @@ class _DetailsCardComponentState extends State<DetailsCardComponent> {
     });
   }
 
+  final HomeController homeController = Get.put(HomeController());
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -60,7 +64,7 @@ class _DetailsCardComponentState extends State<DetailsCardComponent> {
           BoxShadow(
             color: AppColors.black.withOpacity(0.1),
             spreadRadius: 1,
-            offset: Offset(0, 2),
+            offset: const Offset(0, 2),
           ),
         ],
       ),
@@ -248,7 +252,7 @@ class _DetailsCardComponentState extends State<DetailsCardComponent> {
           ),*/
           const SizedBox(
             height: AppDefaults.padding,
-          )
+          ),
         ],
       ),
     );
@@ -277,7 +281,8 @@ class _DetailsCardComponentState extends State<DetailsCardComponent> {
                   child: Container(
                     padding: const EdgeInsets.all(8),
                     decoration: BoxDecoration(
-                      color: isSelected ? AppColors.signUpColor : AppColors.black,
+                      color:
+                          isSelected ? AppColors.signUpColor : AppColors.primaryColor,
                       borderRadius: BorderRadius.circular(8),
                     ),
                     child: Text(className,

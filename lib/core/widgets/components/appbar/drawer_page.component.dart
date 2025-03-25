@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/route_manager.dart';
 import 'package:voyagedifiant/core/constants/app_colors.dart';
 import 'package:voyagedifiant/core/widgets/components/appbar/drawer_page_body.component.dart';
 import 'package:voyagedifiant/core/widgets/components/appbar/drawer_page_header.component.dart';
