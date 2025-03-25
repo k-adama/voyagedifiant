@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/instance_manager.dart';
 import 'package:voyagedifiant/core/constants/app_colors.dart';
 import 'package:voyagedifiant/core/constants/app_defaults.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:voyagedifiant/core/widgets/components/app_divider.dart';
 import 'package:voyagedifiant/views/controllers/home/controllers/home.controllers.dart';
 
@@ -277,10 +276,12 @@ class _InvoiceDetailsComponentState extends State<InvoiceDetailsComponent> {
             const SizedBox(
               width: 10,
             ),
-            Text(
-              info,
-              style: AppColors.interNormal(
-                size: 12,
+            Expanded(
+              child: Text(
+                info,
+                style: AppColors.interNormal(
+                  size: 12,
+                ),
               ),
             ),
           ],
