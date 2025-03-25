@@ -33,4 +33,38 @@ class AppHelpersCommon {
       ),
     );
   }
+
+  // ALERT DIALOG
+
+  static void showAlertDialog({
+    required BuildContext context,
+    required Widget child,
+    bool isTransparent = false,
+    Color backgroundColor = AppColors.white,
+    bool canPop = true,
+    double radius = 16,
+  }) {
+    AlertDialog alert = AlertDialog(
+      backgroundColor: isTransparent ? AppColors.transparent : backgroundColor,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(
+          Radius.circular(radius.r),
+        ),
+      ),
+      contentPadding: EdgeInsets.all(20.r),
+      iconPadding: EdgeInsets.zero,
+      content: PopScope(
+        canPop: canPop,
+        child: child,
+      ),
+    );
+
+    showDialog(
+      context: context,
+      barrierDismissible: canPop,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
 }

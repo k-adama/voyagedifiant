@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:get/route_manager.dart';
 import 'package:voyagedifiant/core/constants/app_colors.dart';
 import 'package:voyagedifiant/core/constants/app_defaults.dart';
+import 'package:voyagedifiant/core/constants/app_helpers.dart';
 import 'package:voyagedifiant/core/widgets/buttons/app_button.dart';
 import 'package:voyagedifiant/core/widgets/components/appbar/app_bar.dart';
 import 'package:voyagedifiant/core/widgets/components/appbar/drawer_page.component.dart';
+import 'package:voyagedifiant/core/widgets/dialogs/successfull.dialog.dart';
 import 'package:voyagedifiant/views/pages/home/components/vehicule/components/invoice_details_component.dart';
 import 'package:animated_toggle_switch/animated_toggle_switch.dart';
 
@@ -117,7 +120,21 @@ class _InvoicePageState extends State<InvoicePage> {
               padding: const EdgeInsets.all(8.0),
               child: AppCustomButton(
                 onPressed: () {
-                  // Get.toNamed(Routes.INVOICE_PAGE);
+                  AppHelpersCommon.showAlertDialog(
+                    context: context,
+                    canPop: false,
+                    child: SuccessfullDialog(
+                      isCustomerAdded: false,
+                      haveButton: false,
+                      // title: "Paiement effectué",
+                      svgPicture:
+                          "assets/icons/undraw_happy_news_re_tsbd 1.svg",
+                      content: 'Paiement effectué',
+                      redirect: () {
+                        Get.close(1);
+                      },
+                    ),
+                  );
                 },
                 borderRadius: const BorderRadius.all(Radius.circular(8)),
                 buttonText: "Régler la facture",
