@@ -226,29 +226,26 @@ class _InvoiceDetailsComponentState extends State<InvoiceDetailsComponent> {
                   size: 14, isUnderLine: true, underLineColor: AppColors.black),
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.all(AppDefaults.padding),
+          const Padding(
+            padding: EdgeInsets.all(AppDefaults.padding),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   '\u2022 Un acompte de 10% est requis',
-                  style: AppColors.interNormal(),
                 ),
-                const SizedBox(
+                SizedBox(
                   height: 10,
                 ),
                 Text(
                   '\u2022 Aucun remboursement n\'est effectué après paiement',
-                  style: AppColors.interNormal(),
                 ),
-                const SizedBox(
+                SizedBox(
                   height: 10,
                 ),
                 Text(
                   '\u2022 Les frais de carburant sont à votre charge',
-                  style: AppColors.interNormal(),
                 ),
               ],
             ),
