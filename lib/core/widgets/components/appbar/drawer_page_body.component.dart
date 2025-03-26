@@ -35,7 +35,7 @@ class DrawerPageBodyComponent extends StatelessWidget {
             emoji: "assets/icons/location-icon.png",
           ),
           onTap: () {
-            Get.toNamed(Routes.PASSWORD_CHANGE_PAGE);
+            Get.toNamed(Routes.PROFIL_PASSWORD_CHANGE);
           },
         ),
         ListTile(

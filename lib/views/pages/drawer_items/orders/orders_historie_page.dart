@@ -16,7 +16,8 @@ class _OrdersHistoriePageState extends State<OrdersHistoriePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
+        appBar: 
+        AppBar(
           backgroundColor: Colors.transparent,
           elevation: 0, // Supprime l'ombre
           actions: const [
