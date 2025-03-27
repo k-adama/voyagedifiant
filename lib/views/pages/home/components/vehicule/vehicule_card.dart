@@ -5,7 +5,7 @@ import 'package:voyagedifiant/core/constants/app_defaults.dart';
 class VehiculeCard extends StatelessWidget {
   const VehiculeCard({
     super.key,
-    this.couponBackground,
+    this.image,
     required this.name,
     required this.price,
     required this.person,
@@ -14,7 +14,7 @@ class VehiculeCard extends StatelessWidget {
     required this.onTap,
   });
 
-  final String? couponBackground;
+  final String? image;
   final String name;
   final String price;
   final String person;
@@ -75,11 +75,11 @@ class VehiculeCard extends StatelessWidget {
                           padding: const EdgeInsets.all(AppDefaults.padding),
                           child: Container(
                             decoration: BoxDecoration(
-                              color: color ?? Colors.blue,
+                              color: color ?? AppColors.transparent,
                               borderRadius: AppDefaults.borderRadius,
-                              image: const DecorationImage(
+                              image: DecorationImage(
                                 image: AssetImage(
-                                  'assets/icons/location-icon.png',
+                                  image ?? 'assets/icons/location-icon.png',
                                 ),
                                 // opacity: 0.25,
                                 fit: BoxFit.cover,

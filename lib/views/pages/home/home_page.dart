@@ -73,7 +73,7 @@ class _HomePageState extends State<HomePage> {
                           price: '35000',
                           person: '04',
                           bag: '01',
-                          color: const Color(0xFF402FBE),
+                          image: 'assets/images/Rectangle 11.png',
                           onTap: () {
                             Get.toNamed(Routes.VEHICULE_ITEM_PAGE);
                           },
@@ -87,7 +87,10 @@ class _HomePageState extends State<HomePage> {
                             size: 14,
                           ),
                         ),
-                        HotelTouristSiteItemsComponents(),
+                        const HotelTouristSiteItemsComponents(
+                          image: 'assets/images/cascade.png',
+                          name: 'Cascade de Man',
+                        ),
                         const SizedBox(
                           height: 12,
                         ),
@@ -97,7 +100,10 @@ class _HomePageState extends State<HomePage> {
                             size: 14,
                           ),
                         ),
-                        HotelTouristSiteItemsComponents(),
+                        const HotelTouristSiteItemsComponents(
+                          image: 'assets/images/sofi.png',
+                          name: 'Sofitel hôtel Ivoire',
+                        ),
                         const SizedBox(
                           height: 12,
                         ),

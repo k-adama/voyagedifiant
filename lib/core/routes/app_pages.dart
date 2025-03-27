@@ -2,6 +2,9 @@ import 'package:get/get_navigation/src/routes/get_route.dart';
 import 'package:voyagedifiant/views/controllers/auth/bindings/auth.bindings.dart';
 import 'package:voyagedifiant/views/controllers/home/bindings/home.bindings.dart';
 import 'package:voyagedifiant/views/controllers/splash/bindings/splash_binding.dart';
+import 'package:voyagedifiant/views/pages/auth/login/components/password_forgot/new_password_page.dart';
+import 'package:voyagedifiant/views/pages/auth/login/components/password_forgot/password_forgot_otp.dart';
+import 'package:voyagedifiant/views/pages/auth/login/components/password_forgot/password_forgot_page.dart';
 import 'package:voyagedifiant/views/pages/auth/login/login_page.dart';
 import 'package:voyagedifiant/views/pages/auth/number_verification.dart';
 import 'package:voyagedifiant/views/pages/auth/register/register_page.dart';
@@ -61,6 +64,21 @@ abstract class AppPages {
     GetPage(
       name: _Paths.HISTORIE_PAGE,
       page: () => const OrdersHistoriePage(),
+      binding: AuthBinding(),
+    ),
+    GetPage(
+      name: _Paths.PASSWORD_FORGOT_PAGE,
+      page: () => const PasswordForgotPage(),
+      binding: AuthBinding(),
+    ),
+    GetPage(
+      name: _Paths.PASSWORD_FORGOT_OTP,
+      page: () => const PasswordForgotPageOtp(),
+      binding: AuthBinding(),
+    ),
+    GetPage(
+      name: _Paths.NEW_PASSWORD_PAGE,
+      page: () => const NewPasswordPage(),
       binding: AuthBinding(),
     ),
   ];

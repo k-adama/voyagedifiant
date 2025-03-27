@@ -74,13 +74,27 @@ class _LoginPageFormState extends State<LoginPageForm> {
                           });
                         },
                       ),
-                      const Text('Se rappeler de moi'),
+                      Text(
+                        'Se rappeler de moi',
+                        style: AppColors.interNormal(
+                          color: AppColors.black,
+                          size: 12,
+                        ),
+                      ),
                     ],
                   ),
                   Flexible(
                     child: TextButton(
-                      onPressed: () {},
-                      child: const Text('Mot de passe oublié ?'),
+                      onPressed: () {
+                        Get.toNamed(Routes.PASSWORD_FORGOT_PAGE);
+                      },
+                      child: Text(
+                        'Mot de passe oublié ?',
+                        style: AppColors.interNormal(
+                          color: AppColors.black,
+                          size: 12,
+                        ),
+                      ),
                     ),
                   ),
                 ],
