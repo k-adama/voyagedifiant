@@ -6,14 +6,16 @@ class CustomField extends StatefulWidget {
   final Function(String)? onFieldSubmitted;
   final String? Function(String?)? validator;
   final bool isEyes;
- // final bool isPasswordValidator;
+  final Widget? label;
+  // final bool isPasswordValidator;
 
   const CustomField({
     Key? key,
     this.onFieldSubmitted,
     this.validator,
-    this.isEyes = true, 
-   // this.isPasswordValidator = true,
+    this.isEyes = true,
+    this.label,
+    // this.isPasswordValidator = true,
   }) : super(key: key);
 
   @override
@@ -37,6 +39,7 @@ class _CustomFieldState extends State<CustomField> {
       textInputAction: TextInputAction.done,
       obscureText: !isPasswordShown,
       decoration: InputDecoration(
+        label: widget.label,
         suffixIcon: Material(
           color: Colors.transparent,
           child: widget.isEyes == true

@@ -5,8 +5,12 @@ import 'package:voyagedifiant/core/constants/app_colors.dart';
 
 class HotelTouristSiteItemsComponents extends StatelessWidget {
   //final Product product;
+  final String? image;
+  final String? name;
   const HotelTouristSiteItemsComponents({
     Key? key,
+    this.image,
+    this.name,
     //required this.product
   }) : super(key: key);
 
@@ -57,7 +61,7 @@ class HotelTouristSiteItemsComponents extends StatelessWidget {
                           height: 130,
                           width: MediaQuery.of(context).size.width,
                           child: Image.asset(
-                            'assets/icons/location-icon.png',
+                            image ?? 'assets/icons/location-icon.png',
                             fit: BoxFit.cover,
                           ),
                         ),
@@ -66,14 +70,14 @@ class HotelTouristSiteItemsComponents extends StatelessWidget {
                         height: 1,
                       ),
                       Text(
-                        'Cascade de Man',
+                        name ?? 'pas de nom',
                         //controller.productList[index].name,
-                        style: const TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w400,
+                        style: AppColors.interBold(
+                          size: 14,
                         ),
                         overflow: TextOverflow.ellipsis,
-                        maxLines: 1,
+                        maxLines: 2,
+                        softWrap: true,
                       ),
                     ],
                   ),

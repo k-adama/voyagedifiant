@@ -2,6 +2,9 @@ import 'package:get/get_navigation/src/routes/get_route.dart';
 import 'package:voyagedifiant/views/controllers/auth/bindings/auth.bindings.dart';
 import 'package:voyagedifiant/views/controllers/home/bindings/home.bindings.dart';
 import 'package:voyagedifiant/views/controllers/splash/bindings/splash_binding.dart';
+import 'package:voyagedifiant/views/pages/auth/login/components/password_forgot/new_password_page.dart';
+import 'package:voyagedifiant/views/pages/auth/login/components/password_forgot/password_forgot_otp.dart';
+import 'package:voyagedifiant/views/pages/auth/login/components/password_forgot/password_forgot_page.dart';
 import 'package:voyagedifiant/views/pages/auth/login/login_page.dart';
 import 'package:voyagedifiant/views/pages/auth/number_verification.dart';
 import 'package:voyagedifiant/views/pages/auth/register/register_page.dart';
@@ -9,6 +12,7 @@ import 'package:voyagedifiant/views/pages/drawer_items/faqs/faqs_page.dart';
 import 'package:voyagedifiant/views/pages/drawer_items/orders/orders_historie_page.dart';
 import 'package:voyagedifiant/views/pages/drawer_items/profile/password_change_page.dart';
 import 'package:voyagedifiant/views/pages/home/components/vehicule/all_vehicule_item.dart';
+import 'package:voyagedifiant/views/pages/home/components/vehicule/invoice_page.dart';
 import 'package:voyagedifiant/views/pages/home/components/vehicule/vehicule_details.dart';
 import 'package:voyagedifiant/views/pages/splash/splash_view.dart';
 import 'package:voyagedifiant/views/pages/home/home_page.dart';
@@ -39,6 +43,11 @@ abstract class AppPages {
       page: () => const VehiculeDetails(),
       binding: HomeBinding(),
     ),
+     GetPage(
+      name: _Paths.INVOICE_PAGE,
+      page: () => const InvoicePage(),
+      binding: HomeBinding(),
+    ),
     GetPage(
       name: _Paths.LOGIN_PAGE,
       page: () => const LoginPage(),
@@ -67,6 +76,21 @@ abstract class AppPages {
      GetPage(
       name: _Paths.PROFIL_PASSWORD_CHANGE,
       page: () => const PasswordChangePage(),
+      binding: AuthBinding(),
+     ),
+    GetPage(
+      name: _Paths.PASSWORD_FORGOT_PAGE,
+      page: () => const PasswordForgotPage(),
+      binding: AuthBinding(),
+    ),
+    GetPage(
+      name: _Paths.PASSWORD_FORGOT_OTP,
+      page: () => const PasswordForgotPageOtp(),
+      binding: AuthBinding(),
+    ),
+    GetPage(
+      name: _Paths.NEW_PASSWORD_PAGE,
+      page: () => const NewPasswordPage(),
       binding: AuthBinding(),
     ),
   ];

@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:get/instance_manager.dart';
 import 'package:voyagedifiant/core/constants/app_colors.dart';
 import 'package:voyagedifiant/core/constants/app_defaults.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:voyagedifiant/core/widgets/components/app_divider.dart';
 import 'package:voyagedifiant/views/controllers/home/controllers/home.controllers.dart';
 
-class DetailsCardComponent extends StatefulWidget {
-  const DetailsCardComponent({
+class InvoiceDetailsComponent extends StatefulWidget {
+  const InvoiceDetailsComponent({
     super.key,
     this.couponBackground,
     required this.name,
@@ -24,10 +24,11 @@ class DetailsCardComponent extends StatefulWidget {
   final Color? color;
 
   @override
-  State<DetailsCardComponent> createState() => _DetailsCardComponentState();
+  State<InvoiceDetailsComponent> createState() =>
+      _InvoiceDetailsComponentState();
 }
 
-class _DetailsCardComponentState extends State<DetailsCardComponent> {
+class _InvoiceDetailsComponentState extends State<InvoiceDetailsComponent> {
   String? selectedClass;
 
   void selectClass(String className) {
@@ -70,6 +71,22 @@ class _DetailsCardComponentState extends State<DetailsCardComponent> {
       ),
       child: Column(
         children: [
+          Container(
+            padding: const EdgeInsets.all(AppDefaults.margin),
+            decoration: const BoxDecoration(
+              color: AppColors.primaryColor,
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(8),
+                topRight: Radius.circular(8),
+              ),
+            ),
+            child: Center(
+              child: Text(
+                'Résumé de la facture',
+                style: AppColors.interBold(size: 16, color: AppColors.white),
+              ),
+            ),
+          ),
           Container(
             decoration: const BoxDecoration(
               border: Border(
@@ -191,9 +208,48 @@ class _DetailsCardComponentState extends State<DetailsCardComponent> {
               ],
             ),
           ),
-          _buildClassButton('Economie', widget.price),
-          const Divider(thickness: 2, color: AppColors.gray),
-          _buildClassButton('Business', widget.price),
+          buildRowText('Classe', 'Economie'),
+          buildRowText('Lieu de prise en charge', 'Economie'),
+          buildRowText('Lieu de restitution', 'Economie'),
+          buildRowText('Période de location', 'Economie'),
+          buildRowText('Chauffeur', 'Economie'),
+          const AppDivider(),
+          buildRowText('Coût journalier', '2000'),
+          buildRowText('Coût total', '360000'),
+          const SizedBox(
+            height: AppDefaults.padding,
+          ),
+          Center(
+            child: Text(
+              "BON A SAVOIR",
+              style: AppColors.interBold(
+                  size: 14, isUnderLine: true, underLineColor: AppColors.black),
+            ),
+          ),
+          const Padding(
+            padding: EdgeInsets.all(AppDefaults.padding),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  '\u2022 Un acompte de 10% est requis',
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Text(
+                  '\u2022 Aucun remboursement n\'est effectué après paiement',
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Text(
+                  '\u2022 Les frais de carburant sont à votre charge',
+                ),
+              ],
+            ),
+          ),
           const SizedBox(
             height: AppDefaults.padding,
           ),
@@ -202,55 +258,29 @@ class _DetailsCardComponentState extends State<DetailsCardComponent> {
     );
   }
 
-  Widget _buildClassButton(String className, String price) {
-    bool isSelected = selectedClass == className;
+  Widget buildRowText(String name, String info) {
     return FractionallySizedBox(
       child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        padding: const EdgeInsets.all(AppDefaults.padding),
+        child: Row(
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text('A partir de $price',
-                    style: const TextStyle(
-                        fontWeight: FontWeight.bold, fontSize: 12)),
-                GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      selectedClass = isSelected ? null : className;
-                    });
-                  },
-                  child: Container(
-                    padding: const EdgeInsets.all(8),
-                    decoration: BoxDecoration(
-                      color: isSelected
-                          ? AppColors.signUpColor
-                          : AppColors.primaryColor,
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    child: Text(className,
-                        style: const TextStyle(color: AppColors.white)),
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 8),
-            if (className == 'Economie')
-              RatingBar.builder(
-                initialRating: 3.5,
-                minRating: 1,
-                direction: Axis.horizontal,
-                allowHalfRating: true,
-                itemCount: 5,
-                itemSize: 20,
-                itemBuilder: (context, _) =>
-                    const Icon(Icons.star, color: Colors.amber),
-                onRatingUpdate: (rating) {},
+            Text(
+              '$name :',
+              style: AppColors.interBold(
+                size: 14,
               ),
-            if (className == 'Business')
-              const Text('Chargeur à porter de main'),
+            ),
+            const SizedBox(
+              width: 10,
+            ),
+            Expanded(
+              child: Text(
+                info,
+                style: AppColors.interNormal(
+                  size: 12,
+                ),
+              ),
+            ),
           ],
         ),
       ),
