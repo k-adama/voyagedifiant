@@ -74,13 +74,13 @@ class _LoginPageFormState extends State<LoginPageForm> {
                           });
                         },
                       ),
-                      Text('Se rappeler de moi'),
+                      const Text('Se rappeler de moi'),
                     ],
                   ),
                   Flexible(
                     child: TextButton(
                       onPressed: () {},
-                      child: Text('Mot de passe oublié ?'),
+                      child: const Text('Mot de passe oublié ?'),
                     ),
                   ),
                 ],
