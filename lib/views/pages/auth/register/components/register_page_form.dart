@@ -120,7 +120,7 @@ class _RegisterPageFormState extends State<RegisterPageForm> {
             const SizedBox(height: 12),
             AppCustomButton(
               onPressed: () {
-                Get.offAllNamed(Routes.NUMBER_VERIFICATION_PAGE);
+                Get.toNamed(Routes.NUMBER_VERIFICATION_PAGE);
               },
               buttonText: "S'INSCRIRE",
               textColor: AppColors.white,

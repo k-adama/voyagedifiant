@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get_instance/src/extension_instance.dart';
 import 'package:get/route_manager.dart';
 import 'package:voyagedifiant/core/constants/app_colors.dart';
 import 'package:voyagedifiant/core/routes/app_pages.dart';
 import 'package:voyagedifiant/core/widgets/components/app_login_register_header.dart';
+import 'package:pinput/pinput.dart';
+import 'package:voyagedifiant/views/controllers/auth/controllers/auth.controllers.dart';
 
 class NumberVerificationPage extends StatefulWidget {
   const NumberVerificationPage({super.key});
@@ -13,14 +16,38 @@ class NumberVerificationPage extends StatefulWidget {
 }
 
 class _NumberVerificationPageState extends State<NumberVerificationPage> {
+  String enteredOtp = '';
+  final AuthController _authController = Get.find();
+  Color getBorderColor() {
+    return _authController.checkOtp ? AppColors.signUpColor : AppColors.black;
+  }
+
   @override
   Widget build(BuildContext context) {
+    final defaultPinTheme = PinTheme(
+      margin: const EdgeInsets.only(left: 10),
+      width: 60,
+      height: 60,
+      textStyle: AppColors.interNormal(size: 22.sp, color: AppColors.black),
+      decoration: BoxDecoration(
+        color: AppColors.white,
+        border: Border.all(color: Colors.blue),
+        borderRadius: BorderRadius.circular(8),
+      ),
+    );
+
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
           child: Stack(
             children: [
               const AppLoginRegisterHeader(),
+              IconButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                icon: const Icon(Icons.arrow_back, color: AppColors.white),
+              ),
               Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: SizedBox(
@@ -39,7 +66,19 @@ class _NumberVerificationPageState extends State<NumberVerificationPage> {
                               'Entrez le code reçu',
                               style: AppColors.interBold(),
                             ),
+                            Padding(
+                              padding: const EdgeInsets.all(
+                                15.0,
+                              ),
+                              child: Text(
+                                'Veuillez saisir le code reçu par e-mail afin de terminer votre inscription',
+                                style: AppColors.interNormal(),
+                              ),
+                            ),
                             const SizedBox(
+                              height: 20,
+                            ),
+                            /*  const SizedBox(
                               height: 30,
                             ),
                             FractionallySizedBox(
@@ -83,9 +122,36 @@ class _NumberVerificationPageState extends State<NumberVerificationPage> {
                                   )
                                 ],
                               ),
+                            ),*/
+
+                            Pinput(
+                              length: 4,
+                              onChanged: (value) {
+                                setState(() {
+                                  enteredOtp = value;
+                                });
+                              },
+                              defaultPinTheme: PinTheme(
+                                width: 60,
+                                height: 60,
+                                textStyle: const TextStyle(
+                                    fontSize: 24, fontWeight: FontWeight.bold),
+                                decoration: BoxDecoration(
+                                  border: Border.all(color: Colors.black),
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                              ),
+                              focusedPinTheme: defaultPinTheme.copyWith(
+                                decoration:
+                                    defaultPinTheme.decoration!.copyWith(
+                                  border:
+                                      Border.all(color: AppColors.signUpColor),
+                                ),
+                              ),
+                              onCompleted: (pin) {
+                                // authController.otpEnters = pin;
+                              },
                             ),
-                            const SizedBox(height: 50),
-                           // const OtpForm(),
                             const SizedBox(height: 24),
                             Text(
                               "Vous n'avez pas reçu de code ?",
@@ -111,156 +177,6 @@ class _NumberVerificationPageState extends State<NumberVerificationPage> {
             ],
           ),
         ),
-      ),
-    );
-  }
-}
-
-const authOutlineInputBorder = OutlineInputBorder(
-  borderSide: BorderSide(color: Color(0xFF757575)),
-  borderRadius: BorderRadius.all(Radius.circular(12)),
-);
-
-class OtpForm extends StatelessWidget {
-  const OtpForm({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Form(
-      child: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              SizedBox(
-                height: 64,
-                width: 64,
-                child: TextFormField(
-                  onSaved: (pin) {},
-                  onChanged: (pin) {
-                    if (pin.isNotEmpty) {
-                      FocusScope.of(context).nextFocus();
-                    }
-                  },
-                  textInputAction: TextInputAction.next,
-                  keyboardType: TextInputType.number,
-                  inputFormatters: [
-                    LengthLimitingTextInputFormatter(1),
-                    FilteringTextInputFormatter.digitsOnly,
-                  ],
-                  style: Theme.of(context).textTheme.titleLarge,
-                  textAlign: TextAlign.center,
-                  decoration: InputDecoration(
-                      hintText: "0",
-                      hintStyle: const TextStyle(color: Color(0xFF757575)),
-                      border: authOutlineInputBorder,
-                      enabledBorder: authOutlineInputBorder,
-                      focusedBorder: authOutlineInputBorder.copyWith(
-                          borderSide:
-                              const BorderSide(color: Color(0xFFFF7643)))),
-                ),
-              ),
-              SizedBox(
-                height: 64,
-                width: 64,
-                child: TextFormField(
-                  onSaved: (pin) {},
-                  onChanged: (pin) {
-                    if (pin.isNotEmpty) {
-                      FocusScope.of(context).nextFocus();
-                    }
-                  },
-                  textInputAction: TextInputAction.next,
-                  keyboardType: TextInputType.number,
-                  inputFormatters: [
-                    LengthLimitingTextInputFormatter(1),
-                    FilteringTextInputFormatter.digitsOnly,
-                  ],
-                  style: Theme.of(context).textTheme.titleLarge,
-                  textAlign: TextAlign.center,
-                  decoration: InputDecoration(
-                      hintText: "0",
-                      hintStyle: const TextStyle(color: Color(0xFF757575)),
-                      border: authOutlineInputBorder,
-                      enabledBorder: authOutlineInputBorder,
-                      focusedBorder: authOutlineInputBorder.copyWith(
-                          borderSide:
-                              const BorderSide(color: Color(0xFFFF7643)))),
-                ),
-              ),
-              SizedBox(
-                height: 64,
-                width: 64,
-                child: TextFormField(
-                  onSaved: (pin) {},
-                  onChanged: (pin) {
-                    if (pin.isNotEmpty) {
-                      FocusScope.of(context).nextFocus();
-                    }
-                  },
-                  textInputAction: TextInputAction.next,
-                  keyboardType: TextInputType.number,
-                  inputFormatters: [
-                    LengthLimitingTextInputFormatter(1),
-                    FilteringTextInputFormatter.digitsOnly,
-                  ],
-                  style: Theme.of(context).textTheme.titleLarge,
-                  textAlign: TextAlign.center,
-                  decoration: InputDecoration(
-                      hintText: "0",
-                      hintStyle: const TextStyle(color: Color(0xFF757575)),
-                      border: authOutlineInputBorder,
-                      enabledBorder: authOutlineInputBorder,
-                      focusedBorder: authOutlineInputBorder.copyWith(
-                          borderSide:
-                              const BorderSide(color: Color(0xFFFF7643)))),
-                ),
-              ),
-              SizedBox(
-                height: 64,
-                width: 64,
-                child: TextFormField(
-                  onSaved: (pin) {},
-                  onChanged: (pin) {
-                    if (pin.isNotEmpty) {
-                      FocusScope.of(context).nextFocus();
-                    }
-                  },
-                  textInputAction: TextInputAction.next,
-                  keyboardType: TextInputType.number,
-                  inputFormatters: [
-                    LengthLimitingTextInputFormatter(1),
-                    FilteringTextInputFormatter.digitsOnly,
-                  ],
-                  style: Theme.of(context).textTheme.titleLarge,
-                  textAlign: TextAlign.center,
-                  decoration: InputDecoration(
-                      hintText: "0",
-                      hintStyle: const TextStyle(color: Color(0xFF757575)),
-                      border: authOutlineInputBorder,
-                      enabledBorder: authOutlineInputBorder,
-                      focusedBorder: authOutlineInputBorder.copyWith(
-                          borderSide:
-                              const BorderSide(color: Color(0xFFFF7643)))),
-                ),
-              ),
-            ],
-          ),
-          /*  const SizedBox(height: 24),
-          ElevatedButton(
-            onPressed: () {},
-            style: ElevatedButton.styleFrom(
-              elevation: 0,
-              backgroundColor: const Color(0xFFFF7643),
-              foregroundColor: Colors.white,
-              minimumSize: const Size(double.infinity, 48),
-              shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(16)),
-              ),
-            ),
-            child: const Text("Continue"),
-          )*/
-        ],
       ),
     );
   }
