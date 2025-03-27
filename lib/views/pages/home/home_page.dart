@@ -112,7 +112,7 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ],
               ),
-              Positioned(
+              const Positioned(
                 top: 140, // Rapprocher les containers du haut
                 left: 0,
                 right: 0,
