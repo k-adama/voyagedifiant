@@ -33,54 +33,37 @@ class HotelTouristSiteItemsComponents extends StatelessWidget {
             child: FadeInAnimation(
                 child: InkWell(
               onTap: () {},
-              child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: const BorderRadius.all(Radius.circular(12)),
-                  color: AppColors.white,
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey[300]!,
-                      blurRadius: 15.0,
-                      spreadRadius: 0.5,
-                      offset: const Offset(
-                        3.0,
-                        3.0,
+              child: Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+                child: Column(
+                  children: <Widget>[
+                    ClipRRect(
+                      borderRadius:
+                          const BorderRadius.all(Radius.circular(12)),
+                      child: SizedBox(
+                        height: 80,
+                        width: MediaQuery.of(context).size.width,
+                        child: Image.asset(
+                          image ?? 'assets/icons/location-icon.png',
+                          fit: BoxFit.cover,
+                        ),
                       ),
                     ),
+                    const SizedBox(
+                      height: 1,
+                    ),
+                    Text(
+                      name ?? 'pas de nom',
+                      //controller.productList[index].name,
+                      style: AppColors.interBold(
+                        size: 14,
+                      ),
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 2,
+                      softWrap: true,
+                    ),
                   ],
-                ),
-                child: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
-                  child: Column(
-                    children: <Widget>[
-                      ClipRRect(
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(12)),
-                        child: SizedBox(
-                          height: 130,
-                          width: MediaQuery.of(context).size.width,
-                          child: Image.asset(
-                            image ?? 'assets/icons/location-icon.png',
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 1,
-                      ),
-                      Text(
-                        name ?? 'pas de nom',
-                        //controller.productList[index].name,
-                        style: AppColors.interBold(
-                          size: 14,
-                        ),
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 2,
-                        softWrap: true,
-                      ),
-                    ],
-                  ),
                 ),
               ),
             )),
