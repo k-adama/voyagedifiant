@@ -16,6 +16,11 @@ abstract class Routes {
   static const PASSWORD_FORGOT_PAGE = _Paths.PASSWORD_FORGOT_PAGE;
   static const PASSWORD_FORGOT_OTP = _Paths.PASSWORD_FORGOT_OTP;
   static const NEW_PASSWORD_PAGE = _Paths.NEW_PASSWORD_PAGE;
+  static const  PROFILE_INFO  = _Paths. PROFILE_INFO ;
+  static const  THEME_CONFIDENTIALITE  = _Paths. THEME_CONFIDENTIALITE ;
+  static const  DETAILS_FAQS  = _Paths. DETAILS_FAQS ;
+    static const  MONEY  = _Paths. MONEY ;
+
 }
 
 abstract class _Paths {
@@ -34,4 +39,10 @@ abstract class _Paths {
   static const PASSWORD_FORGOT_PAGE = "/password_forgot_page";
   static const PASSWORD_FORGOT_OTP = "/password_forgot_otp";
   static const NEW_PASSWORD_PAGE = "/new_password_page";
+  static const PROFILE_INFO = "/profile_info";
+  static const THEME_CONFIDENTIALITE = "/theme_confidentialite";
+  static const DETAILS_FAQS = "/details_faqs";
+  static const MONEY = "/money";
+
+
 }

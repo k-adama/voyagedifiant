@@ -8,9 +8,13 @@ import 'package:voyagedifiant/views/pages/auth/login/components/password_forgot/
 import 'package:voyagedifiant/views/pages/auth/login/login_page.dart';
 import 'package:voyagedifiant/views/pages/auth/number_verification.dart';
 import 'package:voyagedifiant/views/pages/auth/register/register_page.dart';
+import 'package:voyagedifiant/views/pages/drawer_items/confidentialite/theme_confidentialite.dart';
+import 'package:voyagedifiant/views/pages/drawer_items/faqs/details_faqs.dart';
 import 'package:voyagedifiant/views/pages/drawer_items/faqs/faqs_page.dart';
+import 'package:voyagedifiant/views/pages/drawer_items/money/money.dart';
 import 'package:voyagedifiant/views/pages/drawer_items/orders/orders_historie_page.dart';
 import 'package:voyagedifiant/views/pages/drawer_items/profile/password_change_page.dart';
+import 'package:voyagedifiant/views/pages/drawer_items/profile/profile_info_page.dart';
 import 'package:voyagedifiant/views/pages/home/components/vehicule/all_vehicule_item.dart';
 import 'package:voyagedifiant/views/pages/home/components/vehicule/invoice_page.dart';
 import 'package:voyagedifiant/views/pages/home/components/vehicule/vehicule_details.dart';
@@ -91,6 +95,26 @@ abstract class AppPages {
     GetPage(
       name: _Paths.NEW_PASSWORD_PAGE,
       page: () => const NewPasswordPage(),
+      binding: AuthBinding(),
+    ),
+    GetPage(
+      name: _Paths.PROFILE_INFO,
+      page: () => const ProfileInfoPage(),
+      binding: AuthBinding(),
+    ),
+     GetPage(
+      name: _Paths.THEME_CONFIDENTIALITE,
+      page: () => const ThemeConfidentialitePage(),
+      binding: AuthBinding(),
+    ),
+     GetPage(
+      name: _Paths.DETAILS_FAQS,
+      page: () => const DetailsFaqsPage(),
+      binding: AuthBinding(),
+    ),
+     GetPage(
+      name: _Paths.MONEY,
+      page: () => const MoneyPage(),
       binding: AuthBinding(),
     ),
   ];

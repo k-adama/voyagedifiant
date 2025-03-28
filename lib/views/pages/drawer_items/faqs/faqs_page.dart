@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_launcher_icons/ios.dart';
+import 'package:get/route_manager.dart';
 import 'package:voyagedifiant/core/constants/app_colors.dart';
+import 'package:voyagedifiant/core/constants/app_defaults.dart';
 import 'package:voyagedifiant/core/constants/app_icons.dart';
+import 'package:voyagedifiant/core/routes/app_pages.dart';
 import 'package:voyagedifiant/core/widgets/buttons/app_button.dart';
 
 class FaqsPage extends StatelessWidget {
@@ -36,11 +39,12 @@ class FaqsPage extends StatelessWidget {
             ),
           ),
         ),
-        body: Padding(padding: EdgeInsets.all(18.0),
+        body: Padding(padding: EdgeInsets.all(AppDefaults.padding),
         child: Column(
            children: [
             ListTile(
               onTap: () {
+                Get.toNamed(Routes.DETAILS_FAQS);
               },
             leading: Text("Comment ça marche",style: TextStyle(fontSize: 18, fontWeight: FontWeight.w400),),
             trailing: Icon(Icons.arrow_forward_ios, size: 18,),
@@ -50,6 +54,7 @@ class FaqsPage extends StatelessWidget {
             ),
               ListTile(
               onTap: () {
+                 Get.toNamed(Routes.DETAILS_FAQS);
               },
             leading: Text("Comment ça marche",style: TextStyle(fontSize: 18, fontWeight: FontWeight.w400),),
             trailing: Icon(Icons.arrow_forward_ios, size: 18,),
@@ -59,6 +64,7 @@ class FaqsPage extends StatelessWidget {
             ),
               ListTile(
               onTap: () {
+                 Get.toNamed(Routes.DETAILS_FAQS);
               },
             leading: Text("Comment ça marche",style: TextStyle(fontSize: 18, fontWeight: FontWeight.w400),),
             trailing: Icon(Icons.arrow_forward_ios, size: 18,),
@@ -68,6 +74,7 @@ class FaqsPage extends StatelessWidget {
             ),
               ListTile(
               onTap: () {
+                 Get.toNamed(Routes.DETAILS_FAQS);
               },
             leading: Text("Comment ça marche",style: TextStyle(fontSize: 18, fontWeight: FontWeight.w400),),
             trailing: Icon(Icons.arrow_forward_ios, size: 18,),
