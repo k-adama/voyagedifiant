@@ -19,6 +19,7 @@ abstract class Routes {
   static const INVOICE_SEJOUR_PAGE = _Paths.INVOICE_SEJOUR_PAGE;
   static const ALL_DECOUVERTE_ITEMS = _Paths.ALL_DECOUVERTE_ITEMS;
   static const DECOUVERTE_DETAILS = _Paths.DECOUVERTE_DETAILS;
+  static const INVOICE_DECOUVERTE_PAGE = _Paths.INVOICE_DECOUVERTE_PAGE;
 }
 
 abstract class _Paths {
@@ -40,4 +41,5 @@ abstract class _Paths {
   static const INVOICE_SEJOUR_PAGE = "/invoice_sejour_page";
   static const ALL_DECOUVERTE_ITEMS = "/all_decouverte_items";
   static const DECOUVERTE_DETAILS = "/decouverte_details";
+  static const INVOICE_DECOUVERTE_PAGE = "/invoice_decouverte_page";
 }

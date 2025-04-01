@@ -52,7 +52,7 @@ class _DecouverteDetailsState extends State<DecouverteDetails> {
                   height: 200,
                   decoration: BoxDecoration(
                     image: const DecorationImage(
-                      image: AssetImage('assets/icons/hotpalm.png'),
+                      image: AssetImage('assets/icons/Cascade.png'),
                       fit: BoxFit.cover,
                     ),
                     borderRadius: const BorderRadius.all(Radius.circular(18)),
@@ -192,10 +192,10 @@ class _DecouverteDetailsState extends State<DecouverteDetails> {
                 ),
                 AppCustomButton(
                   onPressed: () {
-                    Get.toNamed(Routes.INVOICE_SEJOUR_PAGE);
+                    Get.toNamed(Routes.INVOICE_DECOUVERTE_PAGE);
                   },
                   borderRadius: const BorderRadius.all(Radius.circular(8)),
-                  buttonText: "Enregister",
+                  buttonText: "Régler la facture",
                   textColor: AppColors.white,
                   buttonColor: AppColors.primaryColor,
                 ),
@@ -218,7 +218,7 @@ class _DecouverteDetailsState extends State<DecouverteDetails> {
             children: [
               Expanded(
                 flex: 4,
-                child: Text('A partir de $price/jour',
+                child: Text('A partir de $price/2h',
                     style: AppColors.interBold(
                       size: 12,
                     )),
@@ -245,7 +245,7 @@ class _DecouverteDetailsState extends State<DecouverteDetails> {
               ),
             ],
           ),
-          if (className == 'Standard') const Text('vue sur le balcon'),
+          if (className == 'Premium') const Text('Avec transport'),
           RatingBar.builder(
             initialRating: 3.5,
             minRating: 1,
