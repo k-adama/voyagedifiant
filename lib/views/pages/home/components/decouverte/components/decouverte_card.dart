@@ -72,8 +72,7 @@ class DecouverteCardComponent extends StatelessWidget {
               child: Padding(
                   padding: const EdgeInsets.all(AppDefaults.padding),
                   child: Container(
-                    // width: 180,
-                    height: 130,
+                    height: 120,
                     decoration: BoxDecoration(
                       color: color ?? AppColors.transparent,
                       borderRadius: AppDefaults.borderRadius,
@@ -88,7 +87,7 @@ class DecouverteCardComponent extends StatelessWidget {
                   )),
             ),
             Expanded(
-              flex: 5,
+              flex: 4,
               child: Padding(
                 padding: const EdgeInsets.all(AppDefaults.padding),
                 child: Column(
@@ -123,9 +122,9 @@ class DecouverteCardComponent extends StatelessWidget {
                           width: 5,
                         ),
                         Text('$depart - $arrived',
-                         style: AppColors.interBold(
-                          size: 12,
-                        )),
+                            style: AppColors.interBold(
+                              size: 12,
+                            )),
                       ],
                     ),
                     const SizedBox(
