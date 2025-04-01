@@ -195,7 +195,7 @@ class _DecouverteDetailsState extends State<DecouverteDetails> {
                     Get.toNamed(Routes.INVOICE_DECOUVERTE_PAGE);
                   },
                   borderRadius: const BorderRadius.all(Radius.circular(8)),
-                  buttonText: "Régler la facture",
+                  buttonText: "Enregistrer",
                   textColor: AppColors.white,
                   buttonColor: AppColors.primaryColor,
                 ),

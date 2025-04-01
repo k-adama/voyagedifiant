@@ -67,6 +67,7 @@ class _InvoiceSejourPageState extends State<InvoiceSejourPage> {
                         "Paiement total",
                         style: AppColors.interBold(
                           size: 14,
+                           color: AppColors.primaryColor,
                         ),
                       ),
                       SizedBox(
