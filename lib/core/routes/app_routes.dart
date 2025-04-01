@@ -14,6 +14,9 @@ abstract class Routes {
   static const PASSWORD_FORGOT_PAGE = _Paths.PASSWORD_FORGOT_PAGE;
   static const PASSWORD_FORGOT_OTP = _Paths.PASSWORD_FORGOT_OTP;
   static const NEW_PASSWORD_PAGE = _Paths.NEW_PASSWORD_PAGE;
+  static const SEJOUR_ITEM_PAGE = _Paths.SEJOUR_ITEM_PAGE;
+  static const SEJOUR_DETAILS = _Paths.SEJOUR_DETAILS;
+  static const INVOICE_SEJOUR_PAGE = _Paths.INVOICE_SEJOUR_PAGE;
 }
 
 abstract class _Paths {
@@ -30,4 +33,7 @@ abstract class _Paths {
   static const PASSWORD_FORGOT_PAGE = "/password_forgot_page";
   static const PASSWORD_FORGOT_OTP = "/password_forgot_otp";
   static const NEW_PASSWORD_PAGE = "/new_password_page";
+  static const SEJOUR_ITEM_PAGE = "/sejour_item_page";
+  static const SEJOUR_DETAILS = "/sejour_details";
+  static const INVOICE_SEJOUR_PAGE = "/invoice_sejour_page";
 }

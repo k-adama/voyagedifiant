@@ -6,17 +6,21 @@ import 'package:voyagedifiant/core/models/driver_model.dart';
 class DriverCardComponent extends StatelessWidget {
   final DriverModel driver;
   final VoidCallback onChange;
+  final bool isNotSejour;
 
   const DriverCardComponent({
     super.key,
     required this.driver,
     required this.onChange,
+    this.isNotSejour = true,
   });
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.only(left: 12, right: 12),
+      padding: isNotSejour == true
+          ? const EdgeInsets.only(left: 12, right: 12)
+          : null,
       child: Row(
         children: [
           // Image du chauffeur

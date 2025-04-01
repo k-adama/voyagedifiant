@@ -9,6 +9,9 @@ import 'package:voyagedifiant/views/pages/auth/login/login_page.dart';
 import 'package:voyagedifiant/views/pages/auth/number_verification.dart';
 import 'package:voyagedifiant/views/pages/auth/register/register_page.dart';
 import 'package:voyagedifiant/views/pages/drawer_items/orders/orders_historie_page.dart';
+import 'package:voyagedifiant/views/pages/home/components/sejour/all_sejour.dart';
+import 'package:voyagedifiant/views/pages/home/components/sejour/invoice_sejour.dart';
+import 'package:voyagedifiant/views/pages/home/components/sejour/sejour_details_component.dart';
 import 'package:voyagedifiant/views/pages/home/components/vehicule/all_vehicule_item.dart';
 import 'package:voyagedifiant/views/pages/home/components/vehicule/invoice_page.dart';
 import 'package:voyagedifiant/views/pages/home/components/vehicule/vehicule_details.dart';
@@ -41,7 +44,7 @@ abstract class AppPages {
       page: () => const VehiculeDetails(),
       binding: HomeBinding(),
     ),
-     GetPage(
+    GetPage(
       name: _Paths.INVOICE_PAGE,
       page: () => const InvoicePage(),
       binding: HomeBinding(),
@@ -80,6 +83,21 @@ abstract class AppPages {
       name: _Paths.NEW_PASSWORD_PAGE,
       page: () => const NewPasswordPage(),
       binding: AuthBinding(),
+    ),
+    GetPage(
+      name: _Paths.SEJOUR_ITEM_PAGE,
+      page: () => const AllSejourItems(),
+      binding: HomeBinding(),
+    ),
+    GetPage(
+      name: _Paths.SEJOUR_DETAILS,
+      page: () => const SejourDetails(),
+      binding: HomeBinding(),
+    ),
+     GetPage(
+      name: _Paths.INVOICE_SEJOUR_PAGE,
+      page: () => const InvoiceSejourPage(),
+      binding: HomeBinding(),
     ),
   ];
 }
