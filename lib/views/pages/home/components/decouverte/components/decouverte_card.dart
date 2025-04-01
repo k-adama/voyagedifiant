@@ -117,7 +117,7 @@ class DecouverteCardComponent extends StatelessWidget {
                     ),
                     Row(
                       children: [
-                        Image.asset('assets/icons/location.png'),
+                        Image.asset('assets/icons/tabler_clock-hour-3.png'),
                         const SizedBox(
                           width: 5,
                         ),
