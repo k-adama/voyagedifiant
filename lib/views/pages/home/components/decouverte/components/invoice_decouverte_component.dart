@@ -143,47 +143,12 @@ class _InvoiceDecouverteDetailsComponentState
               ),
             ],
           ),
-          buildRowText('Chambre', 'Standard'),
+          buildRowText('Visite', 'Standard'),
           buildRowText('Localisation', 'Yamoussoukro'),
           buildRowText('Période de location', '04 Nov - 07 Nov'),
           const AppDivider(),
           buildRowText('Coût journalier', '2000'),
           buildRowText('Coût total', '360000'),
-          /*  
-          const SizedBox(
-            height: AppDefaults.padding,
-          ),
-          Center(
-            child: Text(
-              "BON A SAVOIR",
-              style: AppColors.interBold(
-                  size: 14, isUnderLine: true, underLineColor: AppColors.black),
-            ),
-          ),
-          const Padding(
-            padding: EdgeInsets.all(AppDefaults.padding),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  '\u2022 Un acompte de 10% est requis',
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Text(
-                  '\u2022 Aucun remboursement n\'est effectué après paiement',
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Text(
-                  '\u2022 Les frais de carburant sont à votre charge',
-                ),
-              ],
-            ),
-          ),*/
           const SizedBox(
             height: AppDefaults.padding,
           ),
