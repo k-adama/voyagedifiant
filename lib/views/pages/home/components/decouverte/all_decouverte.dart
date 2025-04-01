@@ -64,7 +64,7 @@ class _AllDecouverteItemsState extends State<AllDecouverteItems> {
                         price: '35000',
                        
                         onTap: () {
-                          Get.toNamed(Routes.SEJOUR_DETAILS);
+                          Get.toNamed(Routes.DECOUVERTE_DETAILS);
                         },
                         depart: '09h17',
                         arrived: '17h30',
