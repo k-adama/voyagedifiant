@@ -63,56 +63,30 @@ class _DecouverteDetailsState extends State<DecouverteDetails> {
                   ),
                 ),
                 const SizedBox(
-                  height: 10,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Column(
-                      children: [
-                        Image.asset('assets/icons/lit.png'),
-                        const SizedBox(
-                          width: 5,
-                        ),
-                        const Text('2 lits'),
-                      ],
-                    ),
-                    const SizedBox(width: 20),
-                    Column(
-                      children: [
-                        Image.asset(
-                          'assets/icons/solar_bath-linear.png',
-                          width: 15,
-                        ),
-                        const SizedBox(
-                          width: 5,
-                        ),
-                        const Text('2 salles de bains'),
-                      ],
-                    ),
-                    const SizedBox(width: 20),
-                    Column(
-                      children: [
-                        Image.asset(
-                          'assets/icons/clim.png',
-                          width: 15,
-                        ),
-                        const SizedBox(
-                          width: 5,
-                        ),
-                        const Text('3 climatiseurs'),
-                      ],
-                    )
-                  ],
-                ),
-                const SizedBox(
                   height: 30,
                 ),
                 Text(
-                  "Détails",
+                  "Historique",
                   style: AppColors.interBold(
                     size: 14,
                   ),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Row(
+                  children: [
+                    Image.asset(
+                      'assets/icons/location.png',
+                      color: AppColors.signUpColor,
+                    ),
+                    const SizedBox(width: 10,),
+                    Text("Man",
+                    style: AppColors.interBold(
+                      size: 14,
+                      color: AppColors.signUpColor,
+                    ),)
+                  ],
                 ),
                 const SizedBox(
                   height: 10,
