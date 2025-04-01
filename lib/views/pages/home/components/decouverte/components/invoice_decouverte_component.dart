@@ -84,10 +84,10 @@ class _InvoiceDecouverteDetailsComponentState
                     child: Container(
                       // width: 180,
                       height: 130,
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                         color: AppColors.transparent,
-                        borderRadius: AppDefaults.borderRadius,
-                        image: const DecorationImage(
+                        borderRadius: BorderRadius.all(Radius.circular(4)),
+                        image: DecorationImage(
                           image: AssetImage(
                             'assets/icons/Cascade.png',
                           ),
