@@ -184,7 +184,8 @@ class _InvoiceSejourDetailsComponentState
           const AppDivider(),
           buildRowText('Coût journalier', '2000'),
           buildRowText('Coût total', '360000'),
-          /*  const SizedBox(
+          /*  
+          const SizedBox(
             height: AppDefaults.padding,
           ),
           Center(

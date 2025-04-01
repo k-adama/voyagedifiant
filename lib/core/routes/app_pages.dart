@@ -9,6 +9,7 @@ import 'package:voyagedifiant/views/pages/auth/login/login_page.dart';
 import 'package:voyagedifiant/views/pages/auth/number_verification.dart';
 import 'package:voyagedifiant/views/pages/auth/register/register_page.dart';
 import 'package:voyagedifiant/views/pages/drawer_items/orders/orders_historie_page.dart';
+import 'package:voyagedifiant/views/pages/home/components/decouverte/all_decouverte.dart';
 import 'package:voyagedifiant/views/pages/home/components/sejour/all_sejour.dart';
 import 'package:voyagedifiant/views/pages/home/components/sejour/invoice_sejour.dart';
 import 'package:voyagedifiant/views/pages/home/components/sejour/sejour_details_component.dart';
@@ -97,6 +98,11 @@ abstract class AppPages {
      GetPage(
       name: _Paths.INVOICE_SEJOUR_PAGE,
       page: () => const InvoiceSejourPage(),
+      binding: HomeBinding(),
+    ),
+     GetPage(
+      name: _Paths.ALL_DECOUVERTE_ITEMS,
+      page: () => const AllDecouverteItems(),
       binding: HomeBinding(),
     ),
   ];

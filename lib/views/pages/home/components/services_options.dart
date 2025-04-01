@@ -26,7 +26,7 @@ class ServicesOptions extends StatelessWidget {
             imagePath: 'assets/icons/decouverte-icon.png',
             title: 'decouverte',
             onTap: () {
-              Get.toNamed(Routes.VEHICULE_ITEM_PAGE);
+              Get.toNamed(Routes.ALL_DECOUVERTE_ITEMS);
             },
           ),
           CustomContainerService(
