@@ -19,7 +19,7 @@ abstract class Routes {
   static const  PROFILE_INFO  = _Paths. PROFILE_INFO ;
   static const  THEME_CONFIDENTIALITE  = _Paths. THEME_CONFIDENTIALITE ;
   static const  DETAILS_FAQS  = _Paths. DETAILS_FAQS ;
-    static const  MONEY  = _Paths. MONEY ;
+  static const  MONEY  = _Paths. MONEY ;
 
 }
 
@@ -43,6 +43,5 @@ abstract class _Paths {
   static const THEME_CONFIDENTIALITE = "/theme_confidentialite";
   static const DETAILS_FAQS = "/details_faqs";
   static const MONEY = "/money";
-
 
 }

@@ -118,5 +118,6 @@ abstract class AppPages {
       binding: AuthBinding(),
     ),
     
+    
   ];
 }

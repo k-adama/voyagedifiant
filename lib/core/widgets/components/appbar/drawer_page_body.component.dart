@@ -14,7 +14,7 @@ class DrawerPageBodyComponent extends StatelessWidget {
         ListTile(
           title: const DrawerBodyListRowComponent(
             name: "Historique",
-            emoji: "assets/icons/location-icon.png",
+            emoji: "assets/icons/menu-principal.png",
           ),
           onTap: () {
              Get.toNamed(Routes.HISTORIE_PAGE);
@@ -23,7 +23,7 @@ class DrawerPageBodyComponent extends StatelessWidget {
         ListTile(
           title: const DrawerBodyListRowComponent(
             name: "Modifier mon profil",
-            emoji: "assets/icons/location-icon.png",
+            emoji: "assets/icons/iconamoon_profile-fill.png",
           ),
           onTap: () {
             Get.toNamed(Routes.PROFILE_INFO);
@@ -32,7 +32,7 @@ class DrawerPageBodyComponent extends StatelessWidget {
         ListTile(
           title: const DrawerBodyListRowComponent(
             name: "Modifier mon mot de passe",
-            emoji: "assets/icons/location-icon.png",
+            emoji: "assets/icons/mdi_file-question.png",
           ),
           onTap: () {
             Get.toNamed(Routes.PROFIL_PASSWORD_CHANGE);
@@ -41,7 +41,7 @@ class DrawerPageBodyComponent extends StatelessWidget {
         ListTile(
           title: const DrawerBodyListRowComponent(
             name: "Monnaie",
-            emoji: "assets/icons/location-icon.png",
+            emoji: "assets/icons/majesticons_money-line.png",
           ),
           onTap: () {
             Get.toNamed(Routes.MONEY);
@@ -50,7 +50,7 @@ class DrawerPageBodyComponent extends StatelessWidget {
         ListTile(
           title: const DrawerBodyListRowComponent(
             name: "Questions fréquentes",
-            emoji: "assets/icons/location-icon.png",
+            emoji: "assets/icons/mdi_file-question.png",
           ),
           onTap: () {
             Get.toNamed(Routes.FAQS_PAGE);
@@ -59,7 +59,7 @@ class DrawerPageBodyComponent extends StatelessWidget {
         ListTile(
           title: const DrawerBodyListRowComponent(
             name: "Termes et confidentialités",
-            emoji: "assets/icons/location-icon.png",
+            emoji: "assets/icons/icon-park-solid_termination-file.png",
           ),
           onTap: () {
             Get.toNamed(Routes.THEME_CONFIDENTIALITE);
@@ -78,3 +78,5 @@ class DrawerPageBodyComponent extends StatelessWidget {
     );
   }
 }
+
+
