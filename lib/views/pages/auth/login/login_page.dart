@@ -15,39 +15,85 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: SafeArea(
-      child: SingleChildScrollView(
-        child: Stack(
-          children: [
-            const AppLoginRegisterHeader(),
-            SizedBox(
-              height: MediaQuery.of(context).size.height,
-              child: Stack(
-                children: [
-                  Positioned(
-                    top: 300,
-                    left: 0,
-                    right: 0,
-                    bottom: 0,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Text(
-                          'CONNEXION',
-                          style: AppColors.interBold(),
-                        ),
-                        const LoginPageForm(),
-                        const DontHaveAccountRow(),
-                      ],
-                    ),
+      body: Column(
+        children: [
+          Expanded(child:Stack(
+            children: [
+              Container(
+              color: AppColors.scaffoldWithBoxBackground,),
+                Container(
+                child: Center(
+                  child: Image.asset("assets/icons/logo-voyage.png"),
+                ),
+                decoration: BoxDecoration(
+                    color: AppColors.primaryColor,
+                  borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(40)
+                  )
+                ),
+              )
+            ],
+          )
+          ),
+          Container(
+            height: 500,
+            child: Stack(
+              children: [
+                Container( color: AppColors.primaryColor,),
+                Container(
+                  child: Column( 
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text("CONNEXION",style: AppColors.interBold(),),
+                       const LoginPageForm(),
+                       const DontHaveAccountRow(),
+                    ],
                   ),
-                ],
-              ),
+                  decoration: BoxDecoration(
+                    color: AppColors.scaffoldWithBoxBackground,
+                    borderRadius: BorderRadius.only(
+                      topRight: Radius.circular(97),
+                    )
+                  ),
+                )
+              ],
             ),
-          ],
-        ),
+          )
+        ],
       ),
-    )
+      // body: SafeArea(
+      // child: SingleChildScrollView(
+      //   child: Stack(
+      //     children: [
+            // const AppLoginRegisterHeader(),
+            // SizedBox(
+            //   height: MediaQuery.of(context).size.height,
+            //   child: Stack(
+            //     children: [
+            //       Positioned(
+            //         top: 300,
+            //         left: 0,
+            //         right: 0,
+            //         bottom: 0,
+            //         child: Column(
+            //           mainAxisAlignment: MainAxisAlignment.start,
+            //           children: [
+            //             Text(
+            //               'CONNEXION',
+            //               style: AppColors.interBold(),
+            //             ),
+            //             const LoginPageForm(),
+            //             const DontHaveAccountRow(),
+            //           ],
+            //         ),
+            //       ),
+            //     ],
+            //   ),
+            // ),
+    //       ],
+    //     ),
+    //   ),
+    // )
 
         /*  Container(
         decoration: const BoxDecoration(

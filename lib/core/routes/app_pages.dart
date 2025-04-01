@@ -117,5 +117,6 @@ abstract class AppPages {
       page: () => const MoneyPage(),
       binding: AuthBinding(),
     ),
+    
   ];
 }
