@@ -58,7 +58,7 @@ class _SearchBarComponentState extends State<SearchBarComponent> {
                   focusNode: searchFocusNode,
                   decoration: InputDecoration(
                     hintText:
-                        isSearchFocused || recherch.text.isNotEmpty ? "" : "",
+                    isSearchFocused || recherch.text.isNotEmpty ? "" : "",
                     prefixIcon: isSearchFocused || recherch.text.isNotEmpty
                         ? null
                         : Padding(

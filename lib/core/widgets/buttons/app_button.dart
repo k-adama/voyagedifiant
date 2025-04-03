@@ -30,7 +30,7 @@ class AppCustomButton extends StatelessWidget {
           foregroundColor: textColor,
           padding: padding,
           shape: RoundedRectangleBorder(
-            borderRadius: borderRadius,
+          borderRadius: borderRadius,
           ),
         ),
         child: Text(

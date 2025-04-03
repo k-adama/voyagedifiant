@@ -1,6 +1,7 @@
 import 'package:get/get_navigation/src/routes/get_route.dart';
 import 'package:voyagedifiant/views/controllers/auth/bindings/auth.bindings.dart';
 import 'package:voyagedifiant/views/controllers/home/bindings/home.bindings.dart';
+import 'package:voyagedifiant/views/controllers/order/bindings/order.bindings.dart';
 import 'package:voyagedifiant/views/controllers/splash/bindings/splash_binding.dart';
 import 'package:voyagedifiant/views/pages/auth/login/components/password_forgot/new_password_page.dart';
 import 'package:voyagedifiant/views/pages/auth/login/components/password_forgot/password_forgot_otp.dart';
@@ -8,7 +9,14 @@ import 'package:voyagedifiant/views/pages/auth/login/components/password_forgot/
 import 'package:voyagedifiant/views/pages/auth/login/login_page.dart';
 import 'package:voyagedifiant/views/pages/auth/number_verification.dart';
 import 'package:voyagedifiant/views/pages/auth/register/register_page.dart';
+import 'package:voyagedifiant/views/pages/drawer_items/confidentialite/theme_confidentialite.dart';
+import 'package:voyagedifiant/views/pages/drawer_items/contact/contact_page.dart';
+import 'package:voyagedifiant/views/pages/drawer_items/faqs/details_faqs.dart';
+import 'package:voyagedifiant/views/pages/drawer_items/faqs/faqs_page.dart';
+import 'package:voyagedifiant/views/pages/drawer_items/money/money.dart';
 import 'package:voyagedifiant/views/pages/drawer_items/orders/orders_historie_page.dart';
+import 'package:voyagedifiant/views/pages/drawer_items/profile/password_change_page.dart';
+import 'package:voyagedifiant/views/pages/drawer_items/profile/profile_info_page.dart';
 import 'package:voyagedifiant/views/pages/home/components/decouverte/all_decouverte.dart';
 import 'package:voyagedifiant/views/pages/home/components/decouverte/components/decouverte_details.dart';
 import 'package:voyagedifiant/views/pages/home/components/decouverte/invoice_decouverte_page.dart';
@@ -70,8 +78,18 @@ abstract class AppPages {
     GetPage(
       name: _Paths.HISTORIE_PAGE,
       page: () => const OrdersHistoriePage(),
-      binding: AuthBinding(),
+      binding: OrderBinding(),
     ),
+     GetPage(
+      name: _Paths.FAQS_PAGE,
+      page: () => const FaqsPage(),
+      binding: HomeBinding(),
+    ),
+     GetPage(
+      name: _Paths.PROFIL_PASSWORD_CHANGE,
+      page: () => const PasswordChangePage(),
+      binding: AuthBinding(),
+     ),
     GetPage(
       name: _Paths.PASSWORD_FORGOT_PAGE,
       page: () => const PasswordForgotPage(),
@@ -87,6 +105,27 @@ abstract class AppPages {
       page: () => const NewPasswordPage(),
       binding: AuthBinding(),
     ),
+    GetPage(
+      name: _Paths.PROFILE_INFO,
+      page: () => const ProfileInfoPage(),
+      binding: AuthBinding(),
+    ),
+     GetPage(
+      name: _Paths.THEME_CONFIDENTIALITE,
+      page: () => const ThemeConfidentialitePage(),
+      binding: HomeBinding(),
+    ),
+     GetPage(
+      name: _Paths.DETAILS_FAQS,
+      page: () => const DetailsFaqsPage(),
+      binding: HomeBinding(),
+    ),
+     GetPage(
+      name: _Paths.MONEY,
+      page: () => const MoneyPage(),
+      binding: HomeBinding(),
+    ),
+    
     GetPage(
       name: _Paths.SEJOUR_ITEM_PAGE,
       page: () => const AllSejourItems(),
@@ -115,6 +154,11 @@ abstract class AppPages {
      GetPage(
       name: _Paths.INVOICE_DECOUVERTE_PAGE,
       page: () => const InvoiceDecouvertePage(),
+      binding: HomeBinding(),
+    ),
+    GetPage(
+      name: _Paths.CONTACT_PAGE,
+      page: () => const ContactUsPage(),
       binding: HomeBinding(),
     ),
   ];
