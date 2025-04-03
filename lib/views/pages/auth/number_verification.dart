@@ -4,7 +4,6 @@ import 'package:get/get_instance/src/extension_instance.dart';
 import 'package:get/route_manager.dart';
 import 'package:voyagedifiant/core/constants/app_colors.dart';
 import 'package:voyagedifiant/core/routes/app_pages.dart';
-import 'package:voyagedifiant/core/widgets/components/app_login_register_header.dart';
 import 'package:pinput/pinput.dart';
 import 'package:voyagedifiant/views/controllers/auth/controllers/auth.controllers.dart';
 
@@ -37,7 +36,139 @@ class _NumberVerificationPageState extends State<NumberVerificationPage> {
     );
 
     return Scaffold(
-      body: SafeArea(
+      appBar: AppBar(
+        centerTitle: true,
+        elevation: 0,
+        automaticallyImplyLeading: true,
+        iconTheme: const IconThemeData(color: AppColors.white),
+        backgroundColor: AppColors.primaryColor,
+        // leading: ,
+      ),
+      body: LayoutBuilder(
+        builder: (context, constraints) {
+          return SingleChildScrollView(
+            child: ConstrainedBox(
+              constraints: BoxConstraints(
+                minHeight: constraints.maxHeight,
+              ),
+              child: IntrinsicHeight(
+                child: Column(
+                  children: [
+                    SizedBox(
+                      height: constraints.maxHeight * 0.3,
+                      child: Stack(
+                        children: [
+                          Container(
+                            color: AppColors.scaffoldWithBoxBackground,
+                          ),
+                          Container(
+                            decoration: const BoxDecoration(
+                              color: AppColors.primaryColor,
+                              borderRadius: BorderRadius.only(
+                                bottomLeft: Radius.circular(40),
+                              ),
+                            ),
+                            child: Center(
+                              child:
+                                  Image.asset("assets/icons/logo-voyage.png"),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Expanded(
+                      child: Stack(
+                        children: [
+                          Container(
+                            color: AppColors.primaryColor,
+                          ),
+                          Container(
+                            decoration: const BoxDecoration(
+                              color: AppColors.scaffoldWithBoxBackground,
+                              borderRadius: BorderRadius.only(
+                                topRight: Radius.circular(97),
+                              ),
+                            ),
+                            padding: const EdgeInsets.symmetric(horizontal: 20),
+                            child: Column(
+                              children: [
+                                const SizedBox(
+                                  height: 30,
+                                ),
+                                Text(
+                                  'Entrez le code reçu',
+                                  style: AppColors.interBold(),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(
+                                    15.0,
+                                  ),
+                                  child: Text(
+                                    'Veuillez saisir le code reçu par e-mail afin de terminer votre inscription',
+                                    style: AppColors.interNormal(),
+                                  ),
+                                ),
+                                const SizedBox(
+                                  height: 20,
+                                ),
+                                Pinput(
+                                  length: 4,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      enteredOtp = value;
+                                    });
+                                  },
+                                  defaultPinTheme: PinTheme(
+                                    width: 60,
+                                    height: 60,
+                                    textStyle: const TextStyle(
+                                        fontSize: 24,
+                                        fontWeight: FontWeight.bold),
+                                    decoration: BoxDecoration(
+                                      border: Border.all(color: Colors.black),
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                  ),
+                                  focusedPinTheme: defaultPinTheme.copyWith(
+                                    decoration:
+                                        defaultPinTheme.decoration!.copyWith(
+                                      border: Border.all(
+                                          color: AppColors.signUpColor),
+                                    ),
+                                  ),
+                                  onCompleted: (pin) {
+                                    // authController.otpEnters = pin;
+                                  },
+                                ),
+                                const SizedBox(height: 24),
+                                Text(
+                                  "Vous n'avez pas reçu de code ?",
+                                  style: AppColors.interNormal(),
+                                ),
+                                TextButton(
+                                    onPressed: () {
+                                      Get.offAllNamed(Routes.HOME_PAGE);
+                                    },
+                                    child: Text(
+                                      'Rééssayer',
+                                      style: AppColors.interNormal(
+                                        color: AppColors.signUpColor,
+                                      ),
+                                    ))
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          );
+        },
+      ),
+      /*SafeArea(
         child: SingleChildScrollView(
           child: Stack(
             children: [
@@ -177,7 +308,7 @@ class _NumberVerificationPageState extends State<NumberVerificationPage> {
             ],
           ),
         ),
-      ),
+      ),*/
     );
   }
 }
