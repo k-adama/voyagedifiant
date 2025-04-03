@@ -5,7 +5,6 @@ import 'package:voyagedifiant/core/interceptors/token.interceptor.dart';
 class HttpService {
   Dio client({
     bool requireAuth = false,
-    bool requireRestaurantId = false,
   }) {
     final options = BaseOptions(
       baseUrl: Environment.backEnPoint,

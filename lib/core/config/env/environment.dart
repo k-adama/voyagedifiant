@@ -1,3 +1,3 @@
 class Environment {
-  static const String backEnPoint = "https://ton-api.com";
+  static const String backEnPoint = "https://sp-ia.com/apivyge";
 }

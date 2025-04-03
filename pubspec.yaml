@@ -51,8 +51,8 @@ dependencies:
   animated_toggle_switch: ^0.8.4
   pinput: ^5.0.1
   url_launcher: ^6.3.1
-  http: ^0.13.3
-  connectivity_plus: ^6.1.3
+  #http: ^0.13.3
+  connectivity_plus: ^5.0.2
   dio: ^5.8.0+1
   shared_preferences: ^2.5.3
 
