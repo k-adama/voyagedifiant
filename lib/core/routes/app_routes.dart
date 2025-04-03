@@ -16,10 +16,10 @@ abstract class Routes {
   static const PASSWORD_FORGOT_PAGE = _Paths.PASSWORD_FORGOT_PAGE;
   static const PASSWORD_FORGOT_OTP = _Paths.PASSWORD_FORGOT_OTP;
   static const NEW_PASSWORD_PAGE = _Paths.NEW_PASSWORD_PAGE;
-  static const  PROFILE_INFO  = _Paths. PROFILE_INFO ;
-  static const  THEME_CONFIDENTIALITE  = _Paths. THEME_CONFIDENTIALITE ;
-  static const  DETAILS_FAQS  = _Paths. DETAILS_FAQS ;
-  static const  MONEY  = _Paths. MONEY ;
+  static const PROFILE_INFO = _Paths.PROFILE_INFO;
+  static const THEME_CONFIDENTIALITE = _Paths.THEME_CONFIDENTIALITE;
+  static const DETAILS_FAQS = _Paths.DETAILS_FAQS;
+  static const MONEY = _Paths.MONEY;
 
   static const SEJOUR_ITEM_PAGE = _Paths.SEJOUR_ITEM_PAGE;
   static const SEJOUR_DETAILS = _Paths.SEJOUR_DETAILS;
@@ -27,6 +27,7 @@ abstract class Routes {
   static const ALL_DECOUVERTE_ITEMS = _Paths.ALL_DECOUVERTE_ITEMS;
   static const DECOUVERTE_DETAILS = _Paths.DECOUVERTE_DETAILS;
   static const INVOICE_DECOUVERTE_PAGE = _Paths.INVOICE_DECOUVERTE_PAGE;
+  static const CONTACT_PAGE = _Paths.CONTACT_PAGE;
 }
 
 abstract class _Paths {
@@ -56,4 +57,5 @@ abstract class _Paths {
   static const ALL_DECOUVERTE_ITEMS = "/all_decouverte_items";
   static const DECOUVERTE_DETAILS = "/decouverte_details";
   static const INVOICE_DECOUVERTE_PAGE = "/invoice_decouverte_page";
+  static const CONTACT_PAGE = "/contact_page";
 }

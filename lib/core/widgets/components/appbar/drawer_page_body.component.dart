@@ -17,7 +17,7 @@ class DrawerPageBodyComponent extends StatelessWidget {
             emoji: "assets/icons/menu-principal.png",
           ),
           onTap: () {
-             Get.toNamed(Routes.HISTORIE_PAGE);
+            Get.toNamed(Routes.HISTORIE_PAGE);
           },
         ),
         ListTile(
@@ -68,15 +68,14 @@ class DrawerPageBodyComponent extends StatelessWidget {
         ListTile(
           title: const DrawerBodyListRowComponent(
             name: "Nous contacter",
-            emoji: "assets/icons/location-icon.png",
+            emoji:
+                "assets/icons/pngtree-calling-chat-line-icon-vector-png-image_5199540.jpg",
           ),
           onTap: () {
-            // Get.toNamed(Routes.);
+            Get.toNamed(Routes.CONTACT_PAGE);
           },
         ),
       ],
     );
   }
 }
-
-

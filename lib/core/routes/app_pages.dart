@@ -1,6 +1,7 @@
 import 'package:get/get_navigation/src/routes/get_route.dart';
 import 'package:voyagedifiant/views/controllers/auth/bindings/auth.bindings.dart';
 import 'package:voyagedifiant/views/controllers/home/bindings/home.bindings.dart';
+import 'package:voyagedifiant/views/controllers/order/bindings/order.bindings.dart';
 import 'package:voyagedifiant/views/controllers/splash/bindings/splash_binding.dart';
 import 'package:voyagedifiant/views/pages/auth/login/components/password_forgot/new_password_page.dart';
 import 'package:voyagedifiant/views/pages/auth/login/components/password_forgot/password_forgot_otp.dart';
@@ -9,6 +10,7 @@ import 'package:voyagedifiant/views/pages/auth/login/login_page.dart';
 import 'package:voyagedifiant/views/pages/auth/number_verification.dart';
 import 'package:voyagedifiant/views/pages/auth/register/register_page.dart';
 import 'package:voyagedifiant/views/pages/drawer_items/confidentialite/theme_confidentialite.dart';
+import 'package:voyagedifiant/views/pages/drawer_items/contact/contact_page.dart';
 import 'package:voyagedifiant/views/pages/drawer_items/faqs/details_faqs.dart';
 import 'package:voyagedifiant/views/pages/drawer_items/faqs/faqs_page.dart';
 import 'package:voyagedifiant/views/pages/drawer_items/money/money.dart';
@@ -76,12 +78,12 @@ abstract class AppPages {
     GetPage(
       name: _Paths.HISTORIE_PAGE,
       page: () => const OrdersHistoriePage(),
-      binding: AuthBinding(),
+      binding: OrderBinding(),
     ),
      GetPage(
       name: _Paths.FAQS_PAGE,
       page: () => const FaqsPage(),
-      binding: AuthBinding(),
+      binding: HomeBinding(),
     ),
      GetPage(
       name: _Paths.PROFIL_PASSWORD_CHANGE,
@@ -111,17 +113,17 @@ abstract class AppPages {
      GetPage(
       name: _Paths.THEME_CONFIDENTIALITE,
       page: () => const ThemeConfidentialitePage(),
-      binding: AuthBinding(),
+      binding: HomeBinding(),
     ),
      GetPage(
       name: _Paths.DETAILS_FAQS,
       page: () => const DetailsFaqsPage(),
-      binding: AuthBinding(),
+      binding: HomeBinding(),
     ),
      GetPage(
       name: _Paths.MONEY,
       page: () => const MoneyPage(),
-      binding: AuthBinding(),
+      binding: HomeBinding(),
     ),
     
     GetPage(
@@ -152,6 +154,11 @@ abstract class AppPages {
      GetPage(
       name: _Paths.INVOICE_DECOUVERTE_PAGE,
       page: () => const InvoiceDecouvertePage(),
+      binding: HomeBinding(),
+    ),
+    GetPage(
+      name: _Paths.CONTACT_PAGE,
+      page: () => const ContactUsPage(),
       binding: HomeBinding(),
     ),
   ];

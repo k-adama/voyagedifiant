@@ -1,9 +1,5 @@
-import 'package:auto_height_grid_view/auto_height_grid_view.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:voyagedifiant/core/constants/app_colors.dart';
-import 'package:voyagedifiant/core/widgets/buttons/app_button.dart';
-import 'package:voyagedifiant/core/widgets/components/appbar/app_bar.dart';
 
 class OrdersHistoriePage extends StatefulWidget {
   const OrdersHistoriePage({super.key});
@@ -16,32 +12,22 @@ class _OrdersHistoriePageState extends State<OrdersHistoriePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: 
-        AppBar(
+        appBar: AppBar(
           backgroundColor: Colors.transparent,
-          elevation: 0, // Supprime l'ombre
+          elevation: 0,
           actions: const [
             Padding(
-              padding: EdgeInsets.all(12.0),
-              child: Icon(Icons.language_outlined)
-            )
+                padding: EdgeInsets.all(12.0),
+                child: Icon(Icons.language_outlined))
           ],
           iconTheme: const IconThemeData(color: Colors.black),
-          flexibleSpace: const Padding(
-            padding: EdgeInsets.symmetric(
-              horizontal: 30,
-            ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Text("HISTORIQUE DES COMMANDES",
-                    style: TextStyle(
-                        color: AppColors.primaryColor,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 17))
-              ],
+          title: Text(
+            "HISTORIQUE DES COMMANDES",
+            style: AppColors.interBold(
+              size: 16,
             ),
           ),
+          centerTitle: true,
         ),
         body: Padding(
           padding: const EdgeInsets.all(15),
@@ -51,8 +37,11 @@ class _OrdersHistoriePageState extends State<OrdersHistoriePage> {
               return Card(
                 elevation: 3,
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
-                side: BorderSide(width: 2, color: AppColors.cardColor, )),
+                    borderRadius: BorderRadius.circular(10),
+                    side: const BorderSide(
+                      width: 2,
+                      color: AppColors.cardColor,
+                    )),
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Row(
@@ -75,7 +64,7 @@ class _OrdersHistoriePageState extends State<OrdersHistoriePage> {
                                   Text("04-11-2024 au 07-04-2024"),
                                 ],
                               ),
-                              SizedBox(height: 8), 
+                              SizedBox(height: 8),
                               Text(
                                 "Location de Hundrai pour 3jours",
                                 style: TextStyle(
@@ -113,7 +102,7 @@ class _OrdersHistoriePageState extends State<OrdersHistoriePage> {
                                 ],
                               ),
                               SizedBox(height: 8),
-                                 Wrap(
+                              Wrap(
                                 crossAxisAlignment: WrapCrossAlignment.center,
                                 children: [
                                   Text("Lieu de prise en charge: ",
@@ -157,10 +146,7 @@ class _OrdersHistoriePageState extends State<OrdersHistoriePage> {
                 ),
               );
             },
-            
-       
           ),
-        )
-        );
+        ));
   }
 }
