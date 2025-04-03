@@ -7,17 +7,17 @@ import 'package:voyagedifiant/core/widgets/buttons/app_button.dart';
 import 'package:voyagedifiant/core/widgets/components/appbar/app_bar.dart';
 import 'package:voyagedifiant/core/widgets/components/appbar/drawer_page.component.dart';
 import 'package:voyagedifiant/core/widgets/dialogs/successfull.dialog.dart';
-import 'package:voyagedifiant/views/pages/home/components/vehicule/components/invoice_details_component.dart';
+import 'package:voyagedifiant/views/pages/home/components/sejour/components/invoice_sejour_details.dart';
 import 'package:animated_toggle_switch/animated_toggle_switch.dart';
 
-class InvoicePage extends StatefulWidget {
-  const InvoicePage({super.key});
+class InvoiceSejourPage extends StatefulWidget {
+  const InvoiceSejourPage({super.key});
 
   @override
-  State<InvoicePage> createState() => _InvoicePageState();
+  State<InvoiceSejourPage> createState() => _InvoiceSejourPageState();
 }
 
-class _InvoicePageState extends State<InvoicePage> {
+class _InvoiceSejourPageState extends State<InvoiceSejourPage> {
   bool isAvailable = false;
   double amount = 100;
   final double alternateAmount = 200;
@@ -44,13 +44,7 @@ class _InvoicePageState extends State<InvoicePage> {
         padding: const EdgeInsets.all(AppDefaults.padding),
         child: Column(
           children: [
-            const InvoiceDetailsComponent(
-              name: 'HUNDAI',
-              price: '13000',
-              person: '03',
-              bag: '01',
-              couponBackground: 'assets/images/Rectangle 11.png',
-            ),
+            const InvoiceSejourDetailsComponent(),
             const SizedBox(
               height: AppDefaults.padding,
             ),

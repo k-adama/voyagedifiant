@@ -9,16 +9,16 @@ import 'package:voyagedifiant/core/widgets/components/appbar/app_bar.dart';
 import 'package:voyagedifiant/core/widgets/components/appbar/drawer_page.component.dart';
 import 'package:voyagedifiant/core/widgets/components/publicity_container.dart';
 import 'package:voyagedifiant/core/widgets/components/search_bar_component.dart';
-import 'package:voyagedifiant/views/pages/home/components/vehicule/vehicule_card.dart';
+import 'package:voyagedifiant/views/pages/home/components/sejour/components/sejour_card.dart';
 
-class AllVehiculeItems extends StatefulWidget {
-  const AllVehiculeItems({super.key});
+class AllSejourItems extends StatefulWidget {
+  const AllSejourItems({super.key});
 
   @override
-  State<AllVehiculeItems> createState() => _AllVehiculeItemsState();
+  State<AllSejourItems> createState() => _AllSejourItemsState();
 }
 
-class _AllVehiculeItemsState extends State<AllVehiculeItems> {
+class _AllSejourItemsState extends State<AllSejourItems> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,12 +37,12 @@ class _AllVehiculeItemsState extends State<AllVehiculeItems> {
           child: Column(
             children: [
               const SearchBarComponent(
-                text: "Rechercher un véhicule",
+                text: 'Rechercher un Motel',
               ),
               const PublicityContainer(
                 name:
-                    'Nous mettons des chauffeurs et Vehicules de qualité à votre disposition',
-                background: 'assets/icons/undraw_electric_car_b-7-hl 1(1).png',
+                    'Voulez-vous passer un séjour memorable? Vous êtes à la bonne porte',
+                background: 'assets/icons/Hotel Booking-rafiki 1.png',
               ),
               AutoHeightGridView(
                 shrinkWrap: true,
@@ -57,14 +57,13 @@ class _AllVehiculeItemsState extends State<AllVehiculeItems> {
                     child: ScaleAnimation(
                       scale: 0.5,
                       child: FadeInAnimation(
-                          child: VehiculeCard(
-                        name: 'HUNDAI',
+                          child: SejourCard(
+                        name: 'Hôtel parlementaire',
+                        description: 'Ceci est un hotel de luxe 5 étoiles',
                         price: '35000',
-                        person: '04',
-                        bag: '01',
-                        color: const Color(0xFF402FBE),
+                        location: 'Yamoussoukro',
                         onTap: () {
-                          Get.toNamed(Routes.VEHICULE_DETAILS);
+                          Get.toNamed(Routes.SEJOUR_DETAILS);
                         },
                       )),
                     ),

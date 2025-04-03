@@ -27,9 +27,6 @@ class _HomePageState extends State<HomePage> {
           elevation: 0,
           iconTheme: const IconThemeData(color: AppColors.white),
           backgroundColor: AppColors.primaryColor,
-          leading: Image.asset(
-            'assets/icons/logo-voyage.png',
-          ),
         ),
       ),
       endDrawer: const Drawer(

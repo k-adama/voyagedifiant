@@ -4,8 +4,10 @@ import 'package:voyagedifiant/core/constants/app_colors.dart';
 
 class SearchBarComponent extends StatefulWidget {
   // final bool checkboxstatus;
+  final String text;
   const SearchBarComponent({
     super.key,
+    required this.text,
     //required this.checkboxstatus
   });
 
@@ -65,7 +67,7 @@ class _SearchBarComponentState extends State<SearchBarComponent> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               //  mainAxisSize: MainAxisSize.min,
                               children: [
-                                Text("Rechercher un véhicule ...",
+                                Text(widget.text,
                                     style: AppColors.interNormal(
                                         color: AppColors.black, size: 14.sp)),
                                 SizedBox(width: 10.0.sp),

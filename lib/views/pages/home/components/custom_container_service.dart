@@ -21,8 +21,8 @@ class CustomContainerService extends StatelessWidget {
         child: InkWell(
           onTap: onTap,
           child: Container(
-            margin: const EdgeInsets.all(AppDefaults.padding),
-            padding: const EdgeInsets.all(AppDefaults.padding),
+            margin: const EdgeInsets.all(28),
+           // padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
               color: AppColors.white,
               borderRadius: BorderRadius.circular(8),

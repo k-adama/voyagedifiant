@@ -7,17 +7,17 @@ import 'package:voyagedifiant/core/widgets/buttons/app_button.dart';
 import 'package:voyagedifiant/core/widgets/components/appbar/app_bar.dart';
 import 'package:voyagedifiant/core/widgets/components/appbar/drawer_page.component.dart';
 import 'package:voyagedifiant/core/widgets/dialogs/successfull.dialog.dart';
-import 'package:voyagedifiant/views/pages/home/components/vehicule/components/invoice_details_component.dart';
+import 'package:voyagedifiant/views/pages/home/components/decouverte/components/invoice_decouverte_component.dart';
 import 'package:animated_toggle_switch/animated_toggle_switch.dart';
 
-class InvoicePage extends StatefulWidget {
-  const InvoicePage({super.key});
+class InvoiceDecouvertePage extends StatefulWidget {
+  const InvoiceDecouvertePage({super.key});
 
   @override
-  State<InvoicePage> createState() => _InvoicePageState();
+  State<InvoiceDecouvertePage> createState() => _InvoiceDecouvertePageState();
 }
 
-class _InvoicePageState extends State<InvoicePage> {
+class _InvoiceDecouvertePageState extends State<InvoiceDecouvertePage> {
   bool isAvailable = false;
   double amount = 100;
   final double alternateAmount = 200;
@@ -44,13 +44,7 @@ class _InvoicePageState extends State<InvoicePage> {
         padding: const EdgeInsets.all(AppDefaults.padding),
         child: Column(
           children: [
-            const InvoiceDetailsComponent(
-              name: 'HUNDAI',
-              price: '13000',
-              person: '03',
-              bag: '01',
-              couponBackground: 'assets/images/Rectangle 11.png',
-            ),
+            const InvoiceDecouverteDetailsComponent(),
             const SizedBox(
               height: AppDefaults.padding,
             ),
@@ -73,7 +67,7 @@ class _InvoicePageState extends State<InvoicePage> {
                         "Paiement total",
                         style: AppColors.interBold(
                           size: 14,
-                           color: AppColors.primaryColor,
+                          color: AppColors.primaryColor,
                         ),
                       ),
                       SizedBox(

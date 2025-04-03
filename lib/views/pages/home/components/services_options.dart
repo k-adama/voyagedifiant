@@ -19,21 +19,21 @@ class ServicesOptions extends StatelessWidget {
             imagePath: 'assets/icons/location-icon.png',
             title: 'Location',
             onTap: () {
-               Get.toNamed(Routes.VEHICULE_ITEM_PAGE);
+              Get.toNamed(Routes.VEHICULE_ITEM_PAGE);
             },
           ),
           CustomContainerService(
             imagePath: 'assets/icons/decouverte-icon.png',
             title: 'decouverte',
             onTap: () {
-              Get.offAllNamed(Routes.VEHICULE_ITEM_PAGE);
+              Get.toNamed(Routes.ALL_DECOUVERTE_ITEMS);
             },
           ),
           CustomContainerService(
             imagePath: 'assets/icons/sejour-icon.png',
             title: 'sejour',
             onTap: () {
-              Get.offAllNamed(Routes.VEHICULE_ITEM_PAGE);
+              Get.toNamed(Routes.SEJOUR_ITEM_PAGE);
             },
           ),
         ],

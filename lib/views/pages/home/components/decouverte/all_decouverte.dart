@@ -9,16 +9,16 @@ import 'package:voyagedifiant/core/widgets/components/appbar/app_bar.dart';
 import 'package:voyagedifiant/core/widgets/components/appbar/drawer_page.component.dart';
 import 'package:voyagedifiant/core/widgets/components/publicity_container.dart';
 import 'package:voyagedifiant/core/widgets/components/search_bar_component.dart';
-import 'package:voyagedifiant/views/pages/home/components/vehicule/vehicule_card.dart';
+import 'package:voyagedifiant/views/pages/home/components/decouverte/components/decouverte_card.dart';
 
-class AllVehiculeItems extends StatefulWidget {
-  const AllVehiculeItems({super.key});
+class AllDecouverteItems extends StatefulWidget {
+  const AllDecouverteItems({super.key});
 
   @override
-  State<AllVehiculeItems> createState() => _AllVehiculeItemsState();
+  State<AllDecouverteItems> createState() => _AllDecouverteItemsState();
 }
 
-class _AllVehiculeItemsState extends State<AllVehiculeItems> {
+class _AllDecouverteItemsState extends State<AllDecouverteItems> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,12 +37,13 @@ class _AllVehiculeItemsState extends State<AllVehiculeItems> {
           child: Column(
             children: [
               const SearchBarComponent(
-                text: "Rechercher un véhicule",
+                text: 'Rechercher un site',
               ),
               const PublicityContainer(
                 name:
-                    'Nous mettons des chauffeurs et Vehicules de qualité à votre disposition',
-                background: 'assets/icons/undraw_electric_car_b-7-hl 1(1).png',
+                    "Plongez dans une expérience unique au coeur de la Côte D'Ivoire",
+                background:
+                    'assets/icons/People sightseeing outdoors-cuate 1.png',
               ),
               AutoHeightGridView(
                 shrinkWrap: true,
@@ -57,15 +58,16 @@ class _AllVehiculeItemsState extends State<AllVehiculeItems> {
                     child: ScaleAnimation(
                       scale: 0.5,
                       child: FadeInAnimation(
-                          child: VehiculeCard(
-                        name: 'HUNDAI',
+                          child: DecouverteCardComponent(
+                        name: 'Cascade de man', 
+                        description: 'Ce ci est un hotel de luxe 5 étoiles',
                         price: '35000',
-                        person: '04',
-                        bag: '01',
-                        color: const Color(0xFF402FBE),
+                       
                         onTap: () {
-                          Get.toNamed(Routes.VEHICULE_DETAILS);
+                          Get.toNamed(Routes.DECOUVERTE_DETAILS);
                         },
+                        depart: '09h17',
+                        arrived: '17h30',
                       )),
                     ),
                   );
