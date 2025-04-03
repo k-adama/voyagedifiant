@@ -4,6 +4,7 @@ import 'package:voyagedifiant/core/constants/app_colors.dart';
 import 'package:voyagedifiant/core/constants/app_defaults.dart';
 import 'package:voyagedifiant/core/routes/app_pages.dart';
 import 'package:voyagedifiant/core/widgets/buttons/app_button.dart';
+import 'package:voyagedifiant/core/widgets/components/app_divider%202.dart';
 
 class FaqsPage extends StatelessWidget {
   const FaqsPage({super.key});
@@ -45,9 +46,7 @@ class FaqsPage extends StatelessWidget {
                 size: 18,
               ),
             ),
-            const Divider(
-              thickness: 2,
-            ),
+            AppDivider(),
             ListTile(
               onTap: () {
                 Get.toNamed(Routes.DETAILS_FAQS);
@@ -61,9 +60,7 @@ class FaqsPage extends StatelessWidget {
                 size: 18,
               ),
             ),
-            Divider(
-              thickness: 2,
-            ),
+            AppDivider(),
             ListTile(
               onTap: () {
                 Get.toNamed(Routes.DETAILS_FAQS);
@@ -77,9 +74,7 @@ class FaqsPage extends StatelessWidget {
                 size: 18,
               ),
             ),
-            Divider(
-              thickness: 2,
-            ),
+          AppDivider(),
             ListTile(
               onTap: () {
                 Get.toNamed(Routes.DETAILS_FAQS);
@@ -92,10 +87,7 @@ class FaqsPage extends StatelessWidget {
                 Icons.arrow_forward_ios,
                 size: 18,
               ),
-            ),
-            Divider(
-              thickness: 2,
-            ),
+            ), 
             Spacer(),
             AppCustomButton(
               onPressed: () {},
