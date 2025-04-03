@@ -48,10 +48,6 @@ class _MapsDatetimeCardState extends State<MapsDatetimeCard> {
         ),
         child: Column(
           children: [
-            Image.asset('assets/images/maps.png'),
-            const SizedBox(
-              height: 10,
-            ),
             const TravelPageComponent(),
             Container(
               padding: const EdgeInsets.all(AppDefaults.padding),
