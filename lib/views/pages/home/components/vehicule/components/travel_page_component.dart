@@ -185,7 +185,6 @@
 //   );
 // }
 
-
 import 'package:flutter/material.dart';
 import 'package:voyagedifiant/core/widgets/components/search_bar_component.dart';
 
@@ -198,7 +197,12 @@ class TravelPageComponent extends StatefulWidget {
 
 class _TravelPageComponentState extends State<TravelPageComponent> {
   final TextEditingController _searchController = TextEditingController();
-  List<String> _suggestions = ["Abidjan", "Yamoussoukro", "Bouaké", "San-Pédro"];
+  List<String> _suggestions = [
+    "Abidjan",
+    "Yamoussoukro",
+    "Bouaké",
+    "San-Pédro"
+  ];
   List<String> _filteredSuggestions = [];
 
   // Variables pour stocker la localisation et la destination choisies
@@ -223,7 +227,8 @@ class _TravelPageComponentState extends State<TravelPageComponent> {
                   padding: const EdgeInsets.all(16),
                   decoration: const BoxDecoration(
                     color: Colors.white,
-                    borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+                    borderRadius:
+                        BorderRadius.vertical(top: Radius.circular(20)),
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -232,7 +237,9 @@ class _TravelPageComponentState extends State<TravelPageComponent> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(title, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                          Text(title,
+                              style: const TextStyle(
+                                  fontSize: 18, fontWeight: FontWeight.bold)),
                           IconButton(
                             icon: const Icon(Icons.close),
                             onPressed: () => Navigator.of(context).pop(),
@@ -240,7 +247,7 @@ class _TravelPageComponentState extends State<TravelPageComponent> {
                         ],
                       ),
                       const SizedBox(height: 10),
-                      SearchBarComponent(text: "Recherchez une position"),
+                      const SearchBarComponent(text: "Recherchez une position"),
                       // Barre de recherche
                       // TextField(
                       //   controller: _searchController,
@@ -266,9 +273,13 @@ class _TravelPageComponentState extends State<TravelPageComponent> {
                       Expanded(
                         child: ListView.builder(
                           controller: scrollController,
-                          itemCount: _filteredSuggestions.isEmpty ? _suggestions.length : _filteredSuggestions.length,
+                          itemCount: _filteredSuggestions.isEmpty
+                              ? _suggestions.length
+                              : _filteredSuggestions.length,
                           itemBuilder: (context, index) {
-                            String location = _filteredSuggestions.isEmpty ? _suggestions[index] : _filteredSuggestions[index];
+                            String location = _filteredSuggestions.isEmpty
+                                ? _suggestions[index]
+                                : _filteredSuggestions[index];
 
                             return ListTile(
                               leading: const Icon(Icons.location_on),
@@ -317,13 +328,14 @@ class _TravelPageComponentState extends State<TravelPageComponent> {
         ),
         Expanded(
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            //crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               GestureDetector(
-                onTap: () => _showSearchBottomSheet("Localisation actuelle", true),
+                onTap: () =>
+                    _showSearchBottomSheet("Localisation actuelle", true),
                 child: Container(
                   alignment: Alignment.center,
-                  width: MediaQuery.of(context).size.width * 0.3,
+                  width: double.infinity,
                   height: 35,
                   color: Colors.blue[100],
                   child: Text(_currentLocation, textAlign: TextAlign.center),
@@ -334,7 +346,7 @@ class _TravelPageComponentState extends State<TravelPageComponent> {
                 onTap: () => _showSearchBottomSheet("Destination", false),
                 child: Container(
                   alignment: Alignment.center,
-                  width: MediaQuery.of(context).size.width * 0.3,
+                  width: double.infinity,
                   height: 35,
                   color: Colors.green[100],
                   child: Text(_destination, textAlign: TextAlign.center),
