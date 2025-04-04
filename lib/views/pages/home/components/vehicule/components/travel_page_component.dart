@@ -186,6 +186,8 @@
 // }
 
 import 'package:flutter/material.dart';
+import 'package:voyagedifiant/core/constants/app_colors.dart';
+import 'package:voyagedifiant/core/widgets/components/app_divider%202.dart';
 import 'package:voyagedifiant/core/widgets/components/search_bar_component.dart';
 
 class TravelPageComponent extends StatefulWidget {
@@ -283,7 +285,9 @@ class _TravelPageComponentState extends State<TravelPageComponent> {
 
                             return ListTile(
                               leading: const Icon(Icons.location_on),
-                              title: Text(location),
+                              title: Text(
+                                location,
+                              ),
                               onTap: () {
                                 // Met à jour la valeur affichée
                                 setState(() {
@@ -314,46 +318,83 @@ class _TravelPageComponentState extends State<TravelPageComponent> {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Column(
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Icon(Icons.directions_car, size: 20),
-            SizedBox(
-              height: 20,
-              child: VerticalDivider(color: Colors.black),
+            const Icon(
+              Icons.directions_car,
+              size: 20,
+              color: AppColors.signUpColor,
             ),
-            Icon(Icons.directions_car, size: 20),
+            const SizedBox(
+              width: 10,
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text("Lieu de prise en charge"),
+                GestureDetector(
+                  onTap: () =>
+                      _showSearchBottomSheet("Localisation actuelle", true),
+                  child: Container(
+                    width: MediaQuery.of(context).size.width * 0.8,
+                    height: 35,
+                    alignment: Alignment.centerLeft,
+                    decoration: const BoxDecoration(
+                      border: Border(bottom: BorderSide(color: Colors.grey)),
+                    ),
+                    padding: const EdgeInsets.symmetric(horizontal: 8),
+                    child: Text(
+                      _currentLocation,
+                      style: AppColors.interBold(size: 12),
+                    ),
+                  ),
+                ),
+              ],
+            )
           ],
         ),
-        Expanded(
-          child: Column(
-            //crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              GestureDetector(
-                onTap: () =>
-                    _showSearchBottomSheet("Localisation actuelle", true),
-                child: Container(
-                  alignment: Alignment.center,
-                  width: double.infinity,
-                  height: 35,
-                  color: Colors.blue[100],
-                  child: Text(_currentLocation, textAlign: TextAlign.center),
+        const SizedBox(
+          height: 20,
+          child: VerticalDivider(color: Colors.black),
+        ),
+        Row(
+          children: [
+            const Icon(
+              Icons.directions_car,
+              size: 20,
+              color: AppColors.signUpColor,
+            ),
+            const SizedBox(
+              width: 10,
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text("Lieu de restitution"),
+                GestureDetector(
+                  onTap: () => _showSearchBottomSheet("Destination", false),
+                  child: Container(
+                    width: MediaQuery.of(context).size.width * 0.8,
+                    height: 35,
+                    alignment: Alignment.centerLeft,
+                    decoration: const BoxDecoration(
+                      border: Border(bottom: BorderSide(color: Colors.grey)),
+                    ),
+                    padding: const EdgeInsets.symmetric(horizontal: 8),
+                    child: Text(
+                      _destination,
+                      style: AppColors.interBold(size: 12),
+                    ),
+                  ),
                 ),
-              ),
-              const SizedBox(height: 5),
-              GestureDetector(
-                onTap: () => _showSearchBottomSheet("Destination", false),
-                child: Container(
-                  alignment: Alignment.center,
-                  width: double.infinity,
-                  height: 35,
-                  color: Colors.green[100],
-                  child: Text(_destination, textAlign: TextAlign.center),
-                ),
-              ),
-            ],
-          ),
+              ],
+            )
+          ],
         ),
       ],
     );
