@@ -58,7 +58,7 @@ class _LoginPageState extends State<LoginPage> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                              "CONNEXION",
+                             "CONNEXION",
                               style: AppColors.interBold(),
                             ),
                             const SizedBox(height: 20),
