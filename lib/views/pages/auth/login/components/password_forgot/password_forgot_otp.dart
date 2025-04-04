@@ -6,10 +6,7 @@ import 'package:pinput/pinput.dart';
 import 'package:voyagedifiant/core/constants/app_colors.dart';
 import 'package:voyagedifiant/core/constants/app_defaults.dart';
 import 'package:voyagedifiant/core/routes/app_pages.dart';
-import 'package:voyagedifiant/core/themes/app_themes.dart';
-import 'package:voyagedifiant/core/utils/validators.dart';
 import 'package:voyagedifiant/core/widgets/buttons/app_button.dart';
-import 'package:voyagedifiant/core/widgets/components/app_login_register_header.dart';
 import 'package:voyagedifiant/views/controllers/auth/controllers/auth.controllers.dart';
 
 class PasswordForgotPageOtp extends StatefulWidget {
@@ -41,7 +38,138 @@ class _PasswordForgotPageOtpState extends State<PasswordForgotPageOtp> {
     );
 
     return Scaffold(
-        body: SafeArea(
+      appBar: AppBar(
+        centerTitle: true,
+        elevation: 0,
+        automaticallyImplyLeading: true,
+        iconTheme: const IconThemeData(color: AppColors.white),
+        backgroundColor: AppColors.primaryColor,
+        // leading: ,
+      ),
+      body: LayoutBuilder(
+        builder: (context, constraints) {
+          return SingleChildScrollView(
+            child: ConstrainedBox(
+              constraints: BoxConstraints(
+                minHeight: constraints.maxHeight,
+              ),
+              child: IntrinsicHeight(
+                child: Column(
+                  children: [
+                    SizedBox(
+                      height: constraints.maxHeight * 0.3,
+                      child: Stack(
+                        children: [
+                          Container(
+                            color: AppColors.scaffoldWithBoxBackground,
+                          ),
+                          Container(
+                            decoration: const BoxDecoration(
+                              color: AppColors.primaryColor,
+                              borderRadius: BorderRadius.only(
+                                bottomLeft: Radius.circular(40),
+                              ),
+                            ),
+                            child: Center(
+                              child:
+                                  Image.asset("assets/icons/logo-voyage.png"),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Expanded(
+                      child: Stack(
+                        children: [
+                          Container(
+                            color: AppColors.primaryColor,
+                          ),
+                          Container(
+                            decoration: const BoxDecoration(
+                              color: AppColors.scaffoldWithBoxBackground,
+                              borderRadius: BorderRadius.only(
+                                topRight: Radius.circular(97),
+                              ),
+                            ),
+                            padding: const EdgeInsets.symmetric(horizontal: 20),
+                            child: Column(
+                              children: [
+                                const SizedBox(
+                                  height: 30,
+                                ),
+                                Text(
+                                  'Entrez le code reçu',
+                                  style: AppColors.interBold(),
+                                ),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                Padding(
+                                  padding:
+                                      const EdgeInsets.all(AppDefaults.padding),
+                                  child: Column(
+                                    children: [
+                                      Pinput(
+                                        length: 4,
+                                        onChanged: (value) {
+                                          setState(() {
+                                            enteredOtp = value;
+                                          });
+                                        },
+                                        defaultPinTheme: PinTheme(
+                                          width: 60,
+                                          height: 60,
+                                          textStyle: const TextStyle(
+                                              fontSize: 24,
+                                              fontWeight: FontWeight.bold),
+                                          decoration: BoxDecoration(
+                                            border:
+                                                Border.all(color: Colors.black),
+                                            borderRadius:
+                                                BorderRadius.circular(8),
+                                          ),
+                                        ),
+                                        focusedPinTheme:
+                                            defaultPinTheme.copyWith(
+                                          decoration: defaultPinTheme
+                                              .decoration!
+                                              .copyWith(
+                                            border: Border.all(
+                                                color: AppColors.signUpColor),
+                                          ),
+                                        ),
+                                        onCompleted: (pin) {
+                                          // authController.otpEnters = pin;
+                                        },
+                                      ),
+                                      const SizedBox(
+                                        height: 30,
+                                      ),
+                                      AppCustomButton(
+                                        onPressed: () {
+                                          Get.toNamed(Routes.NEW_PASSWORD_PAGE);
+                                        },
+                                        buttonText: "VALIDER",
+                                        textColor: AppColors.white,
+                                        buttonColor: AppColors.primaryColor,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          );
+        },
+      ),
+      /* SafeArea(
       child: SingleChildScrollView(
         child: Stack(
           children: [
@@ -127,6 +255,7 @@ class _PasswordForgotPageOtpState extends State<PasswordForgotPageOtp> {
           ],
         ),
       ),
-    ));
+    )*/
+    );
   }
 }
