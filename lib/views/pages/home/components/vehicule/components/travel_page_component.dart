@@ -318,85 +318,94 @@ class _TravelPageComponentState extends State<TravelPageComponent> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Icon(
-              Icons.directions_car,
-              size: 20,
-              color: AppColors.signUpColor,
-            ),
-            const SizedBox(
-              width: 10,
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text("Lieu de prise en charge"),
-                GestureDetector(
-                  onTap: () =>
-                      _showSearchBottomSheet("Localisation actuelle", true),
-                  child: Container(
-                    width: MediaQuery.of(context).size.width * 0.8,
-                    height: 35,
-                    alignment: Alignment.centerLeft,
-                    decoration: const BoxDecoration(
-                      border: Border(bottom: BorderSide(color: Colors.grey)),
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Icon(
+                Icons.directions_car,
+                size: 20,
+                color: AppColors.signUpColor,
+              ),
+              const SizedBox(
+                width: 10,
+              ),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text("Lieu de prise en charge"),
+                    GestureDetector(
+                      onTap: () =>
+                          _showSearchBottomSheet("Localisation actuelle", true),
+                      child: Container(
+                        width: MediaQuery.of(context).size.width * 0.8,
+                        height: 35,
+                        alignment: Alignment.centerLeft,
+                        decoration: const BoxDecoration(
+                          border:
+                              Border(bottom: BorderSide(color: AppColors.gray)),
+                        ),
+                        padding: const EdgeInsets.symmetric(horizontal: 8),
+                        child: Text(
+                          _currentLocation,
+                          style: AppColors.interBold(size: 12),
+                        ),
+                      ),
                     ),
-                    padding: const EdgeInsets.symmetric(horizontal: 8),
-                    child: Text(
-                      _currentLocation,
-                      style: AppColors.interBold(size: 12),
-                    ),
-                  ),
+                  ],
                 ),
-              ],
-            )
-          ],
-        ),
-        const SizedBox(
-          height: 20,
-          child: VerticalDivider(color: Colors.black),
-        ),
-        Row(
-          children: [
-            const Icon(
-              Icons.directions_car,
-              size: 20,
-              color: AppColors.signUpColor,
-            ),
-            const SizedBox(
-              width: 10,
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text("Lieu de restitution"),
-                GestureDetector(
-                  onTap: () => _showSearchBottomSheet("Destination", false),
-                  child: Container(
-                    width: MediaQuery.of(context).size.width * 0.8,
-                    height: 35,
-                    alignment: Alignment.centerLeft,
-                    decoration: const BoxDecoration(
-                      border: Border(bottom: BorderSide(color: Colors.grey)),
+              )
+            ],
+          ),
+          const SizedBox(
+            height: 20,
+            child: VerticalDivider(color: Colors.black),
+          ),
+          Row(
+            children: [
+              const Icon(
+                Icons.directions_car,
+                size: 20,
+                color: AppColors.signUpColor,
+              ),
+              const SizedBox(
+                width: 10,
+              ),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text("Lieu de restitution"),
+                    GestureDetector(
+                      onTap: () => _showSearchBottomSheet("Destination", false),
+                      child: Container(
+                        width: MediaQuery.of(context).size.width * 0.8,
+                        height: 35,
+                        alignment: Alignment.centerLeft,
+                        decoration: const BoxDecoration(
+                          border:
+                              Border(bottom: BorderSide(color: AppColors.gray)),
+                        ),
+                        padding: const EdgeInsets.symmetric(horizontal: 8),
+                        child: Text(
+                          _destination,
+                          style: AppColors.interBold(size: 12),
+                        ),
+                      ),
                     ),
-                    padding: const EdgeInsets.symmetric(horizontal: 8),
-                    child: Text(
-                      _destination,
-                      style: AppColors.interBold(size: 12),
-                    ),
-                  ),
+                  ],
                 ),
-              ],
-            )
-          ],
-        ),
-      ],
+              )
+            ],
+          ),
+        ],
+      ),
     );
   }
 }
