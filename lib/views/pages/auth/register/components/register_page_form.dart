@@ -45,7 +45,7 @@ class _RegisterPageFormState extends State<RegisterPageForm> {
           children: [
             TextFormField(
               validator: Validators.requiredWithFieldName('Name').call,
-              textInputAction: TextInputAction.next,
+              textInputAction: TextInputAction.done,
               decoration: const InputDecoration(
                 labelText: 'Nom et prénoms',
                 border: OutlineInputBorder(
@@ -58,7 +58,7 @@ class _RegisterPageFormState extends State<RegisterPageForm> {
             ),
             TextFormField(
               validator: Validators.requiredWithFieldName('email').call,
-              textInputAction: TextInputAction.next,
+              textInputAction: TextInputAction.done,
               decoration: const InputDecoration(
                 labelText: 'Entrer votre e-mail',
                 border: OutlineInputBorder(

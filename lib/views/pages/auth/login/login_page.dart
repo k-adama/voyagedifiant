@@ -14,55 +14,79 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          Expanded(
-              child: Stack(
-            children: [
-              Container(
-                color: AppColors.scaffoldWithBoxBackground,
+      body: LayoutBuilder(
+        builder: (context, constraints) {
+          return SingleChildScrollView(
+            child: ConstrainedBox(
+              constraints: BoxConstraints(
+                minHeight: constraints.maxHeight,
               ),
-              Container(
-                decoration: const BoxDecoration(
-                    color: AppColors.primaryColor,
-                    borderRadius:
-                        BorderRadius.only(bottomLeft: Radius.circular(40))),
-                child: Center(
-                  child: Image.asset("assets/icons/logo-voyage.png"),
-                ),
-              )
-            ],
-          )),
-          SizedBox(
-            height: 500,
-            child: Stack(
-              children: [
-                Container(
-                  color: AppColors.primaryColor,
-                ),
-                Container(
-                  decoration: const BoxDecoration(
-                      color: AppColors.scaffoldWithBoxBackground,
-                      borderRadius: BorderRadius.only(
-                        topRight: Radius.circular(97),
-                      )),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        "CONNEXION",
-                        style: AppColors.interBold(),
+              child: IntrinsicHeight(
+                child: Column(
+                  children: [
+                    SizedBox(
+                      height: constraints.maxHeight * 0.4,
+                      child: Stack(
+                        children: [
+                          Container(
+                            color: AppColors.scaffoldWithBoxBackground,
+                          ),
+                          Container(
+                            decoration: const BoxDecoration(
+                              color: AppColors.primaryColor,
+                              borderRadius: BorderRadius.only(
+                                bottomLeft: Radius.circular(40),
+                              ),
+                            ),
+                            child: Center(
+                              child:
+                                  Image.asset("assets/icons/logo-voyage.png"),
+                            ),
+                          ),
+                        ],
                       ),
-                      const LoginPageForm(),
-                      const DontHaveAccountRow(),
-                    ],
-                  ),
-                )
-              ],
+                    ),
+                    Expanded(
+                      child: Stack(
+                        children: [
+                          Container(
+                            color: AppColors.primaryColor,
+                          ),
+                          Container(
+                            decoration: const BoxDecoration(
+                              color: AppColors.scaffoldWithBoxBackground,
+                              borderRadius: BorderRadius.only(
+                                topRight: Radius.circular(97),
+                              ),
+                            ),
+                            padding: const EdgeInsets.symmetric(horizontal: 20),
+                            child: Column(
+                              children: [
+                                const SizedBox(
+                                  height: 30,
+                                ),
+                                Text(
+                                  "CONNEXION",
+                                  style: AppColors.interBold(),
+                                ),
+                                const SizedBox(height: 20),
+                                const LoginPageForm(),
+                                const DontHaveAccountRow(),
+                                const SizedBox(height: 40),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             ),
-          )
-        ],
+          );
+        },
       ),
+
       // body: SafeArea(
       // child: SingleChildScrollView(
       //   child: Stack(

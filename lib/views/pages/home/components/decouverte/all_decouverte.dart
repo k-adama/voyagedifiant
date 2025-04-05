@@ -36,6 +36,7 @@ class _AllDecouverteItemsState extends State<AllDecouverteItems> {
           padding: const EdgeInsets.all(AppDefaults.padding),
           child: Column(
             children: [
+               
               const SearchBarComponent(
                 text: 'Rechercher un site',
               ),

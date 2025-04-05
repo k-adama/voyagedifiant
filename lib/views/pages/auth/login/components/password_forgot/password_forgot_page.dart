@@ -6,7 +6,6 @@ import 'package:voyagedifiant/core/routes/app_pages.dart';
 import 'package:voyagedifiant/core/themes/app_themes.dart';
 import 'package:voyagedifiant/core/utils/validators.dart';
 import 'package:voyagedifiant/core/widgets/buttons/app_button.dart';
-import 'package:voyagedifiant/core/widgets/components/app_login_register_header.dart';
 
 class PasswordForgotPage extends StatefulWidget {
   const PasswordForgotPage({super.key});
@@ -19,11 +18,130 @@ class _PasswordForgotPageState extends State<PasswordForgotPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+       appBar: AppBar(
+        centerTitle: true,
+        elevation: 0,
+        automaticallyImplyLeading: true,
+        iconTheme: const IconThemeData(color: AppColors.white),
+        backgroundColor: AppColors.primaryColor,
+        // leading: ,
+      ),
         body: Theme(
       data: AppTheme.defaultTheme.copyWith(
         inputDecorationTheme: AppTheme.secondaryInputDecorationTheme,
       ),
-      child: SafeArea(
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          return SingleChildScrollView(
+            child: ConstrainedBox(
+              constraints: BoxConstraints(
+                minHeight: constraints.maxHeight,
+              ),
+              child: IntrinsicHeight(
+                child: Column(
+                  children: [
+                    SizedBox(
+                      height: constraints.maxHeight * 0.3,
+                      child: Stack(
+                        children: [
+                          Container(
+                            color: AppColors.scaffoldWithBoxBackground,
+                          ),
+                          Container(
+                            decoration: const BoxDecoration(
+                              color: AppColors.primaryColor,
+                              borderRadius: BorderRadius.only(
+                                bottomLeft: Radius.circular(40),
+                              ),
+                            ),
+                            child: Center(
+                              child:
+                                  Image.asset("assets/icons/logo-voyage.png"),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Expanded(
+                      child: Stack(
+                        children: [
+                          Container(
+                            color: AppColors.primaryColor,
+                          ),
+                          Container(
+                            decoration: const BoxDecoration(
+                              color: AppColors.scaffoldWithBoxBackground,
+                              borderRadius: BorderRadius.only(
+                                topRight: Radius.circular(97),
+                              ),
+                            ),
+                            padding: const EdgeInsets.symmetric(horizontal: 20),
+                            child: Column(
+                              children: [
+                                const SizedBox(
+                                  height: 30,
+                                ),
+                                Text(
+                                  'MOT DE PASSE OUBLIE',
+                                  style: AppColors.interBold(),
+                                ),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                Padding(
+                                  padding:
+                                      const EdgeInsets.all(AppDefaults.padding),
+                                  child: Column(
+                                    children: [
+                                      Text(
+                                        'S\'il vous plaît, entrez votre adresse e-mail pour pouvoir récupérer votre mot de passe',
+                                        style: AppColors.interNormal(),
+                                      ),
+                                      const SizedBox(
+                                        height: 50,
+                                      ),
+                                      TextFormField(
+                                        validator:
+                                            Validators.requiredWithFieldName(
+                                                    'email')
+                                                .call,
+                                        //textInputAction: TextInputAction.next,
+                                        decoration: const InputDecoration(
+                                          labelText: 'Entrer votre E-mail',
+                                          border: OutlineInputBorder(
+                                            borderSide: BorderSide(),
+                                          ),
+                                        ),
+                                      ),
+                                      const SizedBox(
+                                        height: 30,
+                                      ),
+                                      AppCustomButton(
+                                        onPressed: () {
+                                          Get.toNamed(
+                                              Routes.PASSWORD_FORGOT_OTP);
+                                        },
+                                        buttonText: "CONFIRMER",
+                                        textColor: AppColors.white,
+                                        buttonColor: AppColors.primaryColor,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          );
+        },
+      ),
+      /* SafeArea(
         child: SingleChildScrollView(
           child: Stack(
             children: [
@@ -99,7 +217,7 @@ class _PasswordForgotPageState extends State<PasswordForgotPage> {
             ],
           ),
         ),
-      ),
+      ),*/
     ));
   }
 }
