@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:voyagedifiant/core/constants/app_colors.dart';
 import 'package:voyagedifiant/core/routes/app_pages.dart';
+import 'package:voyagedifiant/translate.dart';
 import 'package:voyagedifiant/views/controllers/Main/bindings/main.binding.dart';
 
 void main() {
@@ -13,9 +14,12 @@ void main() {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-  
+
+  final Locale initialLocale = const Locale('fr', 'FR');
+
   @override
   Widget build(BuildContext context) {
+    final deviceLocale = Get.deviceLocale ?? const Locale('fr', 'FR');
     return ScreenUtilInit(
         designSize: const Size(375, 812),
         builder: (context, child) {
@@ -30,6 +34,10 @@ class MyApp extends StatelessWidget {
               color: AppColors.textGrey,
             ),
             child: GetMaterialApp(
+              translations: AppTranslations(),
+              locale: deviceLocale,
+              //initialLocale,
+              fallbackLocale: const Locale('fr', 'FR'),
               debugShowCheckedModeBanner: false,
               title: "Voyagedifiant",
               initialRoute: AppPages.INITIAL,
@@ -42,8 +50,9 @@ class MyApp extends StatelessWidget {
               ],
               supportedLocales: const [
                 Locale('fr', 'FR'),
+                Locale('en', 'US'),
               ],
-              locale: const Locale('fr'),
+              //locale: const Locale('fr'),
               theme: ThemeData(
                 fontFamily: 'Cereal',
                 useMaterial3: false,
