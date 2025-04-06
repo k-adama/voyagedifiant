@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/instance_manager.dart';
 import 'package:get/route_manager.dart';
 import 'package:voyagedifiant/core/constants/app_colors.dart';
 import 'package:voyagedifiant/core/constants/app_defaults.dart';
@@ -8,6 +9,7 @@ import 'package:voyagedifiant/core/utils/validators.dart';
 import 'package:voyagedifiant/core/widgets/buttons/app_button.dart';
 import 'package:voyagedifiant/core/widgets/textfield/password_field.dart';
 import 'package:voyagedifiant/core/widgets/textfield/phone_input_field.dart';
+import 'package:voyagedifiant/views/controllers/auth/controllers/auth.controllers.dart';
 
 class LoginPageForm extends StatefulWidget {
   const LoginPageForm({
@@ -20,6 +22,8 @@ class LoginPageForm extends StatefulWidget {
 
 class _LoginPageFormState extends State<LoginPageForm> {
   final GlobalKey<FormState> _key = GlobalKey<FormState>();
+
+  AuthController authController = Get.find();
   bool isRememberMeChecked = false;
   bool isPasswordShown = false;
   final FocusNode myFocusNode = FocusNode();
@@ -30,7 +34,9 @@ class _LoginPageFormState extends State<LoginPageForm> {
 
   onLogin() {
     final bool isFormOkay = _key.currentState?.validate() ?? false;
-    if (isFormOkay) {}
+    if (isFormOkay) {
+      authController.onLogin();
+    }
   }
 
   @override
@@ -49,16 +55,17 @@ class _LoginPageFormState extends State<LoginPageForm> {
               PhoneInputField(
                 focusNode: myFocusNode,
                 onChanged: (number) {
-                  print('Numéro : $number');
+                  authController.setNumber(number);
                 },
-                onCountryChanged: (country) {
-                  print('Pays : $country');
-                },
+                onCountryChanged: (country) {},
               ),
               const SizedBox(height: 8),
               CustomField(
-                onFieldSubmitted: (v) => onLogin(),
+                //onFieldSubmitted: (v) => onLogin(),
                 validator: Validators.password.call,
+                onChanged: (password) {
+                  authController.setPassword(password);
+                },
               ),
               const SizedBox(height: 8),
               Row(
@@ -101,9 +108,7 @@ class _LoginPageFormState extends State<LoginPageForm> {
               ),
               const SizedBox(height: 8),
               AppCustomButton(
-                onPressed: () {
-                  Get.offAllNamed(Routes.HOME_PAGE);
-                },
+                onPressed: () => onLogin(),
                 buttonText: "SE CONNECTER",
                 textColor: AppColors.white,
                 buttonColor: AppColors.primaryColor,

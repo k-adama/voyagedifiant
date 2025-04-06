@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:voyagedifiant/core/constants/app_colors.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
+
 
 class AppHelpersCommon {
   AppHelpersCommon._();
@@ -66,5 +69,15 @@ class AppHelpersCommon {
         return alert;
       },
     );
+    
   }
+   /* static showCheckTopSnackBarInfo(BuildContext context, String text,
+      {VoidCallback? onTap}) {
+    return showTopSnackBar(
+        context,
+        CustomSnackBar.info(
+          message: text,
+        ),
+        onTap: onTap);
+  }*/
 }

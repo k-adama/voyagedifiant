@@ -7,6 +7,7 @@ class CustomField extends StatefulWidget {
   final String? Function(String?)? validator;
   final bool isEyes;
   final Widget? label;
+  final Function(String)? onChanged; 
   // final bool isPasswordValidator;
 
   const CustomField({
@@ -15,6 +16,7 @@ class CustomField extends StatefulWidget {
     this.validator,
     this.isEyes = true,
     this.label,
+     this.onChanged,
     // this.isPasswordValidator = true,
   }) : super(key: key);
 
@@ -36,6 +38,7 @@ class _CustomFieldState extends State<CustomField> {
     return TextFormField(
       validator: widget.validator ?? Validators.password.call,
       onFieldSubmitted: widget.onFieldSubmitted,
+       onChanged: widget.onChanged,
       textInputAction: TextInputAction.done,
       obscureText: !isPasswordShown,
       decoration: InputDecoration(

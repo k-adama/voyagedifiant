@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/instance_manager.dart';
 import 'package:get/route_manager.dart';
 import 'package:voyagedifiant/core/constants/app_colors.dart';
 import 'package:voyagedifiant/core/constants/app_defaults.dart';
@@ -8,6 +9,7 @@ import 'package:voyagedifiant/core/utils/validators.dart';
 import 'package:voyagedifiant/core/widgets/buttons/app_button.dart';
 import 'package:voyagedifiant/core/widgets/textfield/password_field.dart';
 import 'package:voyagedifiant/core/widgets/textfield/phone_input_field.dart';
+import 'package:voyagedifiant/views/controllers/auth/controllers/auth.controllers.dart';
 import 'package:voyagedifiant/views/pages/auth/register/components/already_have_accout.dart';
 
 const List<String> list = <String>['Soubré', 'Gagnoa', 'Boundiali', 'Abidjan'];
@@ -22,12 +24,14 @@ class RegisterPageForm extends StatefulWidget {
 class _RegisterPageFormState extends State<RegisterPageForm> {
   // String dropdownValue = list.first;
   final GlobalKey<FormState> _key = GlobalKey<FormState>();
+  AuthController authController = Get.find();
   String? dropdownValue;
   final FocusNode myFocusNode = FocusNode();
 
-  onLogin() {
+  onRegister() {
     final bool isFormOkay = _key.currentState?.validate() ?? false;
     if (isFormOkay) {
+      authController.onRegister();
       // Get.offAllNamed(Routes.NUMBER_VERIFICATION_PAGE);
     }
   }
@@ -45,6 +49,9 @@ class _RegisterPageFormState extends State<RegisterPageForm> {
           children: [
             TextFormField(
               validator: Validators.requiredWithFieldName('Name').call,
+              onChanged: (username) {
+                authController.setUsername(username);
+              },
               textInputAction: TextInputAction.done,
               decoration: const InputDecoration(
                 labelText: 'Nom et prénoms',
@@ -58,6 +65,9 @@ class _RegisterPageFormState extends State<RegisterPageForm> {
             ),
             TextFormField(
               validator: Validators.requiredWithFieldName('email').call,
+              onChanged: (email) {
+                authController.setEmail(email);
+              },
               textInputAction: TextInputAction.done,
               decoration: const InputDecoration(
                 labelText: 'Entrer votre e-mail',
@@ -89,6 +99,7 @@ class _RegisterPageFormState extends State<RegisterPageForm> {
                     onChanged: (String? value) {
                       setState(() {
                         dropdownValue = value;
+                        authController.setCity(value!);
                       });
                     },
                     items: list.map<DropdownMenuItem<String>>((String value) {
@@ -107,26 +118,29 @@ class _RegisterPageFormState extends State<RegisterPageForm> {
             PhoneInputField(
               focusNode: myFocusNode,
               onChanged: (number) {
-                print('Numéro : $number');
+                authController.setNumber(number);
               },
               onCountryChanged: (country) {
                 print('Pays : $country');
               },
             ),
             CustomField(
-              onFieldSubmitted: (v) => onLogin(),
+              // onFieldSubmitted: (v) => onLogin(),
+              onChanged: (password) {
+                authController.setPassword(password);
+              },
               validator: Validators.password.call,
             ),
             const SizedBox(height: 12),
             AppCustomButton(
-              onPressed: () {
-                Get.toNamed(Routes.NUMBER_VERIFICATION_PAGE);
+              onPressed: (){
+                 authController.onRegister();
               },
               buttonText: "S'INSCRIRE",
               textColor: AppColors.white,
               buttonColor: AppColors.primaryColor,
             ),
-             const AlreadyHaveAnAccount(),
+            const AlreadyHaveAnAccount(),
           ],
         ),
       ),
