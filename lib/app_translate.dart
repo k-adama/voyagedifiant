@@ -4,7 +4,7 @@ class AppTranslations extends Translations {
   @override
   Map<String, Map<String, String>> get keys => {
         'fr_FR': {
-          'login_title': 'CONNEXION',
+          '_title': 'CONNEXION',
           'remember': 'Se rappeler de moi',
           'forgot_password': 'Mot de passe oublié?',
           'phone_number': 'Numéro de téléphone',

@@ -46,8 +46,6 @@ class SearchBottomSheetComponent {
                         ],
                       ),
                       const SizedBox(height: 10),
-
-                      // Barre de recherche
                       TextField(
                         decoration: InputDecoration(
                           hintText: "Recherchez une position...",
@@ -66,9 +64,7 @@ class SearchBottomSheetComponent {
                         },
                       ),
 
-                      const SizedBox(height: 10),
-
-                      // Liste des suggestions
+                      const SizedBox(height: 10),  // Liste des suggestions
                       Expanded(
                         child: ListView.builder(
                           controller: scrollController,

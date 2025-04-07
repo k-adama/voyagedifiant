@@ -19,6 +19,50 @@ class SejourDecouverteMapsCard extends StatefulWidget {
 }
 
 class _MapsDatetimeCardState extends State<SejourDecouverteMapsCard> {
+
+  final List<String> _suggestions = [
+  "Abidjan",
+  "Yamoussoukro",
+  "Bouaké",
+  "San-Pédro",
+  "Daloa",
+  "Korhogo",
+  "Man",
+  "Gagnoa",
+  "Divo",
+  "Abengourou",
+  "Odienné",
+  "Bondoukou",
+  "Séguéla",
+  "Touba",
+  "Aboisso",
+  "Ferkessédougou",
+  "Bingerville",
+  "Soubré",
+  "Guiglo",
+  "Sassandra",
+  "Daoukro",
+  "Agboville",
+  "Adzopé",
+  "Tiassalé",
+  "Danané",
+  "Jacqueville",
+  "Grand-Bassam",
+  "Tabou",
+  "Issia",
+  "Vavoua",
+  "Tanda",
+  "Boundiali",
+  "Akoupé",
+  "Katiola",
+  "Mankono",
+  "Tiapoum",
+  "Toumodi",
+  "Zuenoula",
+  "Arrah",
+  "Oumé",
+];
+
   @override
   Widget build(BuildContext context) {
     return GetBuilder<HomeController>(builder: (homeController) {
@@ -71,13 +115,29 @@ class _MapsDatetimeCardState extends State<SejourDecouverteMapsCard> {
                                 borderRadius: BorderRadius.vertical(
                                     top: Radius.circular(20)),
                               ),
-                              child: Text(
-                                'HFJFHFHFHJF',
-                                style: AppColors.interBold(
-                                  color: AppColors.signUpColor,
-                                ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  SizedBox(height: 50,),
+                                  Text(" Veuillez Choisir votre lieu de rassemblement ", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),),
+                                  SizedBox(height: 20,),
+                                  Container(
+                                    constraints: BoxConstraints(
+                                     // Limite la hauteur max (ajuste selon ton design)
+                                       maxHeight: MediaQuery.of(context).size.height * 0.8,
+                                      ),
+                                    child: ListView.separated(
+                                      shrinkWrap: true,
+                                      itemCount: _suggestions.length,
+                                      itemBuilder: (Context,index){
+                                      return Text(_suggestions[index]);
+                                    },
+                                    separatorBuilder: (context, index) => const Divider(color: AppColors.signUpColor,)
+                                    ), 
+                                  ),
+                                ],
+                              )
                               ),
-                            ),
                             isDarkMode: false,
                             isDrag: true,
                             radius: 12,
