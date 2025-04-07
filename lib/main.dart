@@ -8,8 +8,12 @@ import 'package:voyagedifiant/core/repositories/Auth/auth.repository.dart';
 import 'package:voyagedifiant/core/routes/app_pages.dart';
 import 'package:voyagedifiant/core/services/api_result.service.dart';
 import 'package:voyagedifiant/views/controllers/Main/bindings/main.binding.dart';
+import 'package:voyagedifiant/app_translate.dart';
+import 'package:voyagedifiant/core/services/local_storage.dart';
 
 Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await LocalStorage.getInstance();
   runApp(const MyApp());
   final apiService = AuthRepository();
 
@@ -26,8 +30,11 @@ Future<void> main() async {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
+  final Locale initialLocale = const Locale('fr', 'FR');
+
   @override
   Widget build(BuildContext context) {
+    final deviceLocale = Get.deviceLocale ?? const Locale('fr', 'FR');
     return ScreenUtilInit(
         designSize: const Size(375, 812),
         builder: (context, child) {
@@ -42,6 +49,10 @@ class MyApp extends StatelessWidget {
               color: AppColors.textGrey,
             ),
             child: GetMaterialApp(
+              translations: AppTranslations(),
+              locale: deviceLocale,
+              //initialLocale,
+              fallbackLocale: const Locale('fr', 'FR'),
               debugShowCheckedModeBanner: false,
               title: "Voyagedifiant",
               initialRoute: AppPages.INITIAL,
@@ -54,8 +65,9 @@ class MyApp extends StatelessWidget {
               ],
               supportedLocales: const [
                 Locale('fr', 'FR'),
+                Locale('en', 'US'),
               ],
-              locale: const Locale('fr'),
+              //locale: const Locale('fr'),
               theme: ThemeData(
                 fontFamily: 'Cereal',
                 useMaterial3: false,

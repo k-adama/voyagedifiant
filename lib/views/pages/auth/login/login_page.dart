@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get_utils/src/extensions/internacionalization.dart';
 import 'package:voyagedifiant/core/constants/app_colors.dart';
+import 'package:voyagedifiant/core/widgets/components/appbar/translate_appbar.dart';
 import 'package:voyagedifiant/views/pages/auth/login/components/dont_have_account_row.dart';
 import 'package:voyagedifiant/views/pages/auth/login/components/login_form.dart';
 
@@ -14,6 +16,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: const TranslateAppbar(),
       body: LayoutBuilder(
         builder: (context, constraints) {
           return SingleChildScrollView(
@@ -66,7 +69,7 @@ class _LoginPageState extends State<LoginPage> {
                                   height: 30,
                                 ),
                                 Text(
-                                  "CONNEXION",
+                                  "login_title".tr,
                                   style: AppColors.interBold(),
                                 ),
                                 const SizedBox(height: 20),

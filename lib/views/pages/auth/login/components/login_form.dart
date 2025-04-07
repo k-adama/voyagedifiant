@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/instance_manager.dart';
+import 'package:get/get_utils/src/extensions/internacionalization.dart';
 import 'package:get/route_manager.dart';
 import 'package:voyagedifiant/core/constants/app_colors.dart';
 import 'package:voyagedifiant/core/constants/app_defaults.dart';
@@ -57,11 +58,14 @@ class _LoginPageFormState extends State<LoginPageForm> {
                 onChanged: (number) {
                   authController.setNumber(number);
                 },
+              
                 onCountryChanged: (country) {},
               ),
               const SizedBox(height: 8),
               CustomField(
                 //onFieldSubmitted: (v) => onLogin(),
+                label: Text('password'.tr),
+            
                 validator: Validators.password.call,
                 onChanged: (password) {
                   authController.setPassword(password);
@@ -82,7 +86,7 @@ class _LoginPageFormState extends State<LoginPageForm> {
                         },
                       ),
                       Text(
-                        'Se rappeler de moi',
+                        "remember".tr,
                         style: AppColors.interNormal(
                           color: AppColors.black,
                           size: 12,
@@ -96,7 +100,7 @@ class _LoginPageFormState extends State<LoginPageForm> {
                         Get.toNamed(Routes.PASSWORD_FORGOT_PAGE);
                       },
                       child: Text(
-                        'Mot de passe oublié ?',
+                        'forgot_password'.tr,
                         style: AppColors.interNormal(
                           color: AppColors.black,
                           size: 12,
@@ -109,7 +113,7 @@ class _LoginPageFormState extends State<LoginPageForm> {
               const SizedBox(height: 8),
               AppCustomButton(
                 onPressed: () => onLogin(),
-                buttonText: "SE CONNECTER",
+                buttonText: "log_in".tr,
                 textColor: AppColors.white,
                 buttonColor: AppColors.primaryColor,
               ),
