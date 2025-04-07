@@ -21,6 +21,8 @@ class RegisterPageForm extends StatefulWidget {
 }
 
 class _RegisterPageFormState extends State<RegisterPageForm> {
+  String? selectedCity;
+
   // String dropdownValue = list.first;
   final GlobalKey<FormState> _key = GlobalKey<FormState>();
   AuthController authController = Get.find();
@@ -33,6 +35,46 @@ class _RegisterPageFormState extends State<RegisterPageForm> {
       authController.onRegister();
       // Get.offAllNamed(Routes.NUMBER_VERIFICATION_PAGE);
     }
+  }
+
+  void _openCitySelector() {
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: Colors.white,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+      ),
+      builder: (_) {
+        return Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 16),
+              child: Text(
+                'select_city'.tr,
+                style:
+                    const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+            ),
+            const Divider(height: 1),
+            ...list.map((city) {
+              return ListTile(
+                title: Text(city),
+                trailing: selectedCity == city
+                    ? const Icon(Icons.check, color: Colors.blue)
+                    : null,
+                onTap: () {
+                  setState(() => selectedCity = city);
+                  Navigator.pop(context);
+                  authController.setCity(city);
+                },
+              );
+            }).toList(),
+            const SizedBox(height: 16),
+          ],
+        );
+      },
+    );
   }
 
   @override
@@ -78,7 +120,32 @@ class _RegisterPageFormState extends State<RegisterPageForm> {
             const SizedBox(
               height: 12,
             ),
-            SizedBox(
+            GestureDetector(
+              onTap: _openCitySelector,
+              child: SizedBox(
+                height: 50,
+                child: InputDecorator(
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8),
+                      borderSide: const BorderSide(color: Colors.black),
+                    ),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        selectedCity ?? 'select_city'.tr,
+                        style:
+                            const TextStyle(color: Colors.black, fontSize: 16),
+                      ),
+                      const Icon(Icons.arrow_drop_down, color: Colors.black),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            /* SizedBox(
               height: 50,
               child: InputDecorator(
                 decoration: InputDecoration(
@@ -110,30 +177,28 @@ class _RegisterPageFormState extends State<RegisterPageForm> {
                   ),
                 ),
               ),
-            ),
+            ),*/
             const SizedBox(
               height: 12,
             ),
             PhoneInputField(
               focusNode: myFocusNode,
-              onChanged: (number) {
-              },
-              onCountryChanged: (country) {
-              },
+              onChanged: (number) {},
+              onCountryChanged: (country) {},
             ),
             CustomField(
               // onFieldSubmitted: (v) => onLogin(),
               onChanged: (password) {
                 authController.setPassword(password);
               },
-               label: Text('password'.tr),
-            
+              label: Text('password'.tr),
+
               validator: Validators.password.call,
             ),
             const SizedBox(height: 12),
             AppCustomButton(
-              onPressed: (){
-                 authController.onRegister();
+              onPressed: () {
+                authController.onRegister();
               },
               buttonText: "sign_up_register".tr,
               textColor: AppColors.white,
