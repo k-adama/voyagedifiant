@@ -3,7 +3,8 @@ import 'package:voyagedifiant/core/constants/app_colors.dart';
 import 'package:voyagedifiant/core/widgets/components/SearchBottomSheetComponent.dart';
 
 class SejourDecouverteTravel extends StatefulWidget {
-  const SejourDecouverteTravel({super.key});
+  final String text;
+  const SejourDecouverteTravel({super.key, required this.text});
 
   @override
   State<SejourDecouverteTravel> createState() => _SejourDecouverteTravelState();
@@ -28,12 +29,11 @@ class _SejourDecouverteTravelState extends State<SejourDecouverteTravel> {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          const Text("Emplacement"),
+         Text(widget.text),
           const SizedBox(
             height: 10,
           ),
           Container(
-            //width: MediaQuery.of(context).size.width * 0.8,
             alignment: Alignment.centerLeft,
             padding: const EdgeInsets.symmetric(horizontal: 8),
             child: Text(
@@ -61,7 +61,8 @@ class _SejourDecouverteTravelState extends State<SejourDecouverteTravel> {
                   _currentLocation = selected;
                   // setState() si nécessaire
                 },
-              );
+              )
+              ;
             },
             child: Container(
               width: MediaQuery.of(context).size.width * 0.8,

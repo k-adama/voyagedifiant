@@ -133,7 +133,9 @@ class _SejourDetailsState extends State<SejourDetails> {
                 const SizedBox(
                   height: 30,
                 ),
-                SejourDecouverteMapsCard(),
+                const SejourDecouverteMapsCard(
+                  text: "Emplacement",
+                ),
                 /* Row(
                   children: [
                     const Icon(Icons.calendar_today, color: AppColors.black),

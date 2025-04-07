@@ -9,7 +9,10 @@ import 'package:voyagedifiant/views/controllers/home/controllers/home.controller
 import 'package:voyagedifiant/views/pages/home/components/vehicule/components/driver_cart_component.dart';
 
 class SejourDecouverteMapsCard extends StatefulWidget {
-  const SejourDecouverteMapsCard({super.key});
+  final String text;
+  final bool isSejour;
+  const SejourDecouverteMapsCard(
+      {super.key, required this.text, this.isSejour = true});
 
   @override
   State<SejourDecouverteMapsCard> createState() => _MapsDatetimeCardState();
@@ -48,10 +51,58 @@ class _MapsDatetimeCardState extends State<SejourDecouverteMapsCard> {
         ),
         child: Column(
           children: [
-            const SejourDecouverteTravel(),
+            widget.isSejour == true
+                ? SejourDecouverteTravel(
+                    text: widget.text,
+                  )
+                : Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      const Text("Lieu de rassemblement"),
+                      GestureDetector(
+                        onTap: () {
+                          AppHelpersCommon.showCustomModalBottomSheet(
+                            context: context,
+                            modal: Container(
+                              padding: const EdgeInsets.all(16),
+                              decoration: const BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.vertical(
+                                    top: Radius.circular(20)),
+                              ),
+                              child: Text(
+                                'HFJFHFHFHJF',
+                                style: AppColors.interBold(
+                                  color: AppColors.signUpColor,
+                                ),
+                              ),
+                            ),
+                            isDarkMode: false,
+                            isDrag: true,
+                            radius: 12,
+                          );
+                        },
+                        child: Container(
+                          width: MediaQuery.of(context).size.width * 0.8,
+                          height: 35,
+                          alignment: Alignment.centerLeft,
+                          decoration: const BoxDecoration(
+                            border: Border(
+                                bottom: BorderSide(color: AppColors.gray)),
+                          ),
+                          padding: const EdgeInsets.symmetric(horizontal: 8),
+                          child: Text(
+                            'Abobo gare nord',
+                            style: AppColors.interBold(size: 12),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
             Container(
-              padding: const EdgeInsets.only(left:AppDefaults.padding,
-              right:AppDefaults.padding),
+              padding: const EdgeInsets.only(
+                  left: AppDefaults.padding, right: AppDefaults.padding),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
