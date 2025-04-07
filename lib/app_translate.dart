@@ -12,6 +12,13 @@ class AppTranslations extends Translations {
           'log_in': 'SE CONNECTER',
           'have_not_account': 'Vous n\'avez pas encore de compte ?',
           'sign_up': 'Inscrivez-vous',
+          'register': 'INSCRIPTION',
+          'full_name': 'Nom et prénoms',
+          'email_adress': 'Entrer votre e-mail',
+          'select_city': 'Sélectionner une ville',
+          'sign_up_register': 'S\'INSCRIRE',
+          'already_account': 'Dèjà un compte ?',
+          'login_in_register': 'Connectez-vous',
         },
         'en_US': {
           'login_title': 'LOGIN',
@@ -22,6 +29,13 @@ class AppTranslations extends Translations {
           'log_in': 'LOG IN',
           'have_not_account': 'Don\'t have an account?',
           'sign_up': 'Sign up',
+          'register': 'REGISTER',
+          'full_name': 'Full name',
+          'email_adress': 'Enter your e-mail address',
+          'select_city': 'Select a city',
+          'sign_up_register': 'SIGN UP',
+          'already_account': 'Already have an account?',
+          'login_in_register': 'log in',
         },
       };
 }

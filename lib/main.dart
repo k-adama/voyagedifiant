@@ -5,10 +5,13 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:voyagedifiant/core/constants/app_colors.dart';
 import 'package:voyagedifiant/core/routes/app_pages.dart';
-import 'package:voyagedifiant/translate.dart';
+import 'package:voyagedifiant/app_translate.dart';
+import 'package:voyagedifiant/core/services/local_storage.dart';
 import 'package:voyagedifiant/views/controllers/Main/bindings/main.binding.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await LocalStorage.getInstance();
   runApp(const MyApp());
 }
 
