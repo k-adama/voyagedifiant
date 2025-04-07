@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get_utils/src/extensions/internacionalization.dart';
 import 'package:get/route_manager.dart';
 import 'package:voyagedifiant/core/constants/app_colors.dart';
 import 'package:voyagedifiant/core/constants/app_defaults.dart';
@@ -46,9 +47,9 @@ class _RegisterPageFormState extends State<RegisterPageForm> {
             TextFormField(
               validator: Validators.requiredWithFieldName('Name').call,
               textInputAction: TextInputAction.done,
-              decoration: const InputDecoration(
-                labelText: 'Nom et prénoms',
-                border: OutlineInputBorder(
+              decoration: InputDecoration(
+                labelText: 'full_name'.tr,
+                border: const OutlineInputBorder(
                   borderSide: BorderSide(),
                 ),
               ),
@@ -59,9 +60,9 @@ class _RegisterPageFormState extends State<RegisterPageForm> {
             TextFormField(
               validator: Validators.requiredWithFieldName('email').call,
               textInputAction: TextInputAction.done,
-              decoration: const InputDecoration(
-                labelText: 'Entrer votre e-mail',
-                border: OutlineInputBorder(
+              decoration: InputDecoration(
+                labelText: 'email_adress'.tr,
+                border: const OutlineInputBorder(
                   borderSide: BorderSide(),
                 ),
               ),
@@ -85,7 +86,7 @@ class _RegisterPageFormState extends State<RegisterPageForm> {
                     icon:
                         const Icon(Icons.arrow_drop_down, color: Colors.black),
                     style: const TextStyle(color: Colors.black, fontSize: 20),
-                    hint: const Text('Sélectionner une ville'),
+                    hint: Text('select_city'.tr),
                     onChanged: (String? value) {
                       setState(() {
                         dropdownValue = value;
@@ -107,13 +108,12 @@ class _RegisterPageFormState extends State<RegisterPageForm> {
             PhoneInputField(
               focusNode: myFocusNode,
               onChanged: (number) {
-                print('Numéro : $number');
               },
               onCountryChanged: (country) {
-                print('Pays : $country');
               },
             ),
             CustomField(
+               label: Text('password'.tr),
               onFieldSubmitted: (v) => onLogin(),
               validator: Validators.password.call,
             ),
@@ -122,11 +122,11 @@ class _RegisterPageFormState extends State<RegisterPageForm> {
               onPressed: () {
                 Get.toNamed(Routes.NUMBER_VERIFICATION_PAGE);
               },
-              buttonText: "S'INSCRIRE",
+              buttonText: "sign_up_register".tr,
               textColor: AppColors.white,
               buttonColor: AppColors.primaryColor,
             ),
-             const AlreadyHaveAnAccount(),
+            const AlreadyHaveAnAccount(),
           ],
         ),
       ),
