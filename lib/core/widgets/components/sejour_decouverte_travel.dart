@@ -14,7 +14,7 @@ class _SejourDecouverteTravelState extends State<SejourDecouverteTravel> {
   String _destination = "destination";
 
   final List<String> _suggestions = [
-     "Abidjan",
+    "Abidjan",
     "Yamoussoukro",
     "Bouaké",
     "San-Pédro"
@@ -43,7 +43,7 @@ class _SejourDecouverteTravelState extends State<SejourDecouverteTravel> {
               maxLines: 2,
             ),
           ),
-           const SizedBox(
+          const SizedBox(
             height: 20,
           ),
           const Text("Lieu de prise en charge"),
@@ -77,43 +77,6 @@ class _SejourDecouverteTravelState extends State<SejourDecouverteTravel> {
               ),
             ),
           ),
-          /*  Row(
-            children: [
-              const Icon(
-                Icons.directions_car,
-                size: 20,
-                color: AppColors.signUpColor,
-              ),
-              const SizedBox(
-                width: 10,
-              ),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text("Lieu de restitution"),
-                    GestureDetector(
-                      onTap: () => _showSearchBottomSheet("Destination", false),
-                      child: Container(
-                        width: MediaQuery.of(context).size.width * 0.8,
-                        height: 35,
-                        alignment: Alignment.centerLeft,
-                        decoration: const BoxDecoration(
-                          border:
-                              Border(bottom: BorderSide(color: AppColors.gray)),
-                        ),
-                        padding: const EdgeInsets.symmetric(horizontal: 8),
-                        child: Text(
-                          _destination,
-                          style: AppColors.interBold(size: 12),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              )
-            ],
-          ),*/
         ],
       ),
     );
