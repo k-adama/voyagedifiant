@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get_utils/src/extensions/internacionalization.dart';
 import 'package:get/route_manager.dart';
 import 'package:voyagedifiant/core/constants/app_colors.dart';
 import 'package:voyagedifiant/core/constants/app_defaults.dart';
@@ -48,15 +49,12 @@ class _LoginPageFormState extends State<LoginPageForm> {
             children: [
               PhoneInputField(
                 focusNode: myFocusNode,
-                onChanged: (number) {
-                  print('Numéro : $number');
-                },
-                onCountryChanged: (country) {
-                  print('Pays : $country');
-                },
+                onChanged: (number) {},
+                onCountryChanged: (country) {},
               ),
               const SizedBox(height: 8),
               CustomField(
+                label: Text('password'.tr),
                 onFieldSubmitted: (v) => onLogin(),
                 validator: Validators.password.call,
               ),
@@ -75,7 +73,7 @@ class _LoginPageFormState extends State<LoginPageForm> {
                         },
                       ),
                       Text(
-                        'Se rappeler de moi',
+                        "remember".tr,
                         style: AppColors.interNormal(
                           color: AppColors.black,
                           size: 12,
@@ -89,7 +87,7 @@ class _LoginPageFormState extends State<LoginPageForm> {
                         Get.toNamed(Routes.PASSWORD_FORGOT_PAGE);
                       },
                       child: Text(
-                        'Mot de passe oublié ?',
+                        'forgot_password'.tr,
                         style: AppColors.interNormal(
                           color: AppColors.black,
                           size: 12,
@@ -104,7 +102,7 @@ class _LoginPageFormState extends State<LoginPageForm> {
                 onPressed: () {
                   Get.offAllNamed(Routes.HOME_PAGE);
                 },
-                buttonText: "SE CONNECTER",
+                buttonText: "log_in".tr,
                 textColor: AppColors.white,
                 buttonColor: AppColors.primaryColor,
               ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get_utils/src/extensions/internacionalization.dart';
 import 'package:get/route_manager.dart';
 import 'package:voyagedifiant/core/constants/app_colors.dart';
 import 'package:voyagedifiant/core/routes/app_pages.dart';
@@ -13,14 +14,14 @@ class AlreadyHaveAnAccount extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        const Text('Dèjà un compte ?'),
+        Text('already_account'.tr),
         TextButton(
           onPressed: () {
             Get.offAllNamed(Routes.LOGIN_PAGE);
           },
-          child: const Text(
-            'Connectez-vous',
-            style: TextStyle(
+          child: Text(
+            'login_in_register'.tr,
+            style: const TextStyle(
               color: AppColors.signUpColor,
             ),
           ),

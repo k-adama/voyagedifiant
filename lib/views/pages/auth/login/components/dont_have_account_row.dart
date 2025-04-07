@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get_utils/src/extensions/internacionalization.dart';
 import 'package:get/route_manager.dart';
 import 'package:voyagedifiant/core/constants/app_colors.dart';
 import 'package:voyagedifiant/core/routes/app_pages.dart';
@@ -13,14 +14,14 @@ class DontHaveAccountRow extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        const Text('Vous n\'avez pas encore de compte ?'),
+        Text('have_not_account'.tr),
         TextButton(
           onPressed: () {
             Get.offAllNamed(Routes.REGISTER_PAGE);
           },
-          child: const Text(
-            'Inscrivez-vous',
-            style: TextStyle(
+          child: Text(
+            'sign_up'.tr,
+            style: const TextStyle(
               color: AppColors.signUpColor,
             ),
           ),
