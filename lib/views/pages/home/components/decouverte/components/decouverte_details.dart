@@ -4,13 +4,12 @@ import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:get/route_manager.dart';
 import 'package:voyagedifiant/core/constants/app_colors.dart';
 import 'package:voyagedifiant/core/constants/app_defaults.dart';
-import 'package:voyagedifiant/core/constants/app_helpers.dart';
 import 'package:voyagedifiant/core/routes/app_pages.dart';
 import 'package:voyagedifiant/core/widgets/buttons/app_button.dart';
 import 'package:voyagedifiant/core/widgets/components/appbar/app_bar.dart';
 import 'package:voyagedifiant/core/widgets/components/appbar/drawer_page.component.dart';
+import 'package:voyagedifiant/core/widgets/components/sejour_decouverte_maps_card.dart';
 import 'package:voyagedifiant/views/controllers/home/controllers/home.controllers.dart';
-import 'package:voyagedifiant/views/pages/home/components/vehicule/components/driver_cart_component.dart';
 
 class DecouverteDetails extends StatefulWidget {
   const DecouverteDetails({super.key});
@@ -106,89 +105,9 @@ class _DecouverteDetailsState extends State<DecouverteDetails> {
                 const SizedBox(
                   height: 30,
                 ),
-                Text(
-                  "Période de réservation",
-                  style: AppColors.interBold(
-                    size: 12,
-                  ),
-                ),
-                Row(
-                  children: [
-                    const Icon(Icons.calendar_today, color: AppColors.black),
-                    const SizedBox(width: 12),
-                    Expanded(
-                      child: Text(homeController.displayText),
-                    ),
-                    ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: AppColors.primaryColor,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                      ),
-                      onPressed: () => homeController.selectDateRange(),
-                      child: const Text('Modifier'),
-                    ),
-                  ],
-                ),
-                const SizedBox(
-                  height: 30,
-                ),
-                DriverCardComponent(
-                  isNotSejour: false,
-                  driver: homeController.selectedChauffeur.value,
-                  onChange: () {
-                    AppHelpersCommon.showCustomModalBottomSheet(
-                      context: context,
-                      modal: Container(
-                        padding: const EdgeInsets.all(16),
-                        decoration: const BoxDecoration(
-                          color: Colors.white,
-                          borderRadius:
-                              BorderRadius.vertical(top: Radius.circular(20)),
-                        ),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            const Text(
-                              'Choisir un autre chauffeur',
-                              style: TextStyle(
-                                  fontSize: 18, fontWeight: FontWeight.bold),
-                            ),
-                            const SizedBox(height: 16),
-                            // Liste des chauffeurs avec bouton "Choisir"
-                            ...homeController.chauffeurs.map((chauffeur) {
-                              return ListTile(
-                                leading: CircleAvatar(
-                                  backgroundImage:
-                                      AssetImage(chauffeur.imageUrl),
-                                ),
-                                title: Text(chauffeur.name),
-                                subtitle: Text(chauffeur.phoneNumber),
-                                trailing: ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: AppColors.primaryColor,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(4),
-                                    ),
-                                  ),
-                                  onPressed: () =>
-                                      homeController.selectChauffeur(chauffeur),
-                                  child: const Text('Choisir'),
-                                ),
-                              );
-                            }).toList(),
-                          ],
-                        ),
-                      ),
-                      isDarkMode: false,
-                      isDrag: true,
-                      radius: 12,
-                    );
-                  },
-                ),
-                const SizedBox(
-                  height: 30,
+               const SejourDecouverteMapsCard(
+                isSejour: false,
+                  text: "Emplacement",
                 ),
                 AppCustomButton(
                   onPressed: () {
