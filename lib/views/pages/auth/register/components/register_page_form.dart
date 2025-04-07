@@ -137,47 +137,14 @@ class _RegisterPageFormState extends State<RegisterPageForm> {
                       Text(
                         selectedCity ?? 'select_city'.tr,
                         style:
-                            const TextStyle(color: Colors.black, fontSize: 16),
+                            const TextStyle(color: AppColors.black, fontSize: 16),
                       ),
-                      const Icon(Icons.arrow_drop_down, color: Colors.black),
+                      const Icon(Icons.arrow_drop_down, color: AppColors.black),
                     ],
                   ),
                 ),
               ),
             ),
-            /* SizedBox(
-              height: 50,
-              child: InputDecorator(
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8),
-                    borderSide: const BorderSide(color: Colors.black),
-                  ),
-                ),
-                child: DropdownButtonHideUnderline(
-                  child: DropdownButton<String>(
-                    value: dropdownValue,
-                    isExpanded: true,
-                    icon:
-                        const Icon(Icons.arrow_drop_down, color: Colors.black),
-                    style: const TextStyle(color: Colors.black, fontSize: 20),
-                    hint: Text('select_city'.tr),
-                    onChanged: (String? value) {
-                      setState(() {
-                        dropdownValue = value;
-                        authController.setCity(value!);
-                      });
-                    },
-                    items: list.map<DropdownMenuItem<String>>((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(value),
-                      );
-                    }).toList(),
-                  ),
-                ),
-              ),
-            ),*/
             const SizedBox(
               height: 12,
             ),
