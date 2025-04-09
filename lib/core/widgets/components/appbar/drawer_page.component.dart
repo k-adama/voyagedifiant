@@ -35,6 +35,7 @@ class DrawerPageComponent extends StatelessWidget {
         padding: EdgeInsets.zero,
         children: [
           const DrawerHeader(
+            margin: EdgeInsets.only(bottom: 0),
               decoration: BoxDecoration(
               color: AppColors.white,
               ),

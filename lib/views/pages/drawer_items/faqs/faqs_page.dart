@@ -5,6 +5,7 @@ import 'package:voyagedifiant/core/constants/app_defaults.dart';
 import 'package:voyagedifiant/core/routes/app_pages.dart';
 import 'package:voyagedifiant/core/widgets/buttons/app_button.dart';
 import 'package:voyagedifiant/core/widgets/components/app_divider%202.dart';
+import 'package:voyagedifiant/core/widgets/components/translate_pop_item.dart';
 
 class FaqsPage extends StatelessWidget {
   const FaqsPage({super.key});
@@ -16,23 +17,24 @@ class FaqsPage extends StatelessWidget {
         backgroundColor: Colors.transparent,
         elevation: 0,
         actions: const [
-          Padding(
-              padding: EdgeInsets.all(12.0),
-              child: Icon(Icons.language_outlined))
+          TranslatePopItem(
+            isDrawer: true,
+          ),
         ],
         iconTheme: const IconThemeData(color: Colors.black),
-        title: Text(
-          "FAQS",
-          style: AppColors.interBold(
-            size: 16,
-          ),
-        ),
-        centerTitle: true,
       ),
       body: Padding(
         padding: const EdgeInsets.all(AppDefaults.padding),
         child: Column(
           children: [
+            Text("FAQS",
+                style: AppColors.interBold(
+                  size: 18,
+                  color: AppColors.primaryColor,
+                )),
+            const SizedBox(
+              height: 30,
+            ),
             ListTile(
               onTap: () {
                 Get.toNamed(Routes.DETAILS_FAQS);
@@ -74,7 +76,7 @@ class FaqsPage extends StatelessWidget {
                 size: 18,
               ),
             ),
-          AppDivider(),
+            AppDivider(),
             ListTile(
               onTap: () {
                 Get.toNamed(Routes.DETAILS_FAQS);
@@ -87,10 +89,12 @@ class FaqsPage extends StatelessWidget {
                 Icons.arrow_forward_ios,
                 size: 18,
               ),
-            ), 
-            Spacer(),
+            ),
+            const Spacer(),
             AppCustomButton(
-              onPressed: () {},
+              onPressed: () {
+                Get.toNamed(Routes.CONTACT_PAGE);
+              },
               buttonText: "Contactez le support",
               textColor: AppColors.white,
               buttonColor: AppColors.primaryColor,
