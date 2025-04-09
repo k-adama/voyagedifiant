@@ -4,6 +4,7 @@ import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:get/instance_manager.dart';
 import 'package:intl/intl.dart';
+import 'package:voyagedifiant/core/constants/app_colors.dart';
 import 'package:voyagedifiant/core/models/driver_model.dart';
 
 class HomeController extends GetxController {
@@ -16,15 +17,24 @@ class HomeController extends GetxController {
   // Format des dates
   final DateFormat dateFormat = DateFormat('dd MMM');
 
-  // Sélection de la plage de dates
   Future<void> selectDateRange() async {
     DateTimeRange? picked = await showDateRangePicker(
-      context: Get.context!, // Utilise Get.context ici
+      context: Get.context!,
       firstDate: DateTime.now(),
       lastDate: DateTime(DateTime.now().year + 1),
       initialDateRange: startDate != null && endDate != null
           ? DateTimeRange(start: startDate!, end: endDate!)
           : null,
+      builder: (context, child) {
+        return Theme(
+          data: ThemeData(
+            primaryColor: Colors.red, // Couleur du header
+        
+            buttonTheme: ButtonThemeData(textTheme: ButtonTextTheme.primary),
+          ),
+          child: child!,
+        );
+      },
     );
 
     if (picked != null) {
@@ -41,7 +51,7 @@ class HomeController extends GetxController {
   // Sélection d'une heure avec un titre personnalisé
   Future<void> selectTime({required bool isStartTime}) async {
     TimeOfDay? pickedTime = await showTimePicker(
-      context: Get.context!, // Utilise Get.context ici
+      context: Get.context!,
       initialTime: isStartTime
           ? (startTime ?? TimeOfDay.now())
           : (endTime ?? TimeOfDay.now()),
@@ -56,7 +66,7 @@ class HomeController extends GetxController {
       } else {
         endTime = pickedTime;
       }
-      update(); // Met à jour les widgets liés à ce contrôleur
+      update();
     }
   }
 
