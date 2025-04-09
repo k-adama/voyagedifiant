@@ -4,7 +4,6 @@ import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:get/instance_manager.dart';
 import 'package:intl/intl.dart';
-import 'package:voyagedifiant/core/constants/app_colors.dart';
 import 'package:voyagedifiant/core/models/driver_model.dart';
 
 class HomeController extends GetxController {
@@ -25,12 +24,15 @@ class HomeController extends GetxController {
       initialDateRange: startDate != null && endDate != null
           ? DateTimeRange(start: startDate!, end: endDate!)
           : null,
+      helpText: 'Début - Fin',
+      saveText: 'Enregistrer',
+      locale: const Locale('fr'),
       builder: (context, child) {
         return Theme(
           data: ThemeData(
-            primaryColor: Colors.red, // Couleur du header
-        
-            buttonTheme: ButtonThemeData(textTheme: ButtonTextTheme.primary),
+            primaryColor: Colors.red,
+            buttonTheme:
+                const ButtonThemeData(textTheme: ButtonTextTheme.primary),
           ),
           child: child!,
         );
@@ -40,9 +42,8 @@ class HomeController extends GetxController {
     if (picked != null) {
       startDate = picked.start;
       endDate = picked.end;
-      update(); // Met à jour les widgets liés à ce contrôleur
+      update();
 
-      // Sélection des heures après les dates
       await selectTime(isStartTime: true);
       await selectTime(isStartTime: false);
     }
