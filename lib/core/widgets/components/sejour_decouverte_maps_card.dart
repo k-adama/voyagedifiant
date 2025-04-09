@@ -19,6 +19,7 @@ class SejourDecouverteMapsCard extends StatefulWidget {
 }
 
 class _MapsDatetimeCardState extends State<SejourDecouverteMapsCard> {
+
   @override
   Widget build(BuildContext context) {
     return GetBuilder<HomeController>(builder: (homeController) {
@@ -67,15 +68,52 @@ class _MapsDatetimeCardState extends State<SejourDecouverteMapsCard> {
                             modal: Container(
                               padding: const EdgeInsets.all(16),
                               decoration: const BoxDecoration(
-                                color: Colors.white,
+                                color: AppColors.white,
                                 borderRadius: BorderRadius.vertical(
                                     top: Radius.circular(20)),
                               ),
-                              child: Text(
-                                'HFJFHFHFHJF',
-                                style: AppColors.interBold(
-                                  color: AppColors.signUpColor,
-                                ),
+                              height: MediaQuery.of(context).size.height * 0.8,
+                              child: Column(
+                                children: [
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      const SizedBox(width: 24),
+                                      const Spacer(),
+                                      GestureDetector(
+                                        onTap: () {
+                                          Navigator.pop(context);
+                                        },
+                                        child: const Icon(Icons.close,
+                                            color: Colors.white),
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(height: 16),
+                                  Expanded(
+                                    child: ListView.builder(
+                                      itemCount: homeController
+                                          .lieuxDeRassemblement.length,
+                                      itemBuilder: (context, index) {
+                                        final lieu = homeController
+                                            .lieuxDeRassemblement[index];
+                                        return ListTile(
+                                          title: Text(
+                                            lieu,
+                                            style: const TextStyle(
+                                                color: AppColors.black),
+                                          ),
+                                          onTap: () {
+                                            homeController.selectedLieu.value =
+                                                lieu;
+                                            Navigator.pop(context);
+                                          },
+                                        );
+                                      },
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
                             isDarkMode: false,
@@ -83,20 +121,22 @@ class _MapsDatetimeCardState extends State<SejourDecouverteMapsCard> {
                             radius: 12,
                           );
                         },
-                        child: Container(
-                          width: MediaQuery.of(context).size.width * 0.8,
-                          height: 35,
-                          alignment: Alignment.centerLeft,
-                          decoration: const BoxDecoration(
-                            border: Border(
-                                bottom: BorderSide(color: AppColors.gray)),
-                          ),
-                          padding: const EdgeInsets.symmetric(horizontal: 8),
-                          child: Text(
-                            'Abobo gare nord',
-                            style: AppColors.interBold(size: 12),
-                          ),
-                        ),
+                        child: Obx(() => Container(
+                              width: MediaQuery.of(context).size.width * 0.8,
+                              height: 35,
+                              alignment: Alignment.centerLeft,
+                              decoration: const BoxDecoration(
+                                border: Border(
+                                  bottom: BorderSide(color: AppColors.gray),
+                                ),
+                              ),
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 8),
+                              child: Text(
+                                homeController.selectedLieu.value,
+                                style: AppColors.interBold(size: 12),
+                              ),
+                            )),
                       ),
                     ],
                   ),

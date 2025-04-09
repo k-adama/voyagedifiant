@@ -11,6 +11,7 @@ class HomeController extends GetxController {
   DateTime? endDate;
   TimeOfDay? startTime;
   TimeOfDay? endTime;
+  RxString selectedLieu = "Sélectionner un lieu".obs;
 
   // Format des dates
   final DateFormat dateFormat = DateFormat('dd MMM');
@@ -106,4 +107,47 @@ class HomeController extends GetxController {
     selectedChauffeur.value = chauffeur;
     Get.back(); // Ferme le BottomSheet
   }
+
+  final List<String> lieuxDeRassemblement = [
+    "Abidjan",
+    "Yamoussoukro",
+    "Bouaké",
+    "San-Pédro",
+    "Daloa",
+    "Korhogo",
+    "Man",
+    "Gagnoa",
+    "Divo",
+    "Abengourou",
+    "Odienné",
+    "Bondoukou",
+    "Séguéla",
+    "Touba",
+    "Aboisso",
+    "Ferkessédougou",
+    "Bingerville",
+    "Soubré",
+    "Guiglo",
+    "Sassandra",
+    "Daoukro",
+    "Agboville",
+    "Adzopé",
+    "Tiassalé",
+    "Danané",
+    "Jacqueville",
+    "Grand-Bassam",
+    "Tabou",
+    "Issia",
+    "Vavoua",
+    "Tanda",
+    "Boundiali",
+    "Akoupé",
+    "Katiola",
+    "Mankono",
+    "Tiapoum",
+    "Toumodi",
+    "Zuenoula",
+    "Arrah",
+    "Oumé",
+  ];
 }

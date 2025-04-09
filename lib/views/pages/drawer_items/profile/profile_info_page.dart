@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:voyagedifiant/core/constants/app_colors.dart';
 import 'package:voyagedifiant/core/constants/app_defaults.dart';
 import 'package:voyagedifiant/core/widgets/buttons/app_button.dart';
+import 'package:voyagedifiant/core/widgets/components/translate_pop_item.dart';
 import 'package:voyagedifiant/core/widgets/textfield/phone_input_field.dart';
 
 class ProfileInfoPage extends StatefulWidget {
@@ -19,24 +20,22 @@ class _ProfileInfoPageState extends State<ProfileInfoPage> {
         backgroundColor: Colors.transparent,
         elevation: 0, // Supprime l'ombre
         actions: const [
-          Padding(
-              padding: EdgeInsets.all(12.0),
-              child: Icon(Icons.language_outlined))
+          TranslatePopItem(
+            isDrawer: true,
+          ),
         ],
         iconTheme: const IconThemeData(color: Colors.black),
-        title: Text(
-          "MON PROFIL",
-          style: AppColors.interBold(
-            size: 16,
-          ),
-        ),
-        centerTitle: true,
       ),
       body: SafeArea(
           child: Padding(
         padding: const EdgeInsets.all(AppDefaults.padding),
         child: Column(
           children: [
+            Text("MON PROFIL",
+                style: AppColors.interBold(
+                  size: 18,
+                  color: AppColors.primaryColor,
+                )),
             const SizedBox(
               height: 30,
             ),

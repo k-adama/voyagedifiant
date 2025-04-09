@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
 import 'package:voyagedifiant/core/constants/app_colors.dart';
 import 'package:voyagedifiant/core/constants/app_defaults.dart';
+import 'package:voyagedifiant/core/widgets/components/translate_pop_item.dart';
 
 class MoneyPage extends StatefulWidget {
   const MoneyPage({super.key});
@@ -20,18 +21,11 @@ class _MoneyPageState extends State<MoneyPage> {
         backgroundColor: Colors.transparent,
         elevation: 0, // Supprime l'ombre
         actions: const [
-          Padding(
-              padding: EdgeInsets.all(12.0),
-              child: Icon(Icons.language_outlined))
+          TranslatePopItem(
+            isDrawer: true,
+          ),
         ],
         iconTheme: const IconThemeData(color: Colors.black),
-        title: Text(
-          "MONEY",
-          style: AppColors.interBold(
-            size: 16,
-          ),
-        ),
-        centerTitle: true,
       ),
       body: SafeArea(
           child: Padding(
@@ -39,8 +33,13 @@ class _MoneyPageState extends State<MoneyPage> {
         child: Column(
           // crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(
-              height: Get.height / 15,
+            Text("MONNAIE",
+                style: AppColors.interBold(
+                  size: 18,
+                  color: AppColors.primaryColor,
+                )),
+            const SizedBox(
+              height: 30,
             ),
             const Text(
               "Sélectionnez votre type de monnaie ",
