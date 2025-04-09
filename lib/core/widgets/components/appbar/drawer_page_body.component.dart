@@ -3,6 +3,7 @@ import 'package:get/route_manager.dart';
 import 'package:voyagedifiant/core/routes/app_pages.dart';
 
 import 'package:voyagedifiant/core/widgets/components/appbar/drawer_body_list_row.component.dart';
+import 'package:voyagedifiant/core/widgets/components/translate_pop_item.dart';
 
 class DrawerPageBodyComponent extends StatelessWidget {
   const DrawerPageBodyComponent({super.key});
@@ -40,6 +41,7 @@ class DrawerPageBodyComponent extends StatelessWidget {
         ),
         ListTile(
           title: const DrawerBodyListRowComponent(
+            isMonney: true,
             name: "Monnaie",
             emoji: "assets/icons/majesticons_money-line.png",
           ),
@@ -74,6 +76,16 @@ class DrawerPageBodyComponent extends StatelessWidget {
           onTap: () {
             Get.toNamed(Routes.CONTACT_PAGE);
           },
+        ),
+        const Row(
+          children: [
+            SizedBox(
+              width: 8,
+            ),
+            TranslatePopItem(
+              isDrawer: true,
+            ),
+          ],
         ),
       ],
     );

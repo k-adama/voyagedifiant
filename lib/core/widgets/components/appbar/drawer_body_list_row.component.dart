@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';  
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:voyagedifiant/core/constants/app_colors.dart';
 
 class DrawerBodyListRowComponent extends StatelessWidget {
   final String name;
   final String emoji;
-  const DrawerBodyListRowComponent(
-    {super.key, required this.name, required this.emoji});
+  final bool isMonney;
+  const DrawerBodyListRowComponent({
+    super.key,
+    required this.name,
+    required this.emoji,
+    this.isMonney = false,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -20,10 +25,15 @@ class DrawerBodyListRowComponent extends StatelessWidget {
         const SizedBox(
           width: 10,
         ),
-        Text(
-          name,
-          style: AppColors.interBold(size: 15.sp),
-        )
+        Expanded(
+          child: Text(
+            name,
+            style: AppColors.interBold(size: 15.sp),
+            overflow: TextOverflow.ellipsis,
+            maxLines: 2,
+          ),
+        ),
+        isMonney == true ? Text('XOF') : SizedBox.shrink()
       ],
     );
   }
