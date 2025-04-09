@@ -20,49 +20,6 @@ class SejourDecouverteMapsCard extends StatefulWidget {
 
 class _MapsDatetimeCardState extends State<SejourDecouverteMapsCard> {
 
-  final List<String> _suggestions = [
-  "Abidjan",
-  "Yamoussoukro",
-  "Bouaké",
-  "San-Pédro",
-  "Daloa",
-  "Korhogo",
-  "Man",
-  "Gagnoa",
-  "Divo",
-  "Abengourou",
-  "Odienné",
-  "Bondoukou",
-  "Séguéla",
-  "Touba",
-  "Aboisso",
-  "Ferkessédougou",
-  "Bingerville",
-  "Soubré",
-  "Guiglo",
-  "Sassandra",
-  "Daoukro",
-  "Agboville",
-  "Adzopé",
-  "Tiassalé",
-  "Danané",
-  "Jacqueville",
-  "Grand-Bassam",
-  "Tabou",
-  "Issia",
-  "Vavoua",
-  "Tanda",
-  "Boundiali",
-  "Akoupé",
-  "Katiola",
-  "Mankono",
-  "Tiapoum",
-  "Toumodi",
-  "Zuenoula",
-  "Arrah",
-  "Oumé",
-];
-
   @override
   Widget build(BuildContext context) {
     return GetBuilder<HomeController>(builder: (homeController) {
@@ -111,52 +68,75 @@ class _MapsDatetimeCardState extends State<SejourDecouverteMapsCard> {
                             modal: Container(
                               padding: const EdgeInsets.all(16),
                               decoration: const BoxDecoration(
-                                color: Colors.white,
+                                color: AppColors.white,
                                 borderRadius: BorderRadius.vertical(
                                     top: Radius.circular(20)),
                               ),
+                              height: MediaQuery.of(context).size.height * 0.8,
                               child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  SizedBox(height: 50,),
-                                  Text(" Veuillez Choisir votre lieu de rassemblement ", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),),
-                                  SizedBox(height: 20,),
-                                  Container(
-                                    constraints: BoxConstraints(
-                                     // Limite la hauteur max (ajuste selon ton design)
-                                       maxHeight: MediaQuery.of(context).size.height * 0.8,
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      const SizedBox(width: 24),
+                                      const Spacer(),
+                                      GestureDetector(
+                                        onTap: () {
+                                          Navigator.pop(context);
+                                        },
+                                        child: const Icon(Icons.close,
+                                            color: Colors.white),
                                       ),
-                                    child: ListView.separated(
-                                      shrinkWrap: true,
-                                      itemCount: _suggestions.length,
-                                      itemBuilder: (Context,index){
-                                      return Text(_suggestions[index]);
-                                    },
-                                    separatorBuilder: (context, index) => const Divider(color: AppColors.signUpColor,)
-                                    ), 
+                                    ],
+                                  ),
+                                  const SizedBox(height: 16),
+                                  Expanded(
+                                    child: ListView.builder(
+                                      itemCount: homeController
+                                          .lieuxDeRassemblement.length,
+                                      itemBuilder: (context, index) {
+                                        final lieu = homeController
+                                            .lieuxDeRassemblement[index];
+                                        return ListTile(
+                                          title: Text(
+                                            lieu,
+                                            style: const TextStyle(
+                                                color: AppColors.black),
+                                          ),
+                                          onTap: () {
+                                            homeController.selectedLieu.value =
+                                                lieu;
+                                            Navigator.pop(context);
+                                          },
+                                        );
+                                      },
+                                    ),
                                   ),
                                 ],
-                              )
                               ),
+                            ),
                             isDarkMode: false,
                             isDrag: true,
                             radius: 12,
                           );
                         },
-                        child: Container(
-                          width: MediaQuery.of(context).size.width * 0.8,
-                          height: 35,
-                          alignment: Alignment.centerLeft,
-                          decoration: const BoxDecoration(
-                            border: Border(
-                                bottom: BorderSide(color: AppColors.gray)),
-                          ),
-                          padding: const EdgeInsets.symmetric(horizontal: 8),
-                          child: Text(
-                            'Abobo gare nord',
-                            style: AppColors.interBold(size: 12),
-                          ),
-                        ),
+                        child: Obx(() => Container(
+                              width: MediaQuery.of(context).size.width * 0.8,
+                              height: 35,
+                              alignment: Alignment.centerLeft,
+                              decoration: const BoxDecoration(
+                                border: Border(
+                                  bottom: BorderSide(color: AppColors.gray),
+                                ),
+                              ),
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 8),
+                              child: Text(
+                                homeController.selectedLieu.value,
+                                style: AppColors.interBold(size: 12),
+                              ),
+                            )),
                       ),
                     ],
                   ),
