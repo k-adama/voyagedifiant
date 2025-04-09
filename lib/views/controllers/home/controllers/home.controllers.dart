@@ -16,23 +16,34 @@ class HomeController extends GetxController {
   // Format des dates
   final DateFormat dateFormat = DateFormat('dd MMM');
 
-  // Sélection de la plage de dates
   Future<void> selectDateRange() async {
     DateTimeRange? picked = await showDateRangePicker(
-      context: Get.context!, // Utilise Get.context ici
+      context: Get.context!,
       firstDate: DateTime.now(),
       lastDate: DateTime(DateTime.now().year + 1),
       initialDateRange: startDate != null && endDate != null
           ? DateTimeRange(start: startDate!, end: endDate!)
           : null,
+      helpText: 'Début - Fin',
+      saveText: 'Enregistrer',
+      locale: const Locale('fr'),
+      builder: (context, child) {
+        return Theme(
+          data: ThemeData(
+            primaryColor: Colors.red,
+            buttonTheme:
+                const ButtonThemeData(textTheme: ButtonTextTheme.primary),
+          ),
+          child: child!,
+        );
+      },
     );
 
     if (picked != null) {
       startDate = picked.start;
       endDate = picked.end;
-      update(); // Met à jour les widgets liés à ce contrôleur
+      update();
 
-      // Sélection des heures après les dates
       await selectTime(isStartTime: true);
       await selectTime(isStartTime: false);
     }
@@ -41,7 +52,7 @@ class HomeController extends GetxController {
   // Sélection d'une heure avec un titre personnalisé
   Future<void> selectTime({required bool isStartTime}) async {
     TimeOfDay? pickedTime = await showTimePicker(
-      context: Get.context!, // Utilise Get.context ici
+      context: Get.context!,
       initialTime: isStartTime
           ? (startTime ?? TimeOfDay.now())
           : (endTime ?? TimeOfDay.now()),
@@ -56,7 +67,7 @@ class HomeController extends GetxController {
       } else {
         endTime = pickedTime;
       }
-      update(); // Met à jour les widgets liés à ce contrôleur
+      update();
     }
   }
 
