@@ -8,6 +8,7 @@ import 'package:voyagedifiant/core/routes/app_pages.dart';
 import 'package:voyagedifiant/core/widgets/buttons/app_button.dart';
 import 'package:voyagedifiant/core/widgets/components/appbar/drawer_page_body.component.dart';
 import 'package:voyagedifiant/core/widgets/components/appbar/drawer_page_header.component.dart';
+import 'package:voyagedifiant/core/widgets/components/translate_pop_item.dart';
 
 class DrawerPageComponent extends StatelessWidget {
   const DrawerPageComponent({super.key});
@@ -30,19 +31,24 @@ class DrawerPageComponent extends StatelessWidget {
             color: AppColors.black,
           ),
         ),
+        actions: const [
+          TranslatePopItem(
+            isDrawer: true,
+          ),
+        ],
       ),
       body: ListView(
         padding: EdgeInsets.zero,
         children: [
           const DrawerHeader(
-            margin: EdgeInsets.only(bottom: 0),
+              margin: EdgeInsets.only(bottom: 0),
               decoration: BoxDecoration(
-              color: AppColors.white,
+                color: AppColors.white,
               ),
-          child: Center(child: DrawerPageHearderComponent())),
+              child: Center(child: DrawerPageHearderComponent())),
           const DrawerPageBodyComponent(),
           const SizedBox(
-          height: 40,
+            height: 40,
           ),
           ListTile(
             title: InkWell(
@@ -85,22 +91,28 @@ void _showLogoutConfirmationDialog(BuildContext context) {
   showDialog(
     context: context,
     builder: (BuildContext context) {
-      return 
-        // BackdropFilter(
-        //   filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0), // Réglage de l'intensité du flou
-        //   child: Container(
-        //   color:  Colors.white.withOpacity(0), // Transparence de l'arrière-plan  
-        //   child:  
+      return
+          // BackdropFilter(
+          //   filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0), // Réglage de l'intensité du flou
+          //   child: Container(
+          //   color:  Colors.white.withOpacity(0), // Transparence de l'arrière-plan
+          //   child:
           AlertDialog(
-          elevation: 5, 
-          shadowColor:  AppColors.placeholder,
-           shape: RoundedRectangleBorder(
-            
-            borderRadius: BorderRadius.circular(15.0),  // Optionnel : arrondir les bords
-          ),
-          title: Text("ÊTES VOUS SÛR DE VOULOIR VOUS DECONNECTER ?", style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),),
-          content: Text("A quand votre retour vous nous manquer déjà", style: TextStyle(fontSize: 12),),
-          actions: [
+        elevation: 5,
+        shadowColor: AppColors.placeholder,
+        shape: RoundedRectangleBorder(
+          borderRadius:
+              BorderRadius.circular(15.0), // Optionnel : arrondir les bords
+        ),
+        title: Text(
+          "ÊTES VOUS SÛR DE VOULOIR VOUS DECONNECTER ?",
+          style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+        ),
+        content: Text(
+          "A quand votre retour vous nous manquer déjà",
+          style: TextStyle(fontSize: 12),
+        ),
+        actions: [
           Center(
             child: Column(
               children: [
@@ -114,22 +126,23 @@ void _showLogoutConfirmationDialog(BuildContext context) {
                   buttonColor: AppColors.primaryColor,
                   borderRadius: BorderRadius.circular(5),
                 ),
-                SizedBox(height: 15,),
-                 TextButton(
-              onPressed: () {
-                Navigator.pop(context); // Ferme le popup
-              },
-              child: Text("ANNULER", style: TextStyle( color: AppColors.signUpColor),),
-            ),
+                SizedBox(
+                  height: 15,
+                ),
+                TextButton(
+                  onPressed: () {
+                    Navigator.pop(context); // Ferme le popup
+                  },
+                  child: Text(
+                    "ANNULER",
+                    style: TextStyle(color: AppColors.signUpColor),
+                  ),
+                ),
               ],
             ),
           )
-          ],
-        
-          
+        ],
       );
-      
     },
   );
-
 }
