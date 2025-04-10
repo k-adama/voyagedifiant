@@ -73,8 +73,10 @@ class _VehiculeDetailsState extends State<VehiculeDetails> {
                             const SizedBox(
                               width: 12,
                             ),
-                            const Icon(
-                              Icons.pedal_bike,
+                            Image.asset(
+                              'assets/icons/eco-fuel_13104616 1.png',
+                              width: 24,
+                              height: 24,
                               color: AppColors.white,
                             ),
                             const SizedBox(width: 8),
@@ -99,10 +101,8 @@ class _VehiculeDetailsState extends State<VehiculeDetails> {
                             const SizedBox(
                               width: 12,
                             ),
-                            const Icon(
-                              Icons.pedal_bike,
-                              color: AppColors.white,
-                            ),
+                            Image.asset('assets/icons/tdesign_money.png',
+                                width: 24, height: 24, color: AppColors.white),
                             const SizedBox(width: 8),
                             Expanded(
                               child: Text(
