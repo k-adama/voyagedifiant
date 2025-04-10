@@ -52,7 +52,7 @@ class VehiculeCard extends StatelessWidget {
                 BoxShadow(
                   color: AppColors.black.withOpacity(0.1),
                   spreadRadius: 1,
-                  offset: Offset(0, 2),
+                  offset: const Offset(0, 2),
                 ),
               ],
             ),
@@ -64,11 +64,6 @@ class VehiculeCard extends StatelessWidget {
                 borderRadius: AppDefaults.borderRadius,
                 child: Row(
                   children: [
-                    /*  const SizedBox(
-                      height: 160,
-                      child:
-                          DottedDivider(isVertical: true, color: Colors.white),
-                    ),*/
                     Expanded(
                       flex: 5,
                       child: Padding(
@@ -81,7 +76,6 @@ class VehiculeCard extends StatelessWidget {
                                 image: AssetImage(
                                   image ?? 'assets/icons/location-icon.png',
                                 ),
-                                // opacity: 0.25,
                                 fit: BoxFit.cover,
                               ),
                             ),
@@ -92,12 +86,12 @@ class VehiculeCard extends StatelessWidget {
                       child: Padding(
                         padding: const EdgeInsets.all(AppDefaults.padding),
                         child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(name,
                                 style: AppColors.interBold(
-                                  size: 20,
+                                  size: 14,
                                 )),
                             const SizedBox(
                               height: 12,
@@ -112,7 +106,10 @@ class VehiculeCard extends StatelessWidget {
                                       const SizedBox(
                                         width: 5,
                                       ),
-                                      Text(person),
+                                      Text(person,
+                                          style: AppColors.interBold(
+                                            size: 12,
+                                          )),
                                     ],
                                   ),
                                   const SizedBox(
@@ -124,7 +121,10 @@ class VehiculeCard extends StatelessWidget {
                                       const SizedBox(
                                         width: 5,
                                       ),
-                                      Text(bag),
+                                      Text(bag,
+                                          style: AppColors.interBold(
+                                            size: 12,
+                                          )),
                                     ],
                                   ),
                                 ],
@@ -134,8 +134,8 @@ class VehiculeCard extends StatelessWidget {
                               height: 12,
                             ),
                             Text('A partir de $price',
-                                style: AppColors.interNormal(
-                                  size: 14,
+                                style: AppColors.interBold(
+                                  size: 10,
                                 )),
                           ],
                         ),

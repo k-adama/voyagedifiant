@@ -57,7 +57,7 @@ class DecouverteCardComponent extends StatelessWidget {
       ),*/
       elevation: 3,
       shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: AppDefaults.borderRadius,
           side: const BorderSide(
             width: 2,
             color: AppColors.cardColor,
@@ -108,8 +108,9 @@ class DecouverteCardComponent extends StatelessWidget {
                       allowHalfRating: true,
                       itemCount: 5,
                       itemSize: 20,
+                      unratedColor: AppColors.primaryColor,
                       itemBuilder: (context, _) =>
-                          const Icon(Icons.star, color: Colors.amber),
+                          const Icon(Icons.star, color: AppColors.signUpColor),
                       onRatingUpdate: (rating) {},
                     ),
                     const SizedBox(
@@ -130,7 +131,7 @@ class DecouverteCardComponent extends StatelessWidget {
                     const SizedBox(
                       height: 11,
                     ),
-                    Text('visite guidée à partir de $price',
+                    Text('visite guidée à partir de $price fcfa',
                         style: AppColors.interBold(
                           size: 11,
                         )),

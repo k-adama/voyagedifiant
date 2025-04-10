@@ -177,6 +177,7 @@ class _InvoiceDecouverteDetailsComponentState
                 info,
                 style: AppColors.interNormal(
                   size: 12,
+                  color: AppColors.primaryColor,
                 ),
               ),
             ),

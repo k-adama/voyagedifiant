@@ -158,12 +158,14 @@ class _InvoiceSejourDetailsComponentState
                       ),
                       Row(
                         children: [
-                          Image.asset('assets/icons/location.png',
-                          color: AppColors.signUpColor,),
+                          Image.asset(
+                            'assets/icons/location.png',
+                            color: AppColors.signUpColor,
+                          ),
                           const SizedBox(
                             width: 5,
                           ),
-                          Text('location'),
+                          const Text('location'),
                         ],
                       ),
                       const SizedBox(
@@ -248,6 +250,7 @@ class _InvoiceSejourDetailsComponentState
                 info,
                 style: AppColors.interNormal(
                   size: 12,
+                  color: AppColors.primaryColor,
                 ),
               ),
             ),

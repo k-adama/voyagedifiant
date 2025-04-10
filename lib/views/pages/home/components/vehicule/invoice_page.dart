@@ -73,7 +73,7 @@ class _InvoicePageState extends State<InvoicePage> {
                         "Paiement total",
                         style: AppColors.interBold(
                           size: 14,
-                           color: AppColors.primaryColor,
+                          color: AppColors.primaryColor,
                         ),
                       ),
                       SizedBox(
@@ -119,28 +119,35 @@ class _InvoicePageState extends State<InvoicePage> {
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: AppCustomButton(
-                onPressed: () {
-                  AppHelpersCommon.showAlertDialog(
-                    context: context,
-                    canPop: false,
-                    child: SuccessfullDialog(
-                      isCustomerAdded: false,
-                      haveButton: false,
-                      // title: "Paiement effectué",
-                      svgPicture:
-                          "assets/icons/undraw_happy_news_re_tsbd 1.svg",
-                      content: 'Paiement effectué',
-                      redirect: () {
-                        Get.close(1);
-                      },
-                    ),
-                  );
-                },
-                borderRadius: const BorderRadius.all(Radius.circular(8)),
-                buttonText: "Régler la facture",
-                textColor: AppColors.white,
-                buttonColor: AppColors.primaryColor,
+              child: Align(
+                alignment: Alignment.centerRight,
+                child: FractionallySizedBox(
+                  alignment: Alignment.centerRight,
+                  widthFactor: 0.5,
+                  child: AppCustomButton(
+                    onPressed: () {
+                      AppHelpersCommon.showAlertDialog(
+                        context: context,
+                        canPop: false,
+                        child: SuccessfullDialog(
+                          isCustomerAdded: false,
+                          haveButton: false,
+                          // title: "Paiement effectué",
+                          svgPicture:
+                              "assets/icons/undraw_happy_news_re_tsbd 1.svg",
+                          content: 'Paiement effectué',
+                          redirect: () {
+                            Get.close(1);
+                          },
+                        ),
+                      );
+                    },
+                    borderRadius: const BorderRadius.all(Radius.circular(8)),
+                    buttonText: "Régler la facture",
+                    textColor: AppColors.white,
+                    buttonColor: AppColors.primaryColor,
+                  ),
+                ),
               ),
             ),
           ],

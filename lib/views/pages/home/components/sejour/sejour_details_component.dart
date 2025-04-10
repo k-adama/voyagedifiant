@@ -158,14 +158,21 @@ class _SejourDetailsState extends State<SejourDetails> {
                 const SizedBox(
                   height: 30,
                 ),
-                AppCustomButton(
-                  onPressed: () {
-                    Get.toNamed(Routes.INVOICE_SEJOUR_PAGE);
-                  },
-                  borderRadius: const BorderRadius.all(Radius.circular(8)),
-                  buttonText: "Enregister",
-                  textColor: AppColors.white,
-                  buttonColor: AppColors.primaryColor,
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: FractionallySizedBox(
+                    alignment: Alignment.centerRight,
+                    widthFactor: 0.5,
+                    child: AppCustomButton(
+                      onPressed: () {
+                        Get.toNamed(Routes.INVOICE_SEJOUR_PAGE);
+                      },
+                      borderRadius: const BorderRadius.all(Radius.circular(8)),
+                      buttonText: "Réserver maintenant",
+                      textColor: AppColors.white,
+                      buttonColor: AppColors.primaryColor,
+                    ),
+                  ),
                 ),
               ],
             ),
@@ -185,7 +192,7 @@ class _SejourDetailsState extends State<SejourDetails> {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Expanded(
-                flex: 3,
+                flex: 4,
                 child: Text('A partir de $price/jour',
                     style: AppColors.interBold(
                       size: 12,
@@ -204,10 +211,13 @@ class _SejourDetailsState extends State<SejourDetails> {
                       color: isSelected
                           ? AppColors.signUpColor
                           : AppColors.primaryColor,
-                      borderRadius: BorderRadius.circular(4),
+                      borderRadius: AppDefaults.borderRadius,
                     ),
-                    child: Text(className,
-                        style: const TextStyle(color: AppColors.white)),
+                    child: Text(
+                      className,
+                      style: const TextStyle(color: AppColors.white),
+                      textAlign: TextAlign.center,
+                    ),
                   ),
                 ),
               ),
@@ -221,8 +231,9 @@ class _SejourDetailsState extends State<SejourDetails> {
             allowHalfRating: true,
             itemCount: 5,
             itemSize: 20,
+            unratedColor: AppColors.primaryColor,
             itemBuilder: (context, _) =>
-                const Icon(Icons.star, color: Colors.amber),
+                const Icon(Icons.star, color: AppColors.signUpColor),
             onRatingUpdate: (rating) {},
           ),
         ],

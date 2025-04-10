@@ -79,12 +79,16 @@ class _DecouverteDetailsState extends State<DecouverteDetails> {
                       'assets/icons/location.png',
                       color: AppColors.signUpColor,
                     ),
-                    const SizedBox(width: 10,),
-                    Text("Man",
-                    style: AppColors.interBold(
-                      size: 14,
-                      color: AppColors.signUpColor,
-                    ),)
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    Text(
+                      "Man",
+                      style: AppColors.interBold(
+                        size: 14,
+                        color: AppColors.signUpColor,
+                      ),
+                    )
                   ],
                 ),
                 const SizedBox(
@@ -105,18 +109,28 @@ class _DecouverteDetailsState extends State<DecouverteDetails> {
                 const SizedBox(
                   height: 30,
                 ),
-               const SejourDecouverteMapsCard(
-                isSejour: false,
+                const SejourDecouverteMapsCard(
+                  isSejour: false,
                   text: "Emplacement",
                 ),
-                AppCustomButton(
-                  onPressed: () {
-                    Get.toNamed(Routes.INVOICE_DECOUVERTE_PAGE);
-                  },
-                  borderRadius: const BorderRadius.all(Radius.circular(8)),
-                  buttonText: "Enregistrer",
-                  textColor: AppColors.white,
-                  buttonColor: AppColors.primaryColor,
+                const SizedBox(
+                  height: 10,
+                ),
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: FractionallySizedBox(
+                    alignment: Alignment.centerRight,
+                    widthFactor: 0.5,
+                    child: AppCustomButton(
+                      onPressed: () {
+                        Get.toNamed(Routes.INVOICE_DECOUVERTE_PAGE);
+                      },
+                      borderRadius: const BorderRadius.all(Radius.circular(8)),
+                      buttonText: "Réserver maintenant",
+                      textColor: AppColors.white,
+                      buttonColor: AppColors.primaryColor,
+                    ),
+                  ),
                 ),
               ],
             ),
@@ -155,10 +169,13 @@ class _DecouverteDetailsState extends State<DecouverteDetails> {
                       color: isSelected
                           ? AppColors.signUpColor
                           : AppColors.primaryColor,
-                      borderRadius: BorderRadius.circular(4),
+                      borderRadius: AppDefaults.borderRadius,
                     ),
-                    child: Text(className,
-                        style: const TextStyle(color: AppColors.white)),
+                    child: Text(
+                      className,
+                      style: const TextStyle(color: AppColors.white),
+                      textAlign: TextAlign.center,
+                    ),
                   ),
                 ),
               ),
@@ -172,8 +189,9 @@ class _DecouverteDetailsState extends State<DecouverteDetails> {
             allowHalfRating: true,
             itemCount: 5,
             itemSize: 20,
+            unratedColor: AppColors.primaryColor,
             itemBuilder: (context, _) =>
-                const Icon(Icons.star, color: Colors.amber),
+                const Icon(Icons.star, color: AppColors.signUpColor),
             onRatingUpdate: (rating) {},
           ),
         ],

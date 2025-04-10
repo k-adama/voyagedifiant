@@ -24,16 +24,7 @@ class PublicityContainer extends StatelessWidget {
         decoration: BoxDecoration(
           color: AppColors.primaryColor,
           borderRadius: AppDefaults.borderRadius,
-          border: Border.all(
-            color: Colors.grey.withOpacity(0.5),
-            width: 1.0,
-          ),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.1),
-              spreadRadius: 2,
-            ),
-          ],
+         
         ),
         child: Material(
           color: AppColors.transparent,
@@ -55,6 +46,7 @@ class PublicityContainer extends StatelessWidget {
                           style: AppColors.interBold(
                             size: 14,
                             color: AppColors.white,
+                            fontStyle: FontStyle.italic,
                           ),
                         ),
                       ),

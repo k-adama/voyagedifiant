@@ -38,13 +38,13 @@ class ContactUsPage extends StatelessWidget {
         child: Column(
           children: [
             Text("NOUS CONTACTER",
-              style: AppColors.interBold(
-                size: 18,
-                color: AppColors.primaryColor,
-              )),
-          const SizedBox(
-            height: 30,
-          ),
+                style: AppColors.interBold(
+                  size: 18,
+                  color: AppColors.primaryColor,
+                )),
+            const SizedBox(
+              height: 30,
+            ),
             Align(
               alignment: Alignment.topCenter,
               child: Container(
@@ -82,7 +82,8 @@ class ContactUsPage extends StatelessWidget {
                     Divider(thickness: 1, height: 25, color: Colors.grey[300]),
                     Row(
                       children: [
-                        const Icon(Icons.phone, color: Colors.green, size: 28),
+                        const Icon(Icons.phone,
+                            color: AppColors.signUpColor, size: 28),
                         const SizedBox(width: 10),
                         Expanded(
                           child: Text(

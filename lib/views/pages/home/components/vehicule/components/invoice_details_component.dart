@@ -116,7 +116,7 @@ class _InvoiceDetailsComponentState extends State<InvoiceDetailsComponent> {
                                     Image.asset(widget.couponBackground ?? '')),
                           )),
                       Expanded(
-                        flex: 5,
+                        flex: 4,
                         child: Container(
                           color: AppColors.signUpColor,
                           child: Padding(
@@ -144,7 +144,15 @@ class _InvoiceDetailsComponentState extends State<InvoiceDetailsComponent> {
                                           const SizedBox(
                                             width: 10,
                                           ),
-                                          Text('${widget.person} passagers'),
+                                          Text(
+                                            '${widget.person} passagers',
+                                            style: AppColors.interNormal(
+                                              color: AppColors.white,
+                                              size: 12,
+                                            ),
+                                            overflow: TextOverflow.ellipsis,
+                                            maxLines: 1,
+                                          ),
                                         ],
                                       ),
                                       const SizedBox(
@@ -159,7 +167,15 @@ class _InvoiceDetailsComponentState extends State<InvoiceDetailsComponent> {
                                           const SizedBox(
                                             width: 16,
                                           ),
-                                          Text('${widget.bag} valise(s)'),
+                                          Text(
+                                            '${widget.bag} valise(s)',
+                                            style: AppColors.interNormal(
+                                              color: AppColors.white,
+                                              size: 12,
+                                            ),
+                                            overflow: TextOverflow.ellipsis,
+                                            maxLines: 1,
+                                          ),
                                         ],
                                       ),
                                       const SizedBox(
@@ -175,7 +191,15 @@ class _InvoiceDetailsComponentState extends State<InvoiceDetailsComponent> {
                                           const SizedBox(
                                             width: 12,
                                           ),
-                                          Text('${widget.bag} climatisation'),
+                                          Text(
+                                            '${widget.bag} climatisation',
+                                            style: AppColors.interNormal(
+                                              color: AppColors.white,
+                                              size: 12,
+                                            ),
+                                            overflow: TextOverflow.ellipsis,
+                                            maxLines: 1,
+                                          ),
                                         ],
                                       ),
                                       const SizedBox(
@@ -191,7 +215,15 @@ class _InvoiceDetailsComponentState extends State<InvoiceDetailsComponent> {
                                           const SizedBox(
                                             width: 12,
                                           ),
-                                          Text('${widget.bag} valise(s)'),
+                                          Text(
+                                            '${widget.bag} valise(s)',
+                                            style: AppColors.interNormal(
+                                              color: AppColors.white,
+                                              size: 12,
+                                            ),
+                                            overflow: TextOverflow.ellipsis,
+                                            maxLines: 1,
+                                          ),
                                         ],
                                       ),
                                     ],
@@ -278,6 +310,7 @@ class _InvoiceDetailsComponentState extends State<InvoiceDetailsComponent> {
                 info,
                 style: AppColors.interNormal(
                   size: 12,
+                  color: AppColors.primaryColor,
                 ),
               ),
             ),

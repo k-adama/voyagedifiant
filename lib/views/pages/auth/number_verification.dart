@@ -5,6 +5,7 @@ import 'package:get/route_manager.dart';
 import 'package:voyagedifiant/core/constants/app_colors.dart';
 import 'package:voyagedifiant/core/routes/app_pages.dart';
 import 'package:pinput/pinput.dart';
+import 'package:voyagedifiant/core/widgets/components/translate_pop_item.dart';
 import 'package:voyagedifiant/views/controllers/auth/controllers/auth.controllers.dart';
 
 class NumberVerificationPage extends StatefulWidget {
@@ -42,6 +43,9 @@ class _NumberVerificationPageState extends State<NumberVerificationPage> {
         automaticallyImplyLeading: true,
         iconTheme: const IconThemeData(color: AppColors.white),
         backgroundColor: AppColors.primaryColor,
+        actions: const [
+          TranslatePopItem(),
+        ],
         // leading: ,
       ),
       body: LayoutBuilder(
@@ -89,7 +93,8 @@ class _NumberVerificationPageState extends State<NumberVerificationPage> {
                                 topRight: Radius.circular(97),
                               ),
                             ),
-                            padding: const EdgeInsets.symmetric(horizontal: 20),
+                            padding: const EdgeInsets.symmetric(horizontal: 20,
+                            vertical: 30),
                             child: Column(
                               children: [
                                 const SizedBox(
@@ -125,7 +130,8 @@ class _NumberVerificationPageState extends State<NumberVerificationPage> {
                                         fontSize: 24,
                                         fontWeight: FontWeight.bold),
                                     decoration: BoxDecoration(
-                                      border: Border.all(color: Colors.black),
+                                      border: Border.all(color: AppColors.gray,
+                                      width: 1),
                                       borderRadius: BorderRadius.circular(8),
                                     ),
                                   ),

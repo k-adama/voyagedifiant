@@ -2,17 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:auto_height_grid_view/auto_height_grid_view.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:voyagedifiant/core/constants/app_colors.dart';
+import 'package:voyagedifiant/core/constants/app_defaults.dart';
 
 class HotelTouristSiteItemsComponents extends StatelessWidget {
   //final Product product;
   final String? image;
   final String? name;
   const HotelTouristSiteItemsComponents({
-    Key? key,
+    super.key,
     this.image,
     this.name,
     //required this.product
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -34,13 +35,11 @@ class HotelTouristSiteItemsComponents extends StatelessWidget {
                 child: InkWell(
               onTap: () {},
               child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+                padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
                 child: Column(
                   children: <Widget>[
                     ClipRRect(
-                      borderRadius:
-                          const BorderRadius.all(Radius.circular(12)),
+                      borderRadius: AppDefaults.borderRadius,
                       child: SizedBox(
                         height: 80,
                         width: MediaQuery.of(context).size.width,
@@ -59,6 +58,7 @@ class HotelTouristSiteItemsComponents extends StatelessWidget {
                       style: AppColors.interBold(
                         size: 14,
                       ),
+                      textAlign: TextAlign.center,
                       overflow: TextOverflow.ellipsis,
                       maxLines: 2,
                       softWrap: true,
