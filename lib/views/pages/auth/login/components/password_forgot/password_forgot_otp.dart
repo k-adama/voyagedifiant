@@ -7,6 +7,7 @@ import 'package:voyagedifiant/core/constants/app_colors.dart';
 import 'package:voyagedifiant/core/constants/app_defaults.dart';
 import 'package:voyagedifiant/core/routes/app_pages.dart';
 import 'package:voyagedifiant/core/widgets/buttons/app_button.dart';
+import 'package:voyagedifiant/core/widgets/components/translate_pop_item.dart';
 import 'package:voyagedifiant/views/controllers/auth/controllers/auth.controllers.dart';
 
 class PasswordForgotPageOtp extends StatefulWidget {
@@ -39,11 +40,13 @@ class _PasswordForgotPageOtpState extends State<PasswordForgotPageOtp> {
 
     return Scaffold(
       appBar: AppBar(
-        centerTitle: true,
         elevation: 0,
         automaticallyImplyLeading: true,
         iconTheme: const IconThemeData(color: AppColors.white),
         backgroundColor: AppColors.primaryColor,
+        actions: const [
+          TranslatePopItem(),
+        ],
         // leading: ,
       ),
       body: LayoutBuilder(
@@ -91,7 +94,9 @@ class _PasswordForgotPageOtpState extends State<PasswordForgotPageOtp> {
                                 topRight: Radius.circular(97),
                               ),
                             ),
-                            padding: const EdgeInsets.symmetric(horizontal: 20),
+                            padding: const EdgeInsets.symmetric(horizontal: 20,
+                            vertical: 40,
+                          ),
                             child: Column(
                               children: [
                                 const SizedBox(
@@ -102,7 +107,7 @@ class _PasswordForgotPageOtpState extends State<PasswordForgotPageOtp> {
                                   style: AppColors.interBold(),
                                 ),
                                 const SizedBox(
-                                  height: 10,
+                                  height: 40,
                                 ),
                                 Padding(
                                   padding:
@@ -123,8 +128,9 @@ class _PasswordForgotPageOtpState extends State<PasswordForgotPageOtp> {
                                               fontSize: 24,
                                               fontWeight: FontWeight.bold),
                                           decoration: BoxDecoration(
-                                            border:
-                                                Border.all(color: Colors.black),
+                                            border: Border.all(
+                                                color: AppColors.gray,
+                                                width: 1),
                                             borderRadius:
                                                 BorderRadius.circular(8),
                                           ),

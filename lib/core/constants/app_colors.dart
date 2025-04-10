@@ -26,11 +26,12 @@ class AppColors {
   static const Color outlinedColor = Color(0xFFDADADA);
   static const Color signUpColor = Color(0xFFF60FC0);
   static const Color transparent = Color(0x00FFFFFF);
-    static const Color otpColor = Color(0xFF04327D);
+  static const Color otpColor = Color(0xFF04327D);
   static const Color otpEmpty = Color(0xFF5D85C8);
 
   static interBold(
           {double size = 20,
+          FontStyle? fontStyle,
           Color color = AppColors.black,
           bool isUnderLine = false,
           Color underLineColor = AppColors.underLineColor,
@@ -39,6 +40,7 @@ class AppColors {
           fontFamily: 'Cereal',
           fontSize: size.sp,
           fontWeight: FontWeight.w700,
+          fontStyle: fontStyle,
           color: color,
           letterSpacing: letterSpacing.sp,
           decorationColor: isUnderLine ? underLineColor : AppColors.white,

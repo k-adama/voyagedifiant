@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:voyagedifiant/core/constants/app_colors.dart';
+import 'package:voyagedifiant/core/constants/app_defaults.dart';
 import 'package:voyagedifiant/core/models/driver_model.dart';
 
 class DriverCardComponent extends StatelessWidget {
@@ -69,7 +70,7 @@ class DriverCardComponent extends StatelessWidget {
             style: ElevatedButton.styleFrom(
               backgroundColor: AppColors.primaryColor,
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(4),
+                borderRadius: AppDefaults.borderRadius,
               ),
             ),
             child: const Text('Changer'),

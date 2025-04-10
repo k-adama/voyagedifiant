@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_utils/src/extensions/internacionalization.dart';
 import 'package:voyagedifiant/core/constants/app_colors.dart';
+import 'package:voyagedifiant/core/widgets/components/appbar/translate_appbar.dart';
 import 'package:voyagedifiant/views/pages/auth/register/components/register_page_form.dart';
 
 class RegisterPage extends StatefulWidget {

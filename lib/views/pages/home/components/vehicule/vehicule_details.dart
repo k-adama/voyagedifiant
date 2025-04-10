@@ -17,6 +17,8 @@ class VehiculeDetails extends StatefulWidget {
 }
 
 class _VehiculeDetailsState extends State<VehiculeDetails> {
+  Color _buttonColor = AppColors.primaryColor;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,15 +45,118 @@ class _VehiculeDetailsState extends State<VehiculeDetails> {
               ),
               const MapsDatetimeCard(),
               Padding(
+                  padding: const EdgeInsets.all(12),
+                  child: Container(
+                    padding: const EdgeInsets.all(8),
+                    decoration: const BoxDecoration(
+                      color: AppColors.primaryColor,
+                    ),
+                    child: Column(
+                      children: [
+                        const SizedBox(
+                          height: 12,
+                        ),
+                        Text(
+                          "BON A SAVOIR",
+                          style: AppColors.interBold(
+                            size: 16,
+                            color: AppColors.white,
+                            fontStyle: FontStyle.italic,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                        const SizedBox(height: 14),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const SizedBox(
+                              width: 12,
+                            ),
+                            const Icon(
+                              Icons.pedal_bike,
+                              color: AppColors.white,
+                            ),
+                            const SizedBox(width: 8),
+                            Expanded(
+                              child: Text(
+                                "Les frais de carburants sont à vos charges",
+                                style: AppColors.interNormal(
+                                  size: 14,
+                                  color: AppColors.white,
+                                ),
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 2,
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 20),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const SizedBox(
+                              width: 12,
+                            ),
+                            const Icon(
+                              Icons.pedal_bike,
+                              color: AppColors.white,
+                            ),
+                            const SizedBox(width: 8),
+                            Expanded(
+                              child: Text(
+                                "Vous payez un acompte de 10% non remboursable",
+                                style: AppColors.interNormal(
+                                  color: AppColors.white,
+                                  size: 14,
+                                ),
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 2,
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 12,
+                        ),
+                      ],
+                    ),
+                  )),
+              Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: AppCustomButton(
-                  onPressed: () {
-                    Get.toNamed(Routes.INVOICE_PAGE);
-                  },
-                  borderRadius: const BorderRadius.all(Radius.circular(8)),
-                  buttonText: "Passer au paiement",
-                  textColor: AppColors.white,
-                  buttonColor: AppColors.primaryColor,
+                child: Align(
+                  alignment: Alignment.centerRight,
+                  child: FractionallySizedBox(
+                    alignment: Alignment.centerRight,
+                    widthFactor: 0.5,
+                    child: GestureDetector(
+                      onTapDown: (_) {
+                        setState(() {
+                          _buttonColor = AppColors.signUpColor;
+                        });
+                      },
+                      onTapUp: (_) {
+                        setState(() {
+                          _buttonColor = AppColors.primaryColor;
+                        });
+                      },
+                      onTapCancel: () {
+                        setState(() {
+                          _buttonColor = AppColors.primaryColor;
+                        });
+                      },
+                      child: AppCustomButton(
+                        onPressed: () {
+                          Get.toNamed(Routes.INVOICE_PAGE);
+                        },
+                        borderRadius: AppDefaults.borderRadius,
+                        buttonText: "Passer au paiement",
+                        textColor: AppColors.white,
+                        buttonColor: _buttonColor,
+                      ),
+                    ),
+                  ),
                 ),
               ),
             ],

@@ -89,7 +89,7 @@ class _LoginPageState extends State<LoginPage> {
           );
         },
       ),
-
+    
       // body: SafeArea(
       // child: SingleChildScrollView(
       //   child: Stack(
@@ -123,7 +123,7 @@ class _LoginPageState extends State<LoginPage> {
       //     ),
       //   ),
       // )
-
+    
       /*  Container(
         decoration: const BoxDecoration(
           image: DecorationImage(

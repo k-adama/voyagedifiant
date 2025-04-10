@@ -73,7 +73,7 @@ class MyApp extends StatelessWidget {
                 useMaterial3: false,
                 sliderTheme: SliderThemeData(
                     overlayShape: SliderComponentShape.noOverlay,
-                    rangeThumbShape: RoundRangeSliderThumbShape()),
+                    rangeThumbShape: const RoundRangeSliderThumbShape()),
               ),
               themeMode: ThemeMode.light,
             ),

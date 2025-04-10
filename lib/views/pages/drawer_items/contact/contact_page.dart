@@ -1,26 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:voyagedifiant/core/constants/app_colors.dart';
+import 'package:voyagedifiant/core/constants/app_defaults.dart';
 import 'package:voyagedifiant/core/widgets/components/translate_pop_item.dart';
 
 class ContactUsPage extends StatelessWidget {
   final String phoneNumber = "0749468616";
-  final String countryCode = "225";
   final String address = "Angré nouveau chu";
 
-  const ContactUsPage({super.key});
-
-  void _openWhatsApp() async {
-    final String fullNumber = "$countryCode$phoneNumber";
-    final Uri whatsappUrl = Uri.parse("https://wa.me/$fullNumber");
-
-    if (await canLaunchUrl(whatsappUrl)) {
-      await launchUrl(whatsappUrl, mode: LaunchMode.externalApplication);
-    } else {
-      debugPrint("Impossible d'ouvrir WhatsApp");
-    }
-  }
-
+  ContactUsPage({super.key});
+  final Uri whatsappUrl = Uri.parse("https://wa.me/0749468616");
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,13 +27,13 @@ class ContactUsPage extends StatelessWidget {
         child: Column(
           children: [
             Text("NOUS CONTACTER",
-              style: AppColors.interBold(
-                size: 18,
-                color: AppColors.primaryColor,
-              )),
-          const SizedBox(
-            height: 30,
-          ),
+                style: AppColors.interBold(
+                  size: 18,
+                  color: AppColors.primaryColor,
+                )),
+            const SizedBox(
+              height: 30,
+            ),
             Align(
               alignment: Alignment.topCenter,
               child: Container(
@@ -82,7 +71,8 @@ class ContactUsPage extends StatelessWidget {
                     Divider(thickness: 1, height: 25, color: Colors.grey[300]),
                     Row(
                       children: [
-                        const Icon(Icons.phone, color: Colors.green, size: 28),
+                        const Icon(Icons.phone,
+                            color: AppColors.signUpColor, size: 28),
                         const SizedBox(width: 10),
                         Expanded(
                           child: Text(
@@ -96,33 +86,28 @@ class ContactUsPage extends StatelessWidget {
                     Divider(thickness: 1, height: 25, color: Colors.grey[300]),
                     const SizedBox(height: 10),
                     GestureDetector(
-                      onTap: _openWhatsApp,
+                      onTap: () async {
+                        launchUrl(whatsappUrl);
+                      },
+                      //_openWhatsApp,
                       child: LayoutBuilder(
                         builder: (context, constraints) {
                           return Container(
                             width: constraints.maxWidth * 0.9,
                             padding: const EdgeInsets.all(15),
                             decoration: BoxDecoration(
-                              color: Colors.green,
-                              borderRadius: BorderRadius.circular(15),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.green.withOpacity(0.5),
-                                  blurRadius: 10,
-                                  spreadRadius: 2,
-                                  offset: const Offset(0, 4),
-                                ),
-                              ],
+                              color: AppColors.primaryColor,
+                              borderRadius: AppDefaults.borderRadius,
                             ),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Image.asset(
-                                  'assets/icons/whatsapp.png',
+                                  'assets/icons/whatsp-removebg-preview.png',
                                   width: 24,
                                   height: 24,
                                 ),
-                                // const SizedBox(width: 10),
+                                const SizedBox(width: 10),
                                 const Expanded(
                                   child: Text(
                                     "Nous contacter sur WhatsApp",

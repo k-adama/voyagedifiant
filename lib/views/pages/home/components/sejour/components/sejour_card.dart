@@ -54,14 +54,13 @@ class SejourCard extends StatelessWidget {
       ),*/
       elevation: 3,
       shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: AppDefaults.borderRadius,
           side: const BorderSide(
             width: 2,
             color: AppColors.cardColor,
           )),
       child: InkWell(
         onTap: onTap,
-        borderRadius: AppDefaults.borderRadius,
         child: Row(
           children: [
             Expanded(

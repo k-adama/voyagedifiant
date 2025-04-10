@@ -158,7 +158,7 @@ abstract class AppPages {
     ),
     GetPage(
       name: _Paths.CONTACT_PAGE,
-      page: () => const ContactUsPage(),
+      page: () => ContactUsPage(),
       binding: HomeBinding(),
     ),
   ];

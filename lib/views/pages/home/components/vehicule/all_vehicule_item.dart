@@ -47,7 +47,7 @@ class _AllVehiculeItemsState extends State<AllVehiculeItems> {
               AutoHeightGridView(
                 shrinkWrap: true,
                 crossAxisCount: 1,
-                mainAxisSpacing: 2,
+                mainAxisSpacing: 1,
                 itemCount: 5,
                 builder: (context, index) {
                   return AnimationConfiguration.staggeredGrid(
@@ -62,7 +62,7 @@ class _AllVehiculeItemsState extends State<AllVehiculeItems> {
                         price: '35000',
                         person: '04',
                         bag: '01',
-                        color: const Color(0xFF402FBE),
+                        image: "assets/images/Rectangle 11.png",
                         onTap: () {
                           Get.toNamed(Routes.VEHICULE_DETAILS);
                         },

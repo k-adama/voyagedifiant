@@ -16,6 +16,7 @@ class AppBarComponent extends StatelessWidget {
       automaticallyImplyLeading: true,
       iconTheme: const IconThemeData(color: AppColors.white),
       backgroundColor: AppColors.primaryColor,
+      shadowColor: Colors.transparent
       // leading: ,
     );
   }

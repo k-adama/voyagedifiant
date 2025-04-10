@@ -99,7 +99,7 @@ class _DetailsCardComponentState extends State<DetailsCardComponent> {
                                     Image.asset(widget.couponBackground ?? '')),
                           )),
                       Expanded(
-                        flex: 5,
+                        flex: 4,
                         child: Container(
                           color: AppColors.signUpColor,
                           child: Padding(
@@ -127,7 +127,17 @@ class _DetailsCardComponentState extends State<DetailsCardComponent> {
                                           const SizedBox(
                                             width: 10,
                                           ),
-                                          Text('${widget.person} passagers'),
+                                          Expanded(
+                                            child: Text(
+                                              '${widget.person} passagers',
+                                              style: AppColors.interNormal(
+                                                color: AppColors.white,
+                                                size: 12,
+                                              ),
+                                              overflow: TextOverflow.ellipsis,
+                                              maxLines: 1,
+                                            ),
+                                          ),
                                         ],
                                       ),
                                       const SizedBox(
@@ -142,7 +152,17 @@ class _DetailsCardComponentState extends State<DetailsCardComponent> {
                                           const SizedBox(
                                             width: 16,
                                           ),
-                                          Text('${widget.bag} valise(s)'),
+                                          Expanded(
+                                            child: Text(
+                                              '${widget.bag} valise(s)',
+                                              style: AppColors.interNormal(
+                                                color: AppColors.white,
+                                                size: 12,
+                                              ),
+                                              overflow: TextOverflow.ellipsis,
+                                              maxLines: 1,
+                                            ),
+                                          ),
                                         ],
                                       ),
                                       const SizedBox(
@@ -158,7 +178,17 @@ class _DetailsCardComponentState extends State<DetailsCardComponent> {
                                           const SizedBox(
                                             width: 12,
                                           ),
-                                          Text('${widget.bag} climatisation'),
+                                          Expanded(
+                                            child: Text(
+                                              '${widget.bag} climatisation',
+                                              style: AppColors.interNormal(
+                                                color: AppColors.white,
+                                                size: 12,
+                                              ),
+                                              overflow: TextOverflow.ellipsis,
+                                              maxLines: 1,
+                                            ),
+                                          ),
                                         ],
                                       ),
                                       const SizedBox(
@@ -174,7 +204,17 @@ class _DetailsCardComponentState extends State<DetailsCardComponent> {
                                           const SizedBox(
                                             width: 12,
                                           ),
-                                          Text('${widget.bag} valise(s)'),
+                                          Expanded(
+                                            child: Text(
+                                              '${widget.bag} valise(s)',
+                                              style: AppColors.interNormal(
+                                                color: AppColors.white,
+                                                size: 12,
+                                              ),
+                                              overflow: TextOverflow.ellipsis,
+                                              maxLines: 1,
+                                            ),
+                                          ),
                                         ],
                                       ),
                                     ],
@@ -223,15 +263,17 @@ class _DetailsCardComponentState extends State<DetailsCardComponent> {
                     });
                   },
                   child: Container(
-                    padding: const EdgeInsets.all(8),
+                    padding: const EdgeInsets.all(10),
+                     alignment: Alignment.center,
                     decoration: BoxDecoration(
                       color: isSelected
                           ? AppColors.signUpColor
                           : AppColors.primaryColor,
-                      borderRadius: BorderRadius.circular(8),
+                      borderRadius: AppDefaults.borderRadius,
                     ),
                     child: Text(className,
-                        style: const TextStyle(color: AppColors.white)),
+                        style: const TextStyle(color: AppColors.white,
+                        )),
                   ),
                 ),
               ],
@@ -245,8 +287,9 @@ class _DetailsCardComponentState extends State<DetailsCardComponent> {
                 allowHalfRating: true,
                 itemCount: 5,
                 itemSize: 20,
+                unratedColor: AppColors.primaryColor,
                 itemBuilder: (context, _) =>
-                    const Icon(Icons.star, color: Colors.amber),
+                    const Icon(Icons.star, color: AppColors.signUpColor),
                 onRatingUpdate: (rating) {},
               ),
             if (className == 'Business')
