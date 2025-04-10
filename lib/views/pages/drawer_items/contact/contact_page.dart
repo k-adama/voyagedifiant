@@ -6,22 +6,10 @@ import 'package:voyagedifiant/core/widgets/components/translate_pop_item.dart';
 
 class ContactUsPage extends StatelessWidget {
   final String phoneNumber = "0749468616";
-  final String countryCode = "225";
   final String address = "Angré nouveau chu";
 
-  const ContactUsPage({super.key});
-
-  void _openWhatsApp() async {
-    final String fullNumber = "$countryCode$phoneNumber";
-    final Uri whatsappUrl = Uri.parse("https://wa.me/$fullNumber");
-
-    if (await canLaunchUrl(whatsappUrl)) {
-      await launchUrl(whatsappUrl, mode: LaunchMode.externalApplication);
-    } else {
-      debugPrint("Impossible d'ouvrir WhatsApp");
-    }
-  }
-
+  ContactUsPage({super.key});
+  final Uri whatsappUrl = Uri.parse("https://wa.me/0749468616");
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -98,7 +86,10 @@ class ContactUsPage extends StatelessWidget {
                     Divider(thickness: 1, height: 25, color: Colors.grey[300]),
                     const SizedBox(height: 10),
                     GestureDetector(
-                      onTap: _openWhatsApp,
+                      onTap: () async {
+                        launchUrl(whatsappUrl);
+                      },
+                      //_openWhatsApp,
                       child: LayoutBuilder(
                         builder: (context, constraints) {
                           return Container(
