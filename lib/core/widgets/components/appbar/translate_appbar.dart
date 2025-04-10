@@ -15,6 +15,9 @@ class TranslateAppbar extends StatelessWidget implements PreferredSizeWidget {
       automaticallyImplyLeading: false,
       iconTheme: const IconThemeData(color: AppColors.white),
       backgroundColor: AppColors.primaryColor,
+      shape: const Border(
+        bottom: BorderSide.none,
+      ),
       actions: const [
         TranslatePopItem(),
       ],

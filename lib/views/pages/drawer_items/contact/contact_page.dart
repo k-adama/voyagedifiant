@@ -9,7 +9,7 @@ class ContactUsPage extends StatelessWidget {
   final String address = "Angré nouveau chu";
 
   ContactUsPage({super.key});
-  final Uri whatsappUrl = Uri.parse("https://wa.me/0749468616");
+  final Uri whatsappUrl = Uri.parse("https://wa.me/+2250749468616");
   @override
   Widget build(BuildContext context) {
     return Scaffold(

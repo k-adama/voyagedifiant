@@ -27,6 +27,9 @@ class _HomePageState extends State<HomePage> {
           elevation: 0,
           iconTheme: const IconThemeData(color: AppColors.white),
           backgroundColor: AppColors.primaryColor,
+          shape: const Border(
+            bottom: BorderSide.none,
+          ),
         ),
       ),
       endDrawer: const Drawer(
