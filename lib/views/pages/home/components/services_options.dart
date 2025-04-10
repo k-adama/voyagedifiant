@@ -13,7 +13,6 @@ class ServicesOptions extends StatelessWidget {
     return FractionallySizedBox(
       alignment: Alignment.center,
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           CustomContainerService(
             imagePath: 'assets/icons/location-icon.png',
@@ -36,6 +35,7 @@ class ServicesOptions extends StatelessWidget {
               Get.toNamed(Routes.SEJOUR_ITEM_PAGE);
             },
           ),
+          const SizedBox(width: 30,)
         ],
       ),
     );

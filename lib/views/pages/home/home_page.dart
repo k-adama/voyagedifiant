@@ -27,6 +27,9 @@ class _HomePageState extends State<HomePage> {
           elevation: 0,
           iconTheme: const IconThemeData(color: AppColors.white),
           backgroundColor: AppColors.primaryColor,
+          shape: const Border(
+            bottom: BorderSide.none,
+          ),
         ),
       ),
       endDrawer: const Drawer(
@@ -34,6 +37,133 @@ class _HomePageState extends State<HomePage> {
         child: DrawerPageComponent(),
       ),
       body: SingleChildScrollView(
+        child: Stack(
+          children: [
+            Column(
+              children: [
+                Container(
+                  height: MediaQuery.of(context).size.height * 0.25,
+                  decoration: const BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage("assets/icons/basi.jpg"),
+                      fit: BoxFit.cover,
+                    ),
+                    borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(40),
+                    ),
+                  ),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: AppColors.primaryColor.withOpacity(0.9),
+                      borderRadius: const BorderRadius.only(
+                        bottomLeft: Radius.circular(40),
+                      ),
+                    ),
+                    child: Center(
+                      child: Text(
+                          "ENVIE D'UN SÉJOUR DE QUALITÉ SANS\n"
+                          "SOUCIS DE DÉPLACEMENT ?\n"
+                          "VOUS ÊTES À LA BONNE PORTE.",
+                          textAlign: TextAlign.center,
+                          style: AppColors.interBold(
+                            size: 14,
+                            color: AppColors.white,
+                            fontStyle: FontStyle.italic,
+                          )),
+                    ),
+                  ),
+                ),
+                Stack(
+                  children: [
+                    Container(
+                      height: 80,
+                      color: AppColors.primaryColor,
+                    ),
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 15),
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        color: AppColors.white,
+                        borderRadius: const BorderRadius.only(
+                          topRight: Radius.circular(90),
+                        ),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey[300]!,
+                            blurRadius: 0.1,
+                            spreadRadius: 0.1,
+                            offset: const Offset(3.0, 3.0),
+                          ),
+                        ],
+                      ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const SizedBox(height: 70),
+                          Text(
+                            'Louez un vehicule avec chauffeur',
+                            style: AppColors.interBold(
+                              size: 14,
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 8,
+                          ),
+                          VehiculeCard(
+                            name: 'HUNDAI',
+                            price: '35000',
+                            person: '04',
+                            bag: '01',
+                            image: 'assets/images/Rectangle 11.png',
+                            onTap: () {
+                              Get.toNamed(Routes.VEHICULE_ITEM_PAGE);
+                            },
+                          ),
+                          const SizedBox(
+                            height: 12,
+                          ),
+                          Text(
+                            'Envie de site touristique',
+                            style: AppColors.interBold(
+                              size: 14,
+                            ),
+                          ),
+                          const HotelTouristSiteItemsComponents(
+                            image: 'assets/images/cascade.png',
+                            name: 'Cascade de Man',
+                          ),
+                          const SizedBox(
+                            height: 12,
+                          ),
+                          Text(
+                            'Envie de séjourner',
+                            style: AppColors.interBold(
+                              size: 14,
+                            ),
+                          ),
+                          const HotelTouristSiteItemsComponents(
+                            image: 'assets/images/sofi.png',
+                            name: 'Sofitel hôtel Ivoire',
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                )
+              ],
+            ),
+            const Positioned(
+              top: 150,
+              left: 0,
+              right: 0,
+              child: ServicesOptions(),
+            ),
+          ],
+        ),
+      ),
+
+      /* SingleChildScrollView(
           child: Column(
         children: [
           Stack(
@@ -118,7 +248,7 @@ class _HomePageState extends State<HomePage> {
             ],
           ),
         ],
-      )),
+      )),*/
     );
   }
 }

@@ -6,11 +6,11 @@ class CustomContainerService extends StatelessWidget {
   final String title;
   final void Function() onTap;
   const CustomContainerService({
-    super.key,
+    Key? key,
     required this.imagePath,
     required this.title,
     required this.onTap,
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +21,7 @@ class CustomContainerService extends StatelessWidget {
           onTap: onTap,
           child: Container(
             margin:
-                const EdgeInsets.only(left: 16, right: 16, top: 28, bottom: 28),
+                const EdgeInsets.only(left: 16, top: 28, bottom: 28),
             // padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
               color: AppColors.white,

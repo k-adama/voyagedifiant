@@ -43,6 +43,9 @@ class _NumberVerificationPageState extends State<NumberVerificationPage> {
         automaticallyImplyLeading: true,
         iconTheme: const IconThemeData(color: AppColors.white),
         backgroundColor: AppColors.primaryColor,
+        shape: const Border(
+        bottom: BorderSide.none,
+      ),
         actions: const [
           TranslatePopItem(),
         ],
