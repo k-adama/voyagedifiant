@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:voyagedifiant/core/constants/app_colors.dart';
+import 'package:voyagedifiant/core/constants/app_defaults.dart';
 import 'package:voyagedifiant/core/widgets/components/translate_pop_item.dart';
 
 class ContactUsPage extends StatelessWidget {
@@ -104,26 +105,18 @@ class ContactUsPage extends StatelessWidget {
                             width: constraints.maxWidth * 0.9,
                             padding: const EdgeInsets.all(15),
                             decoration: BoxDecoration(
-                              color: Colors.green,
-                              borderRadius: BorderRadius.circular(15),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.green.withOpacity(0.5),
-                                  blurRadius: 10,
-                                  spreadRadius: 2,
-                                  offset: const Offset(0, 4),
-                                ),
-                              ],
+                              color: AppColors.primaryColor,
+                              borderRadius: AppDefaults.borderRadius,
                             ),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Image.asset(
-                                  'assets/icons/whatsapp.png',
+                                  'assets/icons/whatsp-removebg-preview.png',
                                   width: 24,
                                   height: 24,
                                 ),
-                                // const SizedBox(width: 10),
+                                const SizedBox(width: 10),
                                 const Expanded(
                                   child: Text(
                                     "Nous contacter sur WhatsApp",
