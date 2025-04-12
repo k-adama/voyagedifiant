@@ -44,8 +44,8 @@ class _NumberVerificationPageState extends State<NumberVerificationPage> {
         iconTheme: const IconThemeData(color: AppColors.white),
         backgroundColor: AppColors.primaryColor,
         shape: const Border(
-        bottom: BorderSide.none,
-      ),
+          bottom: BorderSide.none,
+        ),
         actions: const [
           TranslatePopItem(),
         ],
@@ -96,8 +96,8 @@ class _NumberVerificationPageState extends State<NumberVerificationPage> {
                                 topRight: Radius.circular(97),
                               ),
                             ),
-                            padding: const EdgeInsets.symmetric(horizontal: 20,
-                            vertical: 30),
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 20, vertical: 30),
                             child: Column(
                               children: [
                                 const SizedBox(
@@ -133,8 +133,8 @@ class _NumberVerificationPageState extends State<NumberVerificationPage> {
                                         fontSize: 24,
                                         fontWeight: FontWeight.bold),
                                     decoration: BoxDecoration(
-                                      border: Border.all(color: AppColors.gray,
-                                      width: 1),
+                                      border: Border.all(
+                                          color: AppColors.gray, width: 1),
                                       borderRadius: BorderRadius.circular(8),
                                     ),
                                   ),
@@ -145,8 +145,25 @@ class _NumberVerificationPageState extends State<NumberVerificationPage> {
                                           color: AppColors.signUpColor),
                                     ),
                                   ),
-                                  onCompleted: (pin) {
-                                    // authController.otpEnters = pin;
+                                  onCompleted: (pin) async {
+                                    bool isOtpValid = await _authController
+                                        .verifyOtp(enteredOtp: enteredOtp);
+                                    if (isOtpValid) {
+                                      TopSnackbar.show(
+                                        context,
+                                        message: "OTP vérifié avec succès",
+                                        backgroundColor: Colors
+                                            .green, // Couleur de fond de succès
+                                      );
+                                    } else {
+                                      // Afficher un message d'erreur avec TopSnackbar
+                                      TopSnackbar.show(
+                                        context,
+                                        message: "OTP invalide",
+                                        backgroundColor: Colors
+                                            .red, // Couleur de fond d'erreur
+                                      );
+                                    }
                                   },
                                 ),
                                 const SizedBox(height: 24),
@@ -155,8 +172,11 @@ class _NumberVerificationPageState extends State<NumberVerificationPage> {
                                   style: AppColors.interNormal(),
                                 ),
                                 TextButton(
-                                    onPressed: () {
-                                      Get.offAllNamed(Routes.HOME_PAGE);
+                                    onPressed: () async {
+                                      await _authController.sendOtpToEmail(
+                                        _authController.email,
+                                      );
+                                      // Get.offAllNamed(Routes.HOME_PAGE);
                                     },
                                     child: Text(
                                       'Rééssayer',
@@ -318,6 +338,19 @@ class _NumberVerificationPageState extends State<NumberVerificationPage> {
           ),
         ),
       ),*/
+    );
+  }
+}
+
+class TopSnackbar {
+  static void show(BuildContext context,
+      {required String message, required Color backgroundColor}) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+        backgroundColor: backgroundColor,
+        duration: Duration(seconds: 2),
+      ),
     );
   }
 }

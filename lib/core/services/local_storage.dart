@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:voyagedifiant/core/constants/auth.constant.dart';
 
 class LocalStorage {
   static SharedPreferences? _preferences;
@@ -30,18 +31,21 @@ class LocalStorage {
     _preferences = await SharedPreferences.getInstance();
   }
 
-String? getCurrentLanguage() {
-  return _preferences?.getString('language');
-}
-
-  Future<void> getLanguage(String? language) async {
+  Future<void> setToken(String? token) async {
     if (_preferences != null) {
-      await _preferences!
-          .setString('language', language ?? '');
+      await _preferences!.setString(AuthConstant.keyToken, token ?? '');
     }
   }
 
-
-  void logout() {
+  String? getCurrentLanguage() {
+    return _preferences?.getString('language');
   }
+
+  Future<void> getLanguage(String? language) async {
+    if (_preferences != null) {
+      await _preferences!.setString('language', language ?? '');
+    }
+  }
+
+  void logout() {}
 }

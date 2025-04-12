@@ -1,3 +1,4 @@
 class Environment {
-  static const String backEnPoint = "http://172.20.10.2:8000/api";
+  static const String backEnPoint =
+      "https://sp-ia.com/voyagedifiant/public/api/";
 }

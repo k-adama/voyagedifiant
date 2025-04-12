@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get_utils/src/extensions/internacionalization.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 
@@ -18,6 +19,8 @@ class PhoneInputField extends StatelessWidget {
   Widget build(BuildContext context) {
     return IntlPhoneField(
       focusNode: focusNode,
+      keyboardType: TextInputType.number,
+      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
       decoration: InputDecoration(
         labelText: "phone_number".tr,
         border: const OutlineInputBorder(

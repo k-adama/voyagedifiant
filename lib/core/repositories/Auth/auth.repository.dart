@@ -24,6 +24,46 @@ class AuthRepository {
           statusCode: NetworkExceptionsService.getDioStatus(e));
     }
   }*/
+  Future<ApiResultService> sendOtp({
+    required String email,
+  }) async {
+    try {
+      final client = server.client(requireAuth: false);
+      final response = await client.post(
+        '/send-otp',
+        data: {
+          'email': email,
+        },
+      );
+      debugPrint(response.data.toString());
+      return ApiResultService.success(data: response.data);
+    } catch (e) {
+      debugPrint('==> otp failure: $e');
+      return ApiResultService.failure(
+        error: NetworkExceptionsService.getDioException(e),
+        statusCode: NetworkExceptionsService.getDioStatus(e),
+      ); // Retourne une réponse d'échec en cas d'erreur
+    }
+  }
+
+  Future<ApiResultService> verifyOtp({
+    required String email,
+    required String otp,
+  }) async {
+    try {
+      final client = server.client(requireAuth: false);
+      final response = await client.post('/verify-otp', data: {
+        'email': email,
+        'otp': otp,
+      });
+      return ApiResultService.success(data: response.data);
+    } catch (e) {
+      return ApiResultService.failure(
+        error: NetworkExceptionsService.getDioException(e),
+        statusCode: NetworkExceptionsService.getDioStatus(e),
+      );
+    }
+  }
 
   Future<ApiResultService<UserModel>> register({
     required String name,
