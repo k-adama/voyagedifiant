@@ -31,7 +31,7 @@ class AuthController extends GetxController {
       isLoading = true;
       update();
       final response = await authRepository.login(
-        number: number,
+        phone: number,
         password: password,
       );
       response.when(
@@ -39,6 +39,8 @@ class AuthController extends GetxController {
           // LocalStorage.instance.setToken(data?.token);
           //await getUser(context);
           print("il est connecté");
+          print(response);
+          print("il est connecté ..........................");
         },
         failure: (failure, status) {
           isLoading = false;
@@ -68,10 +70,10 @@ class AuthController extends GetxController {
       isLoading = true;
       update();
       final response = await authRepository.register(
-        username: username,
+        name: username,
         email: email,
-        city: city,
-        number: number,
+        country: city,
+        phone: number,
         password: password,
       );
 
@@ -80,6 +82,8 @@ class AuthController extends GetxController {
           // LocalStorage.instance.setToken(data?.token);
           //await getUser(context);
           print("compte créé");
+           print(response);
+          print("////////////////..........................");
         },
         failure: (failure, status) {
           isLoading = false;
@@ -113,7 +117,7 @@ class AuthController extends GetxController {
   }
 
   void setNumber(String text) {
-    number = text.trim();
+    number = text.replaceAll(RegExp(r'[^0-9]'), '');
     isLoginError = false;
     isNumberNotValid = false;
     isPasswordNotValid = false;
@@ -143,5 +147,4 @@ class AuthController extends GetxController {
     isPasswordNotValid = false;
     update();
   }
-
 }

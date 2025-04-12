@@ -58,14 +58,13 @@ class _LoginPageFormState extends State<LoginPageForm> {
                 onChanged: (number) {
                   authController.setNumber(number);
                 },
-              
                 onCountryChanged: (country) {},
               ),
               const SizedBox(height: 8),
               CustomField(
                 //onFieldSubmitted: (v) => onLogin(),
                 label: Text('password'.tr),
-            
+
                 validator: Validators.password.call,
                 onChanged: (password) {
                   authController.setPassword(password);
@@ -112,7 +111,7 @@ class _LoginPageFormState extends State<LoginPageForm> {
               ),
               const SizedBox(height: 8),
               AppCustomButton(
-                onPressed: () => onLogin(),
+                onPressed: () => authController.onLogin(),
                 buttonText: "log_in".tr,
                 textColor: AppColors.white,
                 buttonColor: AppColors.primaryColor,

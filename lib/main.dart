@@ -15,16 +15,16 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await LocalStorage.getInstance();
   runApp(const MyApp());
-  final apiService = AuthRepository();
+  //final apiService = AuthRepository();
 
   // Test de la connexion
-  ApiResultService result = await apiService.getConnexion();
+  //ApiResultService result = await apiService.getConnexion();
 
-  if (result.data != null) {
+  /* if (result.data != null) {
     print('Connexion réussie: ${result.data}');
   } else {
     print('Erreur de connexion: ${result.error}');
-  }
+  }*/
 }
 
 class MyApp extends StatelessWidget {

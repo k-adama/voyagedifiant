@@ -136,8 +136,8 @@ class _RegisterPageFormState extends State<RegisterPageForm> {
                     children: [
                       Text(
                         selectedCity ?? 'select_city'.tr,
-                        style:
-                            const TextStyle(color: AppColors.black, fontSize: 16),
+                        style: const TextStyle(
+                            color: AppColors.black, fontSize: 16),
                       ),
                       const Icon(Icons.arrow_drop_down, color: AppColors.black),
                     ],
@@ -150,7 +150,9 @@ class _RegisterPageFormState extends State<RegisterPageForm> {
             ),
             PhoneInputField(
               focusNode: myFocusNode,
-              onChanged: (number) {},
+              onChanged: (number) {
+                authController.setNumber(number);
+              },
               onCountryChanged: (country) {},
             ),
             CustomField(
@@ -164,9 +166,7 @@ class _RegisterPageFormState extends State<RegisterPageForm> {
             ),
             const SizedBox(height: 12),
             AppCustomButton(
-              onPressed: () {
-                authController.onRegister();
-              },
+              onPressed: () => authController.onRegister(),
               buttonText: "sign_up_register".tr,
               textColor: AppColors.white,
               buttonColor: AppColors.primaryColor,

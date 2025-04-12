@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:voyagedifiant/core/models/user.dart';
 import 'package:voyagedifiant/core/services/api_result.service.dart';
 import 'package:voyagedifiant/core/services/http.service.dart';
 import 'package:voyagedifiant/core/services/network_exceptions.service.dart';
@@ -6,7 +7,7 @@ import 'package:voyagedifiant/core/services/network_exceptions.service.dart';
 class AuthRepository {
   HttpService server = HttpService();
 
-  Future<ApiResultService> getConnexion() async {
+  /*Future<ApiResultService> getConnexion() async {
     try {
       final client = server.client(requireAuth: true);
       final response = await client.get(
@@ -22,13 +23,13 @@ class AuthRepository {
           error: NetworkExceptionsService.getDioException(e),
           statusCode: NetworkExceptionsService.getDioStatus(e));
     }
-  }
+  }*/
 
-  Future<ApiResultService> register({
-    required String username,
+  Future<ApiResultService<UserModel>> register({
+    required String name,
     required String email,
-    required String city,
-    required String number,
+    required String country,
+    required String phone,
     required String password,
   }) async {
     try {
@@ -36,15 +37,15 @@ class AuthRepository {
       final response = await client.post(
         '/register',
         data: {
-          'username': username,
+          'name': name,
           'email': email,
-          'city': city,
-          'number': number,
+          'country': country,
+          'phone': phone,
           'password': password,
         },
       );
       debugPrint(response.data.toString());
-      return ApiResultService.success(data: response.data);
+      return ApiResultService.success(data: UserModel.fromJson(response.data));
     } catch (e) {
       debugPrint('==> register failure: $e');
       return ApiResultService.failure(
@@ -54,16 +55,16 @@ class AuthRepository {
     }
   }
 
-  Future<ApiResultService> login(
-      {required String number, required String password}) async {
+  Future<ApiResultService<UserModel>> login(
+      {required String phone, required String password}) async {
     try {
       final client = server.client(requireAuth: false);
       final response = await client.post(
         '/login',
-        data: {'number': number, 'password': password},
+        data: {'phone': phone, 'password': password},
       );
       debugPrint(response.data.toString());
-      return ApiResultService.success(data: response.data);
+      return ApiResultService.success(data: UserModel.fromJson(response.data));
     } catch (e) {
       debugPrint('==> login failure: $e');
       return ApiResultService.failure(
