@@ -2,6 +2,23 @@ import 'network_exceptions.service.dart';
 
 class ApiResultService<T> {
   final T? data;
+  final String? error;
+
+  ApiResultService.success({this.data}) : error = null;
+  ApiResultService.failure(this.error) : data = null;
+
+  // Méthode pour vérifier si la réponse est un succès
+  bool isSuccess() => error == null;
+  void when(
+      {required Function(T data) success,
+      required Function(String error) failure}) {
+    if (isSuccess()) {
+      success(data!); // Appelle le callback de succès
+    } else {
+      failure(error!); // Appelle le callback d'échec
+    }
+  }
+  /*final T? data;
   final NetworkExceptionsService error;
   final int statusCode;
 
@@ -24,5 +41,5 @@ class ApiResultService<T> {
     } else {
       throw Exception('Invalid ApiResult type');
     }
-  }
+  }*/
 }

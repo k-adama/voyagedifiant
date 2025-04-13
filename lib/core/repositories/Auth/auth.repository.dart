@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:voyagedifiant/core/models/user.dart';
 import 'package:voyagedifiant/core/services/api_result.service.dart';
@@ -25,6 +26,32 @@ class AuthRepository {
     }
   }*/
   Future<ApiResultService> sendOtp({
+  required String email,
+}) async {
+  try {
+    final client = server.client(requireAuth: false);
+    final response = await client.post(
+      '/send-otp',
+      data: {
+        'email': email,
+      },
+    );
+    debugPrint(response.data.toString());
+
+    // Retourne la réponse de l'API encapsulée dans ApiResultService
+    return ApiResultService.success(data: response.data);
+  } catch (e) {
+    debugPrint('==> otp failure: $e');
+    if (e is DioException) {
+      final message =
+          e.response?.data["message"] ?? "Une erreur est survenue";
+      return ApiResultService.failure(message);
+    }
+    return ApiResultService.failure("Erreur inconnue");
+  }
+}
+
+ /* Future<ApiResultService> sendOtp({
     required String email,
   }) async {
     try {
@@ -39,12 +66,14 @@ class AuthRepository {
       return ApiResultService.success(data: response.data);
     } catch (e) {
       debugPrint('==> otp failure: $e');
-      return ApiResultService.failure(
-        error: NetworkExceptionsService.getDioException(e),
-        statusCode: NetworkExceptionsService.getDioStatus(e),
-      ); // Retourne une réponse d'échec en cas d'erreur
+      if (e is DioException) {
+        final message =
+            e.response?.data["message"] ?? "Une erreur est survenue";
+        return ApiResultService.failure(message);
+      }
+      return ApiResultService.failure("Erreur inconnue");
     }
-  }
+  }*/
 
   Future<ApiResultService> verifyOtp({
     required String email,
@@ -58,10 +87,12 @@ class AuthRepository {
       });
       return ApiResultService.success(data: response.data);
     } catch (e) {
-      return ApiResultService.failure(
-        error: NetworkExceptionsService.getDioException(e),
-        statusCode: NetworkExceptionsService.getDioStatus(e),
-      );
+      if (e is DioException) {
+        final message =
+            e.response?.data["message"] ?? "Une erreur est survenue";
+        return ApiResultService.failure(message);
+      }
+      return ApiResultService.failure("Erreur inconnue");
     }
   }
 
@@ -88,10 +119,12 @@ class AuthRepository {
       return ApiResultService.success(data: UserModel.fromJson(response.data));
     } catch (e) {
       debugPrint('==> register failure: $e');
-      return ApiResultService.failure(
-        error: NetworkExceptionsService.getDioException(e),
-        statusCode: NetworkExceptionsService.getDioStatus(e),
-      ); // Retourne une réponse d'échec en cas d'erreur
+      if (e is DioException) {
+        final message =
+            e.response?.data["message"] ?? "Une erreur est survenue";
+        return ApiResultService.failure(message);
+      }
+      return ApiResultService.failure("Erreur inconnue");
     }
   }
 
@@ -107,10 +140,16 @@ class AuthRepository {
       return ApiResultService.success(data: UserModel.fromJson(response.data));
     } catch (e) {
       debugPrint('==> login failure: $e');
-      return ApiResultService.failure(
+      if (e is DioException) {
+        final message =
+            e.response?.data["message"] ?? "Une erreur est survenue";
+        return ApiResultService.failure(message);
+      }
+      return ApiResultService.failure("Erreur inconnue");
+      /* return ApiResultService.failure(
         error: NetworkExceptionsService.getDioException(e),
         statusCode: NetworkExceptionsService.getDioStatus(e),
-      );
+      );*/
     }
   }
 

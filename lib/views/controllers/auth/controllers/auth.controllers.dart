@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:get/route_manager.dart';
 import 'package:voyagedifiant/core/repositories/Auth/auth.repository.dart';
@@ -13,7 +14,8 @@ class AuthController extends GetxController {
   bool isLoading = false;
   String username = "";
   String email = "";
-  String? emailError;
+  var emailError = ''.obs;
+  var phoneError = ''.obs;
   String number = "";
   String city = "";
   String password = "";
@@ -27,21 +29,22 @@ class AuthController extends GetxController {
     final response = await authRepository.sendOtp(
       email: email,
     );
-    if (response.statusCode == 200) {
+    if (response.isSuccess()) {
       return true;
     } else {
-      debugPrint(response.error.toString());
+      debugPrint(
+          response.error.toString()); // Affiche l'erreur dans le cas d'échec
       return false;
     }
   }
 
-   Future<bool> verifyOtp({required String enteredOtp}) async {
+  Future<bool> verifyOtp({required String enteredOtp}) async {
     final result = await authRepository.verifyOtp(
       email: email,
       otp: enteredOtp,
     );
 
-    return result.statusCode == 200;
+    return result == 200;
   }
 
   Future<void> onLogin() async {
@@ -68,13 +71,19 @@ class AuthController extends GetxController {
           print(response);
           print("il est connecté ..........................");
         },
-        failure: (failure, status) {
+        failure: (errorMessage) {
+          isLoading = false;
+          isLoginError = true;
+          update();
+          _showNoInternetPopup(errorMessage); // Message exact de l’API
+        },
+        /*(failure, status) {
           isLoading = false;
           isLoginError = true;
           update();
 
           _showNoInternetPopup("Pas dans la bd");
-        },
+        },*/
       );
     }
   }
@@ -110,17 +119,26 @@ class AuthController extends GetxController {
 
       response.when(
         success: (data) async {
-          LocalStorage.instance.setToken(data?.token);
-          print("compte créé avec token : ${data?.token}");
+          LocalStorage.instance.setToken(data.token);
+          print("compte créé avec token : ${data.token}");
           result = true;
           await sendOtpToEmail(email);
           Get.toNamed(Routes.NUMBER_VERIFICATION_PAGE);
         },
-        failure: (failure, status) {
+        failure: (errorMessage) {
           isLoading = false;
           isLoginError = true;
+
           update();
-          _showNoInternetPopup("Pas dans la BD");
+          if (errorMessage.contains("email")) {
+            emailError.value = "L'email est déjà pris.";
+          }
+          if (errorMessage.contains("phone")) {
+            phoneError.value = "Le numéro est déjà utilisé.";
+          } else {
+            emailError.value = errorMessage;
+          }
+          //_showNoInternetPopup(errorMessage);
         },
       );
 
@@ -150,6 +168,7 @@ class AuthController extends GetxController {
 
   void setNumber(String text) {
     number = text.replaceAll(RegExp(r'[^0-9]'), '');
+    phoneError.value = '';
     isLoginError = false;
     isNumberNotValid = false;
     isPasswordNotValid = false;
@@ -166,6 +185,7 @@ class AuthController extends GetxController {
 
   void setEmail(String text) {
     email = text.trim();
+    emailError.value = '';
     isLoginError = false;
     isNumberNotValid = false;
     isPasswordNotValid = false;
