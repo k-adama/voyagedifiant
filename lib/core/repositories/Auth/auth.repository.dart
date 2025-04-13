@@ -26,32 +26,32 @@ class AuthRepository {
     }
   }*/
   Future<ApiResultService> sendOtp({
-  required String email,
-}) async {
-  try {
-    final client = server.client(requireAuth: false);
-    final response = await client.post(
-      '/send-otp',
-      data: {
-        'email': email,
-      },
-    );
-    debugPrint(response.data.toString());
+    required String email,
+  }) async {
+    try {
+      final client = server.client(requireAuth: false);
+      final response = await client.post(
+        '/send-otp',
+        data: {
+          'email': email,
+        },
+      );
+      debugPrint(response.data.toString());
 
-    // Retourne la réponse de l'API encapsulée dans ApiResultService
-    return ApiResultService.success(data: response.data);
-  } catch (e) {
-    debugPrint('==> otp failure: $e');
-    if (e is DioException) {
-      final message =
-          e.response?.data["message"] ?? "Une erreur est survenue";
-      return ApiResultService.failure(message);
+      // Retourne la réponse de l'API encapsulée dans ApiResultService
+      return ApiResultService.success(data: response.data);
+    } catch (e) {
+      debugPrint('==> otp failure: $e');
+      if (e is DioException) {
+        final message =
+            e.response?.data["message"] ?? "Une erreur est survenue";
+        return ApiResultService.failure(message);
+      }
+      return ApiResultService.failure("Erreur inconnue");
     }
-    return ApiResultService.failure("Erreur inconnue");
   }
-}
 
- /* Future<ApiResultService> sendOtp({
+  /* Future<ApiResultService> sendOtp({
     required String email,
   }) async {
     try {
@@ -128,7 +128,52 @@ class AuthRepository {
     }
   }
 
-  Future<ApiResultService<UserModel>> login(
+  Future<ApiResultService<UserModel>> login({
+    required String phone,
+    required String password,
+  }) async {
+    try {
+      final client = server.client(requireAuth: false);
+      final response = await client.post(
+        '/login',
+        data: {'phone': phone, 'password': password},
+      );
+      debugPrint(response.data.toString());
+      return ApiResultService.success(data: UserModel.fromJson(response.data));
+    } catch (e) {
+      debugPrint('==> login failure: $e');
+
+      if (e is DioException) {
+        final data = e.response?.data;
+
+        // Récupère le message principal
+        String message = data?["message"] ?? "Une erreur est survenue";
+
+        // Récupère les erreurs spécifiques si présentes
+        if (data?['errors'] != null) {
+          final errors = data['errors'] as Map<String, dynamic>;
+
+          // On concatène les messages d'erreur spécifiques
+          List<String> detailedErrors = [];
+          errors.forEach((key, value) {
+            if (value is List && value.isNotEmpty) {
+              detailedErrors.add(value.first.toString());
+            }
+          });
+
+          if (detailedErrors.isNotEmpty) {
+            message = detailedErrors.join('\n'); // si plusieurs erreurs
+          }
+        }
+
+        return ApiResultService.failure(message);
+      }
+
+      return ApiResultService.failure("Erreur inconnue");
+    }
+  }
+
+/*  Future<ApiResultService<UserModel>> login(
       {required String phone, required String password}) async {
     try {
       final client = server.client(requireAuth: false);
@@ -146,12 +191,9 @@ class AuthRepository {
         return ApiResultService.failure(message);
       }
       return ApiResultService.failure("Erreur inconnue");
-      /* return ApiResultService.failure(
-        error: NetworkExceptionsService.getDioException(e),
-        statusCode: NetworkExceptionsService.getDioStatus(e),
-      );*/
+      
     }
-  }
+  }*/
 
   /*  Future<ApiResultService<LoginResponseEntity>> login({
     required String email,

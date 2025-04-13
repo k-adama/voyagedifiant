@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
 import 'package:voyagedifiant/core/constants/app_colors.dart';
 import 'package:voyagedifiant/core/routes/app_pages.dart';
+import 'package:voyagedifiant/core/services/local_storage.dart';
 
 class SplashView extends StatefulWidget {
   const SplashView({super.key});
@@ -18,6 +19,10 @@ class _SplashViewState extends State<SplashView>
   @override
   void initState() {
     super.initState();
+    _loadSplashImages();
+  }
+
+  Future<void> _loadSplashImages() async {
     _controller = AnimationController(
       duration: const Duration(seconds: 3),
       vsync: this,
@@ -27,9 +32,16 @@ class _SplashViewState extends State<SplashView>
     );
 
     _controller.forward();
+    await Future.delayed(const Duration(seconds: 4), () async {
+      final token = await LocalStorage.instance.getToken();
+      final otpVerified =
+          await LocalStorage.instance.getBool("otp_verified") ?? false;
 
-    Future.delayed(const Duration(seconds: 4), () {
-      Get.offAllNamed(Routes.LOGIN_PAGE);
+      if (token != null && token.isNotEmpty && otpVerified) {
+        Get.offAllNamed(Routes.HOME_PAGE);
+      } else {
+        Get.offAllNamed(Routes.LOGIN_PAGE);
+      }
     });
   }
 

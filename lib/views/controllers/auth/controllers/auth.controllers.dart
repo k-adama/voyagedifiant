@@ -16,12 +16,15 @@ class AuthController extends GetxController {
   String email = "";
   var emailError = ''.obs;
   var phoneError = ''.obs;
+  var loginPhoneError = ''.obs;
+  var passwordError = ''.obs;
   String number = "";
   String city = "";
   String password = "";
-  bool isLoginError = false;
   bool isNumberNotValid = false;
   bool isPasswordNotValid = false;
+  String tempToken = '';
+  int? tempUserId;
 
   final authRepository = AuthRepository();
 
@@ -39,18 +42,40 @@ class AuthController extends GetxController {
   }
 
   Future<bool> verifyOtp({required String enteredOtp}) async {
-    final result = await authRepository.verifyOtp(
+    final response = await authRepository.verifyOtp(
       email: email,
       otp: enteredOtp,
     );
 
-    return result == 200;
+    bool result = false;
+
+    response.when(
+      success: (_) {
+        LocalStorage.instance.setToken(tempToken);
+        LocalStorage.instance.setBool("otp_verified", true);
+        LocalStorage.instance.setUserId(tempUserId ?? 0);
+        result = true;
+        Get.offAllNamed(Routes.HOME_PAGE);
+        Get.snackbar("Bravo", 'Inscription réussie',
+            snackPosition: SnackPosition.TOP,
+            backgroundColor: Colors.green,
+            colorText: Colors.white);
+      },
+      failure: (errorMessage) {
+        Get.snackbar("Erreur", errorMessage,
+            snackPosition: SnackPosition.TOP,
+            backgroundColor: Colors.green,
+            colorText: Colors.white);
+        result = false;
+      },
+    );
+
+    return result;
   }
 
   Future<void> onLogin() async {
     final connected = await AppConnectivityService.connectivity();
     if (number.isEmpty || password.isEmpty) {
-      isLoginError = true;
       update();
       return;
     }
@@ -65,7 +90,7 @@ class AuthController extends GetxController {
       );
       response.when(
         success: (data) async {
-          // LocalStorage.instance.setToken(data?.token);
+          LocalStorage.instance.setToken(data.token);
           //await getUser(context);
           print("il est connecté");
           print(response);
@@ -73,17 +98,14 @@ class AuthController extends GetxController {
         },
         failure: (errorMessage) {
           isLoading = false;
-          isLoginError = true;
+          if (errorMessage.contains("téléphone")) {
+            loginPhoneError.value = "! Numéro incorrect.";
+          } else if (errorMessage.contains("mot de passe")) {
+            passwordError.value = "! Mot de passe incorrect.";
+          }
           update();
-          _showNoInternetPopup(errorMessage); // Message exact de l’API
+          _showNoInternetPopup(errorMessage);
         },
-        /*(failure, status) {
-          isLoading = false;
-          isLoginError = true;
-          update();
-
-          _showNoInternetPopup("Pas dans la bd");
-        },*/
       );
     }
   }
@@ -95,7 +117,6 @@ class AuthController extends GetxController {
         city.isEmpty ||
         number.isEmpty ||
         password.isEmpty) {
-      isLoginError = true;
       update();
       return false; // ici aussi
     }
@@ -119,15 +140,17 @@ class AuthController extends GetxController {
 
       response.when(
         success: (data) async {
+          tempToken = data.token ?? '';
+          tempUserId = data.userId;
           LocalStorage.instance.setToken(data.token);
           print("compte créé avec token : ${data.token}");
           result = true;
           await sendOtpToEmail(email);
+          isLoading = false;
           Get.toNamed(Routes.NUMBER_VERIFICATION_PAGE);
         },
         failure: (errorMessage) {
           isLoading = false;
-          isLoginError = true;
 
           update();
           if (errorMessage.contains("email")) {
@@ -160,7 +183,6 @@ class AuthController extends GetxController {
 
   void setPassword(String text) {
     password = text.trim();
-    isLoginError = false;
     isNumberNotValid = false;
     isPasswordNotValid = false;
     update();
@@ -169,7 +191,7 @@ class AuthController extends GetxController {
   void setNumber(String text) {
     number = text.replaceAll(RegExp(r'[^0-9]'), '');
     phoneError.value = '';
-    isLoginError = false;
+    loginPhoneError.value = '';
     isNumberNotValid = false;
     isPasswordNotValid = false;
     update();
@@ -177,7 +199,6 @@ class AuthController extends GetxController {
 
   void setUsername(String text) {
     username = text.trim();
-    isLoginError = false;
     isNumberNotValid = false;
     isPasswordNotValid = false;
     update();
@@ -186,7 +207,6 @@ class AuthController extends GetxController {
   void setEmail(String text) {
     email = text.trim();
     emailError.value = '';
-    isLoginError = false;
     isNumberNotValid = false;
     isPasswordNotValid = false;
 
@@ -195,7 +215,6 @@ class AuthController extends GetxController {
 
   void setCity(String text) {
     city = text.trim();
-    isLoginError = false;
     isNumberNotValid = false;
     isPasswordNotValid = false;
     update();

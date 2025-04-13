@@ -1,23 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/instance_manager.dart';
-import 'package:get/get_utils/src/extensions/internacionalization.dart';
-import 'package:get/route_manager.dart';
-import 'package:intl_phone_field/intl_phone_field.dart';
-import 'package:voyagedifiant/app_translate.dart';
 import 'package:voyagedifiant/core/constants/app_colors.dart';
 import 'package:voyagedifiant/core/constants/app_defaults.dart';
-import 'package:voyagedifiant/core/routes/app_pages.dart';
 import 'package:voyagedifiant/core/themes/app_themes.dart';
-import 'package:voyagedifiant/core/utils/validators.dart';
 import 'package:voyagedifiant/core/widgets/buttons/app_button.dart';
 import 'package:voyagedifiant/core/widgets/textfield/password_field.dart';
 import 'package:voyagedifiant/core/widgets/textfield/phone_input_field.dart';
 import 'package:voyagedifiant/views/controllers/auth/controllers/auth.controllers.dart';
 import 'package:voyagedifiant/views/pages/auth/register/components/already_have_accout.dart';
 import 'package:country_picker/country_picker.dart';
-
-const List<String> list = <String>['Soubré', 'Gagnoa', 'Boundiali', 'Abidjan'];
 
 class RegisterPageForm extends StatefulWidget {
   const RegisterPageForm({super.key});
@@ -35,7 +26,7 @@ class _RegisterPageFormState extends State<RegisterPageForm> {
 
   Future<void> onRegister() async {
     if (_formKey.currentState != null && _formKey.currentState!.validate()) {
-      await _authController.onRegister();
+      _authController.onRegister();
     }
   }
 
@@ -216,12 +207,16 @@ class _RegisterPageFormState extends State<RegisterPageForm> {
                   },
                 ),
                 const SizedBox(height: 12),
-                AppCustomButton(
-                  onPressed: onRegister,
-                  buttonText: "sign_up_register".tr,
-                  textColor: AppColors.white,
-                  buttonColor: AppColors.primaryColor,
-                ),
+                authController.isLoading
+                    ? const Center(child: CircularProgressIndicator())
+                    : AppCustomButton(
+                        onPressed: () async {
+                          await onRegister();
+                        },
+                        buttonText: "sign_up_register".tr,
+                        textColor: AppColors.white,
+                        buttonColor: AppColors.primaryColor,
+                      ),
                 const AlreadyHaveAnAccount(),
               ],
             ),

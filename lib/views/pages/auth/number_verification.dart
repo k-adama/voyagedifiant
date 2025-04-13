@@ -145,24 +145,8 @@ class _NumberVerificationPageState extends State<NumberVerificationPage> {
                                     ),
                                   ),
                                   onCompleted: (pin) async {
-                                    bool isOtpValid = await _authController
-                                        .verifyOtp(enteredOtp: enteredOtp);
-                                    if (isOtpValid) {
-                                      TopSnackbar.show(
-                                        context,
-                                        message: "OTP vérifié avec succès",
-                                        backgroundColor: Colors
-                                            .green, // Couleur de fond de succès
-                                      );
-                                    } else {
-                                      // Afficher un message d'erreur avec TopSnackbar
-                                      TopSnackbar.show(
-                                        context,
-                                        message: "OTP invalide",
-                                        backgroundColor: Colors
-                                            .red, // Couleur de fond d'erreur
-                                      );
-                                    }
+                                    await _authController.verifyOtp(
+                                        enteredOtp: enteredOtp);
                                   },
                                 ),
                                 const SizedBox(height: 24),
@@ -337,19 +321,6 @@ class _NumberVerificationPageState extends State<NumberVerificationPage> {
           ),
         ),
       ),*/
-    );
-  }
-}
-
-class TopSnackbar {
-  static void show(BuildContext context,
-      {required String message, required Color backgroundColor}) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(message),
-        backgroundColor: backgroundColor,
-        duration: Duration(seconds: 2),
-      ),
     );
   }
 }

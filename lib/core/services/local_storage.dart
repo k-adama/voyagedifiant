@@ -37,6 +37,26 @@ class LocalStorage {
     }
   }
 
+  Future<void> setBool(String key, bool value) async {
+    await _preferences?.setBool(key, value);
+  }
+
+  Future<void> setUserId(int value) async {
+    await _preferences?.setInt(AuthConstant.userIdKey, value);
+  }
+
+  Future<String?> getToken() async {
+    return _preferences?.getString(AuthConstant.keyToken);
+  }
+
+  Future<bool?> getBool(String key) async {
+    return _preferences?.getBool(key);
+  }
+
+  Future<int?> getUserId() async {
+    return _preferences?.getInt(AuthConstant.userIdKey);
+  }
+
   String? getCurrentLanguage() {
     return _preferences?.getString('language');
   }
@@ -45,6 +65,19 @@ class LocalStorage {
     if (_preferences != null) {
       await _preferences!.setString('language', language ?? '');
     }
+  }
+
+//logout
+  Future<void> removeToken() async {
+    await _preferences?.remove(AuthConstant.keyToken);
+  }
+
+  Future<void> removeBool(String key) async {
+    await _preferences?.remove(key);
+  }
+
+  Future<void> removeUserId(String key) async {
+    await _preferences?.remove(key);
   }
 
   void logout() {}
