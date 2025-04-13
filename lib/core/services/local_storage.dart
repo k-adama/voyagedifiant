@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:voyagedifiant/core/constants/auth.constant.dart';
+import 'package:voyagedifiant/core/models/user.dart';
 
 class LocalStorage {
   static SharedPreferences? _preferences;
@@ -29,6 +30,26 @@ class LocalStorage {
 
   Future<void> _init() async {
     _preferences = await SharedPreferences.getInstance();
+  }
+
+  String? get(String key) {
+    return _preferences?.getString(key);
+  }
+
+  Future<void> setUser(UserModel user) async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setString('user', jsonEncode(user.toJson()));
+  }
+
+  Future<UserModel?> getUser() async {
+    final prefs = await SharedPreferences.getInstance();
+    final userJson = prefs.getString('user');
+    if (userJson == null) return null;
+    return UserModel.fromJson(jsonDecode(userJson));
+  }
+
+  Future<void> set(String key, String value) async {
+    await _preferences?.setString(key, value);
   }
 
   Future<void> setToken(String? token) async {

@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:voyagedifiant/core/constants/app_colors.dart';
+import 'package:voyagedifiant/core/constants/app_helpers.dart';
 
 class DrawerPageHearderComponent extends StatelessWidget {
   const DrawerPageHearderComponent({super.key});
 
   @override
   Widget build(BuildContext context) {
-    // final user = AppHelpersCommon.getUserInLocalStorage();
+    final user = AppHelpersCommon.getUserInLocalStorage();
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -33,7 +34,7 @@ class DrawerPageHearderComponent extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.only(top: 5.0),
           child: Text(
-            "Chara",
+            user!.name ?? "",
             style: AppColors.interBold(color: AppColors.signUpColor, size: 15),
           ),
         ),

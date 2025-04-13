@@ -18,4 +18,16 @@ class UserModel {
       token: json['token'], // Token est à la racine
     );
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'user': {
+        'id': userId,
+        'name': name,
+        'phone': phone,
+        'email': email,
+      },
+      'token': token,
+    };
+  }
 }

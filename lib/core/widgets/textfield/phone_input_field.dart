@@ -48,7 +48,7 @@ class PhoneInputField extends StatelessWidget {
             border: const OutlineInputBorder(
               borderSide: BorderSide(),
             ),
-            errorText: errorText,
+            errorText: errorText ?? field.errorText,
           ),
           languageCode: "fr",
           onChanged: (phone) {

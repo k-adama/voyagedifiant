@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:get/route_manager.dart';
+import 'package:voyagedifiant/core/constants/auth.constant.dart';
 import 'package:voyagedifiant/core/repositories/Auth/auth.repository.dart';
 import 'package:voyagedifiant/core/routes/app_pages.dart';
 import 'package:voyagedifiant/core/services/app_connectivity.service.dart';
@@ -35,8 +36,7 @@ class AuthController extends GetxController {
     if (response.isSuccess()) {
       return true;
     } else {
-      debugPrint(
-          response.error.toString()); // Affiche l'erreur dans le cas d'échec
+      debugPrint(response.error.toString());
       return false;
     }
   }
@@ -91,10 +91,14 @@ class AuthController extends GetxController {
       response.when(
         success: (data) async {
           LocalStorage.instance.setToken(data.token);
+          LocalStorage.instance.setBool("otp_verified", true);
+          LocalStorage.instance.setUserId(tempUserId ?? 0);
+          await LocalStorage.instance.set(
+            AuthConstant.keyUser,
+            jsonEncode(data.toJson()),
+          );
+          Get.offAllNamed(Routes.HOME_PAGE);
           //await getUser(context);
-          print("il est connecté");
-          print(response);
-          print("il est connecté ..........................");
         },
         failure: (errorMessage) {
           isLoading = false;
@@ -104,7 +108,6 @@ class AuthController extends GetxController {
             passwordError.value = "! Mot de passe incorrect.";
           }
           update();
-          _showNoInternetPopup(errorMessage);
         },
       );
     }
@@ -142,7 +145,6 @@ class AuthController extends GetxController {
         success: (data) async {
           tempToken = data.token ?? '';
           tempUserId = data.userId;
-          LocalStorage.instance.setToken(data.token);
           print("compte créé avec token : ${data.token}");
           result = true;
           await sendOtpToEmail(email);

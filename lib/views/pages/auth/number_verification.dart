@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get_instance/src/extension_instance.dart';
@@ -19,6 +21,45 @@ class _NumberVerificationPageState extends State<NumberVerificationPage> {
   final AuthController _authController = Get.find();
   Color getBorderColor() {
     return _authController.checkOtp ? AppColors.signUpColor : AppColors.black;
+  }
+
+  bool isButtonDisabled = true;
+  int countdown = 20;
+  Timer? timer;
+
+  @override
+  void initState() {
+    super.initState();
+    _startCountdown();
+  }
+
+  void _startCountdown() {
+    timer = Timer.periodic(const Duration(seconds: 1), (Timer t) {
+      if (countdown == 0) {
+        t.cancel();
+        setState(() {
+          isButtonDisabled = false;
+        });
+      } else {
+        setState(() {
+          countdown--;
+        });
+      }
+    });
+  }
+
+  void _restartCountdown() {
+    setState(() {
+      isButtonDisabled = true;
+      countdown = 20;
+    });
+    _startCountdown();
+  }
+
+  @override
+  void dispose() {
+    timer?.cancel();
+    super.dispose();
   }
 
   @override
@@ -154,7 +195,27 @@ class _NumberVerificationPageState extends State<NumberVerificationPage> {
                                   "Vous n'avez pas reçu de code ?",
                                   style: AppColors.interNormal(),
                                 ),
-                                TextButton(
+                                isButtonDisabled
+                                    ? Text(
+                                        "Réessayez dans ${countdown}s",
+                                        style: AppColors.interNormal(
+                                            color: Colors.grey),
+                                      )
+                                    : TextButton(
+                                        onPressed: () async {
+                                          _restartCountdown();
+                                          await _authController.sendOtpToEmail(
+                                            _authController.email,
+                                          );
+                                        },
+                                        child: Text(
+                                          'Réessayer',
+                                          style: AppColors.interNormal(
+                                            color: AppColors.signUpColor,
+                                          ),
+                                        ),
+                                      ),
+                                /* TextButton(
                                     onPressed: () async {
                                       await _authController.sendOtpToEmail(
                                         _authController.email,
@@ -166,7 +227,7 @@ class _NumberVerificationPageState extends State<NumberVerificationPage> {
                                       style: AppColors.interNormal(
                                         color: AppColors.signUpColor,
                                       ),
-                                    ))
+                                    ))*/
                               ],
                             ),
                           ),
