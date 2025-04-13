@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/instance_manager.dart';
 import 'package:get/get_utils/src/extensions/internacionalization.dart';
 import 'package:get/route_manager.dart';
+import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:voyagedifiant/app_translate.dart';
 import 'package:voyagedifiant/core/constants/app_colors.dart';
 import 'package:voyagedifiant/core/constants/app_defaults.dart';
@@ -13,6 +14,7 @@ import 'package:voyagedifiant/core/widgets/textfield/password_field.dart';
 import 'package:voyagedifiant/core/widgets/textfield/phone_input_field.dart';
 import 'package:voyagedifiant/views/controllers/auth/controllers/auth.controllers.dart';
 import 'package:voyagedifiant/views/pages/auth/register/components/already_have_accout.dart';
+import 'package:country_picker/country_picker.dart';
 
 const List<String> list = <String>['Soubré', 'Gagnoa', 'Boundiali', 'Abidjan'];
 
@@ -135,31 +137,80 @@ class _RegisterPageFormState extends State<RegisterPageForm> {
               const SizedBox(
                 height: 12,
               ),
-              GestureDetector(
-                onTap: _openCitySelector,
-                child: SizedBox(
-                  height: 50,
-                  child: InputDecorator(
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8),
-                        borderSide: const BorderSide(color: Colors.black),
-                      ),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          selectedCity ?? 'select_city'.tr,
-                          style: const TextStyle(
-                              color: AppColors.black, fontSize: 16),
+              FormField<String>(
+                validator: (value) {
+                  if (selectedCity == null) {
+                    return 'Veuillez sélectionner une ville';
+                  }
+                  return null;
+                },
+                builder: (FormFieldState<String> state) {
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          showCountryPicker(
+                            context: context,
+                            showPhoneCode: false,
+                            showSearch: true,
+                            onSelect: (Country country) {
+                              setState(() {
+                                selectedCity = country.name;
+                                state.didChange(country.name);
+                              });
+                              authController.setCity(country.name);
+                            },
+                            countryListTheme: CountryListThemeData(
+                              borderRadius: const BorderRadius.only(
+                                topLeft: Radius.circular(16),
+                                topRight: Radius.circular(16),
+                              ),
+                              backgroundColor: Colors.white,
+                              textStyle: const TextStyle(
+                                  fontSize: 14, fontFamily: 'Poppins'),
+                              bottomSheetHeight:
+                                  MediaQuery.of(context).size.height * 0.7,
+                              inputDecoration: InputDecoration(
+                                hintText: 'select_city'.tr,
+                                prefixIcon: const Icon(Icons.search),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                              ),
+                            ),
+                          );
+                        },
+                        child: InputDecorator(
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(8),
+                              borderSide: const BorderSide(color: Colors.black),
+                            ),
+                            errorText: state.hasError ? state.errorText : null,
+                            errorStyle: const TextStyle(
+                                height:
+                                    0.8), // réduit la hauteur du texte d'erreur
+                            contentPadding: const EdgeInsets.symmetric(
+                                horizontal: 12, vertical: 14),
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                selectedCity ?? 'select_city'.tr,
+                                style: const TextStyle(
+                                    color: AppColors.black, fontSize: 16),
+                              ),
+                              const Icon(Icons.arrow_drop_down,
+                                  color: AppColors.black),
+                            ],
+                          ),
                         ),
-                        const Icon(Icons.arrow_drop_down,
-                            color: AppColors.black),
-                      ],
-                    ),
-                  ),
-                ),
+                      ),
+                    ],
+                  );
+                },
               ),
               const SizedBox(
                 height: 12,

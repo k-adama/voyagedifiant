@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get_instance/src/extension_instance.dart';
 import 'package:get/route_manager.dart';
 import 'package:voyagedifiant/core/constants/app_colors.dart';
-import 'package:voyagedifiant/core/routes/app_pages.dart';
 import 'package:pinput/pinput.dart';
 import 'package:voyagedifiant/core/widgets/components/translate_pop_item.dart';
 import 'package:voyagedifiant/views/controllers/auth/controllers/auth.controllers.dart';
