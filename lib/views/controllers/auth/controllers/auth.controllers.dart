@@ -80,7 +80,11 @@ class AuthController extends GetxController {
       return;
     }
     if (!connected) {
-      _showNoInternetPopup('Aucune connexion internet. Vérifiez votre réseau.');
+      Get.snackbar(
+          "Erreur", 'Aucune connexion internet. Vérifiez votre réseau.',
+          snackPosition: SnackPosition.TOP,
+          backgroundColor: Colors.red,
+          colorText: Colors.white);
     } else {
       isLoading = true;
       update();

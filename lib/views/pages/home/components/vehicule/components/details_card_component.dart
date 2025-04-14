@@ -14,6 +14,7 @@ class DetailsCardComponent extends StatefulWidget {
     required this.person,
     required this.bag,
     this.color,
+    required this.airConditioning,
   });
 
   final String? couponBackground;
@@ -21,6 +22,7 @@ class DetailsCardComponent extends StatefulWidget {
   final String price;
   final String person;
   final String bag;
+  final String airConditioning;
   final Color? color;
 
   @override
@@ -110,7 +112,7 @@ class _DetailsCardComponentState extends State<DetailsCardComponent> {
                               children: [
                                 Text(widget.name,
                                     style: AppColors.interBold(
-                                      size: 20,
+                                      size: 14,
                                     )),
                                 const SizedBox(
                                   height: 12,
@@ -180,7 +182,7 @@ class _DetailsCardComponentState extends State<DetailsCardComponent> {
                                           ),
                                           Expanded(
                                             child: Text(
-                                              '${widget.bag} climatisation',
+                                              '${widget.airConditioning} climatisation',
                                               style: AppColors.interNormal(
                                                 color: AppColors.white,
                                                 size: 12,
@@ -264,7 +266,7 @@ class _DetailsCardComponentState extends State<DetailsCardComponent> {
                   },
                   child: Container(
                     padding: const EdgeInsets.all(10),
-                     alignment: Alignment.center,
+                    alignment: Alignment.center,
                     decoration: BoxDecoration(
                       color: isSelected
                           ? AppColors.signUpColor
@@ -272,7 +274,8 @@ class _DetailsCardComponentState extends State<DetailsCardComponent> {
                       borderRadius: AppDefaults.borderRadius,
                     ),
                     child: Text(className,
-                        style: const TextStyle(color: AppColors.white,
+                        style: const TextStyle(
+                          color: AppColors.white,
                         )),
                   ),
                 ),

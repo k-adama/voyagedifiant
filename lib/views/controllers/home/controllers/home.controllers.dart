@@ -1,10 +1,16 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/extension_navigation.dart';
+import 'package:get/get_navigation/src/snackbar/snackbar.dart';
 import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:get/instance_manager.dart';
 import 'package:intl/intl.dart';
 import 'package:voyagedifiant/core/models/driver_model.dart';
+import 'package:voyagedifiant/core/models/vehicule.dart';
+import 'package:voyagedifiant/core/repositories/Auth/home.repository.dart';
+import 'package:voyagedifiant/core/services/app_connectivity.service.dart';
 
 class HomeController extends GetxController {
   DateTime? startDate;
@@ -12,9 +18,85 @@ class HomeController extends GetxController {
   TimeOfDay? startTime;
   TimeOfDay? endTime;
   RxString selectedLieu = "Sélectionner un lieu".obs;
+  bool isVehicleLoading = true;
+  bool hasConnection = true;
+  List<VehicleModel> vehicles = List<VehicleModel>.empty().obs;
+  List<VehicleModel> vehiculeInit = List<VehicleModel>.empty().obs;
+  List<VehicleModel> displayedVehicles = List<VehicleModel>.empty().obs;
+  int currentPage = 0;
+  final int itemsPerPage = 10;
+  bool isLoadingMore = false;
+
+  var randomVehicle = Rx<VehicleModel?>(null);
+  final homeRepository = HomeRepository();
 
   // Format des dates
   final DateFormat dateFormat = DateFormat('dd MMM');
+
+  @override
+  void onReady() async {
+    await Future.wait([
+      fetchVehicles(),
+    ]);
+    super.onReady();
+  }
+
+  Future<void> fetchVehicles() async {
+    final connected = await AppConnectivityService.connectivity();
+    if (!connected) {
+      hasConnection = false;
+      isVehicleLoading = false;
+      update();
+      Get.snackbar(
+          "Erreur", 'Aucune connexion internet. Vérifiez votre réseau.',
+          snackPosition: SnackPosition.TOP,
+          backgroundColor: Colors.red,
+          colorText: Colors.white);
+    } else {
+      hasConnection = true;
+      isVehicleLoading = true;
+      update();
+
+      final result = await homeRepository.getVehicles();
+
+      result.when(
+        success: (data) {
+          vehicles.assignAll(data);
+          vehiculeInit.assignAll(data);
+          displayedVehicles.clear();
+          currentPage = 0;
+          loadMore();
+          if (vehicles.isNotEmpty) {
+            randomVehicle.value = vehicles[Random().nextInt(vehicles.length)];
+          }
+        },
+        failure: (message) {
+          // Gère le message d'erreur comme tu veux
+          debugPrint("Erreur lors du chargement des véhicules : $message");
+        },
+      );
+
+      isVehicleLoading = false;
+      update();
+    }
+  }
+
+ Future<void> loadMore() async {
+  if (isLoadingMore) return;
+
+  isLoadingMore = true;
+  update();
+
+  // Simule un délai pour voir le cercle tourner (ex: 1 seconde)
+  await Future.delayed(const Duration(seconds: 1));
+
+  final currentLength = displayedVehicles.length;
+  final nextItems = vehicles.skip(currentLength).take(10).toList();
+  displayedVehicles.addAll(nextItems);
+
+  isLoadingMore = false;
+  update();
+}
 
   Future<void> selectDateRange() async {
     DateTimeRange? picked = await showDateRangePicker(
