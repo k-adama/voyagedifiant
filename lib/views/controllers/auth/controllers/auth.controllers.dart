@@ -64,7 +64,7 @@ class AuthController extends GetxController {
       failure: (errorMessage) {
         Get.snackbar("Erreur", errorMessage,
             snackPosition: SnackPosition.TOP,
-            backgroundColor: Colors.green,
+            backgroundColor: Colors.red,
             colorText: Colors.white);
         result = false;
       },
