@@ -59,35 +59,40 @@ class _AllVehiculeItemsState extends State<AllVehiculeItems> {
                         background:
                             'assets/icons/undraw_electric_car_b-7-hl 1(1).png',
                       ),
-                      AutoHeightGridView(
-                        shrinkWrap: true,
-                        crossAxisCount: 1,
-                        mainAxisSpacing: 1,
-                        itemCount: ctrl.displayedVehicles.length,
-                        builder: (context, index) {
-                          final vehicle = ctrl.displayedVehicles[index];
-                          return AnimationConfiguration.staggeredGrid(
-                            columnCount: 4,
-                            position: index,
-                            duration: const Duration(milliseconds: 375),
-                            child: ScaleAnimation(
-                              scale: 0.5,
-                              child: FadeInAnimation(
-                                  child: VehiculeCard(
-                                name: vehicle.name,
-                                price: '35000',
-                                person: vehicle.numberOfSeats.toString(),
-                                bag: vehicle.luggage.toString(),
-                                image: "assets/images/Rectangle 11.png",
-                                onTap: () {
-                                  Get.toNamed(Routes.VEHICULE_DETAILS,
-                                      arguments: vehicle);
-                                },
-                              )),
-                            ),
-                          );
-                        },
-                      ),
+                      if (ctrl.isVehicleLoading || !ctrl.hasConnection)
+                        const Center(
+                          child: CircularProgressIndicator(color: AppColors.signUpColor,),
+                        )
+                      else
+                        AutoHeightGridView(
+                          shrinkWrap: true,
+                          crossAxisCount: 1,
+                          mainAxisSpacing: 1,
+                          itemCount: ctrl.displayedVehicles.length,
+                          builder: (context, index) {
+                            final vehicle = ctrl.displayedVehicles[index];
+                            return AnimationConfiguration.staggeredGrid(
+                              columnCount: 4,
+                              position: index,
+                              duration: const Duration(milliseconds: 375),
+                              child: ScaleAnimation(
+                                scale: 0.5,
+                                child: FadeInAnimation(
+                                    child: VehiculeCard(
+                                  name: vehicle.name,
+                                  price: '35000',
+                                  person: vehicle.numberOfSeats.toString(),
+                                  bag: vehicle.luggage.toString(),
+                                  image: "assets/images/Rectangle 11.png",
+                                  onTap: () {
+                                    Get.toNamed(Routes.VEHICULE_DETAILS,
+                                        arguments: vehicle);
+                                  },
+                                )),
+                              ),
+                            );
+                          },
+                        ),
                       if (ctrl.isLoadingMore)
                         const Padding(
                           padding: EdgeInsets.symmetric(vertical: 16),
