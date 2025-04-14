@@ -61,8 +61,12 @@ class _AllVehiculeItemsState extends State<AllVehiculeItems> {
                       ),
                       if (ctrl.isVehicleLoading || !ctrl.hasConnection)
                         const Center(
-                          child: CircularProgressIndicator(color: AppColors.signUpColor,),
+                          child: CircularProgressIndicator(
+                            color: AppColors.signUpColor,
+                          ),
                         )
+                      else if (ctrl.vehicles.isEmpty)
+                        const Center(child: Text("Aucun véhicule disponible"))
                       else
                         AutoHeightGridView(
                           shrinkWrap: true,

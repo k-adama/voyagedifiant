@@ -8,6 +8,7 @@ import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:get/instance_manager.dart';
 import 'package:intl/intl.dart';
 import 'package:voyagedifiant/core/models/driver_model.dart';
+import 'package:voyagedifiant/core/models/touristic_discovery.dart';
 import 'package:voyagedifiant/core/models/vehicule.dart';
 import 'package:voyagedifiant/core/repositories/Auth/home.repository.dart';
 import 'package:voyagedifiant/core/services/app_connectivity.service.dart';
@@ -19,15 +20,27 @@ class HomeController extends GetxController {
   TimeOfDay? endTime;
   RxString selectedLieu = "Sélectionner un lieu".obs;
   bool isVehicleLoading = true;
+  bool isTouristicSiteLoading = true;
   bool hasConnection = true;
   List<VehicleModel> vehicles = List<VehicleModel>.empty().obs;
   List<VehicleModel> vehiculeInit = List<VehicleModel>.empty().obs;
   List<VehicleModel> displayedVehicles = List<VehicleModel>.empty().obs;
+
+  List<TouristicDiscovery> touristicSites =
+      List<TouristicDiscovery>.empty().obs;
+  List<TouristicDiscovery> touristicSitesInit =
+      List<TouristicDiscovery>.empty().obs;
+  List<TouristicDiscovery> displayedTouristicSites =
+      List<TouristicDiscovery>.empty().obs;
+
   int currentPage = 0;
   final int itemsPerPage = 10;
   bool isLoadingMore = false;
+  bool isLoadingMoreTouristicSite = false;
 
   var randomVehicle = Rx<VehicleModel?>(null);
+  RxList<VehicleModel> randomVehicles = <VehicleModel>[].obs;
+
   final homeRepository = HomeRepository();
 
   // Format des dates
@@ -37,6 +50,7 @@ class HomeController extends GetxController {
   void onReady() async {
     await Future.wait([
       fetchVehicles(),
+      fetchTouristicSites(),
     ]);
     super.onReady();
   }
@@ -67,7 +81,9 @@ class HomeController extends GetxController {
           currentPage = 0;
           loadMore();
           if (vehicles.isNotEmpty) {
-            randomVehicle.value = vehicles[Random().nextInt(vehicles.length)];
+            // randomVehicle.value = vehicles[Random().nextInt(vehicles.length)];
+            final shuffled = vehicles.toList()..shuffle();
+            randomVehicles.assignAll(shuffled.take(5));
           }
         },
         failure: (message) {
@@ -81,22 +97,73 @@ class HomeController extends GetxController {
     }
   }
 
- Future<void> loadMore() async {
-  if (isLoadingMore) return;
+  Future<void> fetchTouristicSites() async {
+    final connected = await AppConnectivityService.connectivity();
+    if (!connected) {
+      hasConnection = false;
+      isTouristicSiteLoading = false;
+      update();
+      Get.snackbar(
+          "Erreur", 'Aucune connexion internet. Vérifiez votre réseau.',
+          snackPosition: SnackPosition.TOP,
+          backgroundColor: Colors.red,
+          colorText: Colors.white);
+    } else {
+      hasConnection = true;
+      isTouristicSiteLoading = true;
+      update();
 
-  isLoadingMore = true;
-  update();
+      final result = await homeRepository.getTouristicSites();
+      result.when(
+        success: (data) {
+          touristicSites.assignAll(data);
+          touristicSitesInit.assignAll(data);
+          displayedTouristicSites.clear();
+          currentPage = 0;
+          loadMoreTouristicSites();
+        },
+        failure: (message) {
+          // Gère le message d'erreur comme tu veux
+          debugPrint("Erreur lors du chargement des véhicules : $message");
+        },
+      );
 
-  // Simule un délai pour voir le cercle tourner (ex: 1 seconde)
-  await Future.delayed(const Duration(seconds: 1));
+      isTouristicSiteLoading = false;
+      update();
+    }
+  }
 
-  final currentLength = displayedVehicles.length;
-  final nextItems = vehicles.skip(currentLength).take(10).toList();
-  displayedVehicles.addAll(nextItems);
+  Future<void> loadMore() async {
+    if (isLoadingMore) return;
 
-  isLoadingMore = false;
-  update();
-}
+    isLoadingMore = true;
+    update();
+
+    await Future.delayed(const Duration(seconds: 1));
+
+    final currentLength = displayedVehicles.length;
+    final nextItems = vehicles.skip(currentLength).take(10).toList();
+    displayedVehicles.addAll(nextItems);
+
+    isLoadingMore = false;
+    update();
+  }
+
+  Future<void> loadMoreTouristicSites() async {
+    if (isLoadingMoreTouristicSite) return;
+
+    isLoadingMoreTouristicSite = true;
+    update();
+
+    await Future.delayed(const Duration(seconds: 1));
+
+    final currentLength = displayedTouristicSites.length;
+    final nextItems = touristicSites.skip(currentLength).take(10).toList();
+    displayedTouristicSites.addAll(nextItems);
+
+    isLoadingMoreTouristicSite = false;
+    update();
+  }
 
   Future<void> selectDateRange() async {
     DateTimeRange? picked = await showDateRangePicker(

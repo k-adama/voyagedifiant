@@ -11,6 +11,7 @@ class DetailsCardComponent extends StatefulWidget {
     this.couponBackground,
     required this.name,
     required this.price,
+    required this.businessPrice,
     required this.person,
     required this.bag,
     this.color,
@@ -20,6 +21,7 @@ class DetailsCardComponent extends StatefulWidget {
   final String? couponBackground;
   final String name;
   final String price;
+  final String businessPrice;
   final String person;
   final String bag;
   final String airConditioning;
@@ -235,7 +237,7 @@ class _DetailsCardComponentState extends State<DetailsCardComponent> {
           ),
           _buildClassButton('Economie', widget.price),
           const Divider(thickness: 2, color: AppColors.gray),
-          _buildClassButton('Business', widget.price),
+          _buildClassButton('Business', widget.businessPrice),
           const SizedBox(
             height: AppDefaults.padding,
           ),

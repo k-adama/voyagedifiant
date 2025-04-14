@@ -1,10 +1,11 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
+import 'package:get/instance_manager.dart';
 import 'package:get/route_manager.dart';
 import 'package:voyagedifiant/core/constants/app_colors.dart';
-import 'package:voyagedifiant/core/constants/app_defaults.dart';
 import 'package:voyagedifiant/core/routes/app_pages.dart';
-import 'package:voyagedifiant/core/widgets/components/app_login_register_header.dart';
 import 'package:voyagedifiant/core/widgets/components/appbar/drawer_page.component.dart';
 import 'package:voyagedifiant/views/controllers/home/controllers/home.controllers.dart';
 import 'package:voyagedifiant/views/pages/home/components/hotel_tourist_site/hotel_tourist_site_component.dart';
@@ -19,6 +20,39 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final HomeController homeController = Get.find();
+  late PageController _pageController;
+  int _currentPage = 0;
+  Timer? _pageTimer;
+
+  @override
+  void initState() {
+    super.initState();
+    _pageController = PageController(viewportFraction: 0.85);
+
+    _pageTimer = Timer.periodic(const Duration(seconds: 4), (Timer timer) {
+      if (homeController.randomVehicles.isNotEmpty) {
+        if (_currentPage < homeController.randomVehicles.length - 1) {
+          _currentPage++;
+        } else {
+          _currentPage = 0;
+        }
+        _pageController.animateToPage(
+          _currentPage,
+          duration: const Duration(milliseconds: 500),
+          curve: Curves.easeInOut,
+        );
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    _pageTimer?.cancel();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -122,11 +156,37 @@ class _HomePageState extends State<HomePage> {
                             else if (homeController.vehicles.isEmpty)
                               const Center(
                                   child: Text("Aucun véhicule disponible"))
-                            else if (homeController.randomVehicle.value == null)
+                            else if (homeController.randomVehicles.isEmpty)
                               const Center(
                                   child: Text("Aucun véhicule sélectionné"))
                             else
-                              VehiculeCard(
+                              SizedBox(
+                                height:
+                                    MediaQuery.of(context).size.height * 0.2,
+                                child: PageView.builder(
+                                  itemCount:
+                                      homeController.randomVehicles.length,
+                                  controller: _pageController,
+                                  itemBuilder: (context, index) {
+                                    final vehicle =
+                                        homeController.randomVehicles[index];
+                                    return VehiculeCard(
+                                      name: vehicle.name,
+                                      price: vehicle.economyPrice.toString(),
+                                      person: vehicle.numberOfSeats.toString(),
+                                      bag: vehicle.luggage.toString(),
+                                      image: vehicle.imageUrl,
+                                      onTap: () {
+                                        Get.toNamed(
+                                          Routes.VEHICULE_DETAILS,
+                                          arguments: vehicle,
+                                        );
+                                      },
+                                    );
+                                  },
+                                ),
+                              ),
+                            /*VehiculeCard(
                                 name: homeController.randomVehicle.value!.name,
                                 price: '3000'
                                     .toString(),
@@ -142,7 +202,7 @@ class _HomePageState extends State<HomePage> {
                                       arguments:
                                           homeController.randomVehicle.value);
                                 },
-                              ),
+                              ),*/
 
                             /* homeController.isVehicleLoading == true
                                 ? const Center(

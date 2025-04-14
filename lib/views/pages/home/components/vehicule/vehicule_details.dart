@@ -42,7 +42,8 @@ class _VehiculeDetailsState extends State<VehiculeDetails> {
             children: [
               DetailsCardComponent(
                 name: vehicle?.name ?? '',
-                price: '13000',
+                price: vehicle?.economyPrice.toString() ?? '',
+                businessPrice: vehicle?.businessPrice.toString() ?? '',
                 person: vehicle?.numberOfSeats.toString() ?? '',
                 bag: vehicle?.luggage.toString() ?? '',
                 couponBackground:
