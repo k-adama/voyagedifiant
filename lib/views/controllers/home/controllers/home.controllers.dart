@@ -40,6 +40,7 @@ class HomeController extends GetxController {
 
   var randomVehicle = Rx<VehicleModel?>(null);
   RxList<VehicleModel> randomVehicles = <VehicleModel>[].obs;
+  RxList<TouristicDiscovery> randomTouristicSites = <TouristicDiscovery>[].obs;
 
   final homeRepository = HomeRepository();
 
@@ -83,11 +84,10 @@ class HomeController extends GetxController {
           if (vehicles.isNotEmpty) {
             // randomVehicle.value = vehicles[Random().nextInt(vehicles.length)];
             final shuffled = vehicles.toList()..shuffle();
-            randomVehicles.assignAll(shuffled.take(5));
+            randomVehicles.assignAll(shuffled.take(20));
           }
         },
         failure: (message) {
-          // Gère le message d'erreur comme tu veux
           debugPrint("Erreur lors du chargement des véhicules : $message");
         },
       );
@@ -121,6 +121,10 @@ class HomeController extends GetxController {
           displayedTouristicSites.clear();
           currentPage = 0;
           loadMoreTouristicSites();
+          if (touristicSites.isNotEmpty) {
+            final shuffled = touristicSites.toList()..shuffle();
+            randomTouristicSites.assignAll(shuffled.take(20));
+          }
         },
         failure: (message) {
           // Gère le message d'erreur comme tu veux

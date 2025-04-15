@@ -8,7 +8,8 @@ import 'package:voyagedifiant/core/constants/app_colors.dart';
 import 'package:voyagedifiant/core/routes/app_pages.dart';
 import 'package:voyagedifiant/core/widgets/components/appbar/drawer_page.component.dart';
 import 'package:voyagedifiant/views/controllers/home/controllers/home.controllers.dart';
-import 'package:voyagedifiant/views/pages/home/components/hotel_tourist_site/hotel_tourist_site_component.dart';
+import 'package:voyagedifiant/views/pages/home/components/decouverte/components/touristic_site.component.dart';
+import 'package:voyagedifiant/views/pages/home/components/sejour/components/hotel_component.dart';
 import 'package:voyagedifiant/views/pages/home/components/services_options.dart';
 import 'package:voyagedifiant/views/pages/home/components/vehicule/vehicule_card.dart';
 
@@ -24,11 +25,13 @@ class _HomePageState extends State<HomePage> {
   late PageController _pageController;
   int _currentPage = 0;
   Timer? _pageTimer;
+  final int _initialPage = 1000;
 
   @override
   void initState() {
     super.initState();
-    _pageController = PageController(viewportFraction: 0.85);
+    _pageController =
+        PageController(initialPage: _initialPage, viewportFraction: 0.85);
 
     _pageTimer = Timer.periodic(const Duration(seconds: 4), (Timer timer) {
       if (homeController.randomVehicles.isNotEmpty) {
@@ -229,9 +232,8 @@ class _HomePageState extends State<HomePage> {
                                 size: 14,
                               ),
                             ),
-                            const HotelTouristSiteItemsComponents(
-                              image: 'assets/images/cascade.png',
-                              name: 'Cascade de Man',
+                            TouristSiteItemsComponents(
+                              sites: homeController.randomTouristicSites,
                             ),
                             const SizedBox(
                               height: 12,
@@ -242,7 +244,7 @@ class _HomePageState extends State<HomePage> {
                                 size: 14,
                               ),
                             ),
-                            const HotelTouristSiteItemsComponents(
+                            const HotelComponents(
                               image: 'assets/images/sofi.png',
                               name: 'Sofitel hôtel Ivoire',
                             ),

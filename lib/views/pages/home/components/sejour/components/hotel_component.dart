@@ -4,11 +4,11 @@ import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:voyagedifiant/core/constants/app_colors.dart';
 import 'package:voyagedifiant/core/constants/app_defaults.dart';
 
-class HotelTouristSiteItemsComponents extends StatelessWidget {
+class HotelComponents extends StatelessWidget {
   //final Product product;
   final String? image;
   final String? name;
-  const HotelTouristSiteItemsComponents({
+  const HotelComponents({
     super.key,
     this.image,
     this.name,

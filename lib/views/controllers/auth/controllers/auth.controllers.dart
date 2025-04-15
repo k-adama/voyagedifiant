@@ -54,6 +54,7 @@ class AuthController extends GetxController {
         LocalStorage.instance.setToken(tempToken);
         LocalStorage.instance.setBool("otp_verified", true);
         LocalStorage.instance.setUserId(tempUserId ?? 0);
+
         result = true;
         Get.offAllNamed(Routes.HOME_PAGE);
         Get.snackbar("Bravo", 'Inscription réussie',
@@ -149,7 +150,10 @@ class AuthController extends GetxController {
         success: (data) async {
           tempToken = data.token ?? '';
           tempUserId = data.userId;
-          print("compte créé avec token : ${data.token}");
+          await LocalStorage.instance.set(
+            AuthConstant.keyUser,
+            jsonEncode(data.toJson()),
+          );
           result = true;
           await sendOtpToEmail(email);
           isLoading = false;

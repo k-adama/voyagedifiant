@@ -93,7 +93,8 @@ class _AllDecouverteItemsState extends State<AllDecouverteItems> {
                                   price:
                                       touristicSites.standardPrice.toString(),
                                   onTap: () {
-                                    Get.toNamed(Routes.DECOUVERTE_DETAILS);
+                                    Get.toNamed(Routes.DECOUVERTE_DETAILS,
+                                     arguments: touristicSites);
                                   },
                                   depart: AppConstants.formatTime(
                                       touristicSites.visitStartTime),
