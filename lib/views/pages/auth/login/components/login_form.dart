@@ -7,7 +7,6 @@ import 'package:voyagedifiant/core/constants/app_colors.dart';
 import 'package:voyagedifiant/core/constants/app_defaults.dart';
 import 'package:voyagedifiant/core/routes/app_pages.dart';
 import 'package:voyagedifiant/core/themes/app_themes.dart';
-import 'package:voyagedifiant/core/utils/validators.dart';
 import 'package:voyagedifiant/core/widgets/buttons/app_button.dart';
 import 'package:voyagedifiant/core/widgets/textfield/password_field.dart';
 import 'package:voyagedifiant/core/widgets/textfield/phone_input_field.dart';
@@ -25,7 +24,7 @@ class LoginPageForm extends StatefulWidget {
 class _LoginPageFormState extends State<LoginPageForm> {
   final _formKey = GlobalKey<FormState>();
 
-  AuthController _authController = Get.find();
+  final AuthController _authController = Get.find();
   bool isRememberMeChecked = false;
   bool isPasswordShown = false;
   final FocusNode myFocusNode = FocusNode();
@@ -37,14 +36,6 @@ class _LoginPageFormState extends State<LoginPageForm> {
   Future<void> onLogin() async {
     if (_formKey.currentState != null && _formKey.currentState!.validate()) {
       _authController.onLogin();
-      /* _authController.onLogin().then((success) {
-        if (_authController.isLoginError ||
-            _authController.isPasswordNotValid) {
-          setState(() {
-            // showError = true;
-          });
-        }
-      });*/
     }
   }
 
@@ -134,14 +125,16 @@ class _LoginPageFormState extends State<LoginPageForm> {
                   ],
                 ),
                 const SizedBox(height: 8),
-                AppCustomButton(
-                  onPressed: () async {
-                    await onLogin();
-                  },
-                  buttonText: "log_in".tr,
-                  textColor: AppColors.white,
-                  buttonColor: AppColors.primaryColor,
-                ),
+                authController.isLoginLoading
+                    ? const Center(child: CircularProgressIndicator())
+                    : AppCustomButton(
+                        onPressed: () async {
+                          await onLogin();
+                        },
+                        buttonText: "log_in".tr,
+                        textColor: AppColors.white,
+                        buttonColor: AppColors.primaryColor,
+                      ),
               ],
             ),
           ),

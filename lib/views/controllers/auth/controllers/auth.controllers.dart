@@ -13,17 +13,23 @@ import 'package:voyagedifiant/core/services/local_storage.dart';
 class AuthController extends GetxController {
   bool checkOtp = false;
   bool isLoading = false;
+  bool isLoginLoading = false;
+  bool isNewPasswordLoading = false;
+  bool sendForgotLoading = false;
   String username = "";
   String email = "";
   var emailError = ''.obs;
   var phoneError = ''.obs;
   var loginPhoneError = ''.obs;
   var passwordError = ''.obs;
+  var newPasswordError = ''.obs;
   String number = "";
   String city = "";
   String password = "";
+  String confirmPassword = "";
   bool isNumberNotValid = false;
   bool isPasswordNotValid = false;
+  bool isConfirmPasswordNotValid = false;
   String tempToken = '';
   int? tempUserId;
 
@@ -39,6 +45,58 @@ class AuthController extends GetxController {
       debugPrint(response.error.toString());
       return false;
     }
+  }
+
+  Future<bool> sendOtpToForgotPassword(String email) async {
+    if (email.isEmpty) {
+      sendForgotLoading = false;
+      update();
+      return false;
+    }
+    sendForgotLoading = true;
+    update();
+    final response = await authRepository.sendOtpForgotPassword(
+      email: email,
+    );
+    if (response.isSuccess()) {
+      Get.toNamed(Routes.PASSWORD_FORGOT_OTP);
+      sendForgotLoading = false;
+      update();
+      return true;
+    } else {
+      debugPrint(response.error.toString());
+      sendForgotLoading = false;
+      update();
+      return false;
+    }
+  }
+
+  Future<bool> verifyOtpForgotPassword({required String enteredOtp}) async {
+    final response = await authRepository.verifyOtpForgotPassword(
+      email: email,
+      otp: enteredOtp,
+    );
+    bool result = false;
+
+    response.when(
+      success: (_) {
+        result = true;
+        Get.toNamed(Routes.NEW_PASSWORD_PAGE);
+        Get.snackbar("Bravo", 'Code vérifié avec succès',
+            snackPosition: SnackPosition.TOP,
+            backgroundColor: Colors.green,
+            colorText: Colors.white);
+      },
+      failure: (errorMessage) {
+        Get.snackbar("Erreur", errorMessage,
+            snackPosition: SnackPosition.TOP,
+            backgroundColor: Colors.red,
+            colorText: Colors.white);
+        result = false;
+      },
+    );
+
+    return result;
   }
 
   Future<bool> verifyOtp({required String enteredOtp}) async {
@@ -74,6 +132,53 @@ class AuthController extends GetxController {
     return result;
   }
 
+  Future<bool> changePassword(
+      String email, String password, String confirmPassword) async {
+    final connected = await AppConnectivityService.connectivity();
+    if (password.isEmpty || confirmPassword.isEmpty) {
+      update();
+      return false;
+    }
+    if (password != confirmPassword) {
+      isNewPasswordLoading = false;
+      update();
+      Get.snackbar("Erreur", 'Vos mots de passe ne sont pas identiques.',
+          snackPosition: SnackPosition.TOP,
+          backgroundColor: Colors.red,
+          colorText: Colors.white);
+      return false;
+    }
+    if (!connected) {
+      Get.snackbar(
+          "Erreur", 'Aucune connexion internet. Vérifiez votre réseau.',
+          snackPosition: SnackPosition.TOP,
+          backgroundColor: Colors.red,
+          colorText: Colors.white);
+    }
+    isNewPasswordLoading = true;
+    update();
+    final response = await authRepository.changePasswordService(
+      email: email,
+      password: password,
+      confirmPassword: confirmPassword,
+    );
+    if (response.isSuccess()) {
+      Get.toNamed(Routes.LOGIN_PAGE);
+      Get.snackbar("Félicitations", 'Mot de passe réinitialisé avec succès.',
+          snackPosition: SnackPosition.TOP,
+          backgroundColor: Colors.green,
+          colorText: Colors.white);
+      isNewPasswordLoading = false;
+      update();
+      return true;
+    } else {
+      isNewPasswordLoading = false;
+      update();
+      debugPrint(response.error.toString());
+      return false;
+    }
+  }
+
   Future<void> onLogin() async {
     final connected = await AppConnectivityService.connectivity();
     if (number.isEmpty || password.isEmpty) {
@@ -87,7 +192,7 @@ class AuthController extends GetxController {
           backgroundColor: Colors.red,
           colorText: Colors.white);
     } else {
-      isLoading = true;
+      isLoginLoading = true;
       update();
       final response = await authRepository.login(
         phone: number,
@@ -106,7 +211,7 @@ class AuthController extends GetxController {
           //await getUser(context);
         },
         failure: (errorMessage) {
-          isLoading = false;
+          isLoginLoading = false;
           if (errorMessage.contains("téléphone")) {
             loginPhoneError.value = "! Numéro incorrect.";
           } else if (errorMessage.contains("mot de passe")) {
@@ -126,7 +231,7 @@ class AuthController extends GetxController {
         number.isEmpty ||
         password.isEmpty) {
       update();
-      return false; // ici aussi
+      return false;
     }
 
     if (!connected) {
@@ -184,8 +289,8 @@ class AuthController extends GetxController {
       content: Text(message),
       backgroundColor: Colors.red,
       behavior: SnackBarBehavior.floating,
-      margin: EdgeInsets.only(top: 50, left: 10, right: 10),
-      duration: Duration(seconds: 3),
+      margin: const EdgeInsets.only(top: 50, left: 10, right: 10),
+      duration: const Duration(seconds: 3),
     );
 
     ScaffoldMessenger.of(Get.context!).showSnackBar(snackBar);
@@ -195,6 +300,13 @@ class AuthController extends GetxController {
     password = text.trim();
     isNumberNotValid = false;
     isPasswordNotValid = false;
+    update();
+  }
+
+  void setConfirmPassword(String text) {
+    confirmPassword = text.trim();
+    isNumberNotValid = false;
+    isConfirmPasswordNotValid = false;
     update();
   }
 

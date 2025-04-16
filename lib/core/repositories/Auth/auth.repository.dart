@@ -38,13 +38,87 @@ class AuthRepository {
       );
       debugPrint(response.data.toString());
 
-      // Retourne la réponse de l'API encapsulée dans ApiResultService
       return ApiResultService.success(data: response.data);
     } catch (e) {
       debugPrint('==> otp failure: $e');
       if (e is DioException) {
         final message =
             e.response?.data["message"] ?? "Une erreur est survenue";
+        return ApiResultService.failure(message);
+      }
+      return ApiResultService.failure("Erreur inconnue");
+    }
+  }
+
+  Future<ApiResultService> changePasswordService({
+    required String email,
+    required String password,
+    required String confirmPassword,
+  }) async {
+    try {
+      final client = server.client(requireAuth: false);
+      final response = await client.post(
+        '/reset-password',
+        data: {
+          'email': email,
+          'password': password,
+          'password_confirmation': confirmPassword,
+        },
+      );
+      debugPrint(response.data.toString());
+
+      return ApiResultService.success(data: response.data);
+    } catch (e) {
+      debugPrint('==> otp forgot password failure: $e');
+      if (e is DioException) {
+        final message =
+            e.response?.data["message"] ?? "Une erreur est survenue";
+        return ApiResultService.failure(message);
+      }
+      return ApiResultService.failure("Erreur inconnue");
+    }
+  }
+
+  Future<ApiResultService> sendOtpForgotPassword({
+    required String email,
+  }) async {
+    try {
+      final client = server.client(requireAuth: false);
+      final response = await client.post(
+        '/forgot-password',
+        data: {
+          'email': email,
+        },
+      );
+      debugPrint(response.data.toString());
+
+      return ApiResultService.success(data: response.data);
+    } catch (e) {
+      debugPrint('==> otp forgot password failure: $e');
+      if (e is DioException) {
+        final message =
+            e.response?.data["message"] ?? "Une erreur est survenue";
+        return ApiResultService.failure(message);
+      }
+      return ApiResultService.failure("Erreur inconnue");
+    }
+  }
+
+  Future<ApiResultService> verifyOtpForgotPassword({
+    required String email,
+    required String otp,
+  }) async {
+    try {
+      final client = server.client(requireAuth: false);
+      final response = await client.post('/verify-otp-forgot-password', data: {
+        'email': email,
+        'otp': otp,
+      });
+      return ApiResultService.success(data: response.data);
+    } catch (e) {
+      if (e is DioException) {
+        final message = e.response?.data["message"] ??
+            "Une erreur est survenue password forgot";
         return ApiResultService.failure(message);
       }
       return ApiResultService.failure("Erreur inconnue");
