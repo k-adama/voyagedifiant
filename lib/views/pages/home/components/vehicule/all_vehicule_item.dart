@@ -53,7 +53,7 @@ class _AllVehiculeItemsState extends State<AllVehiculeItems> {
                       SearchBarComponent(
                         text: "Rechercher un véhicule",
                         onChanged: (text) {
-                          ctrl.hotelSearchFilter(text);
+                          ctrl.searchVehiculeQuery.value = text;
                         },
                       ),
                       const PublicityContainer(

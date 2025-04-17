@@ -26,6 +26,7 @@ class HomeController extends GetxController {
   bool isHotelsLoading = true;
   bool hasConnection = true;
   final RxString searchQuery = ''.obs;
+  final RxString searchVehiculeQuery = ''.obs;
   List<VehicleModel> vehicles = List<VehicleModel>.empty().obs;
   List<VehicleModel> vehiculeInit = List<VehicleModel>.empty().obs;
   List<VehicleModel> displayedVehicles = List<VehicleModel>.empty().obs;
@@ -58,7 +59,13 @@ class HomeController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-
+    debounce<String>(
+      searchVehiculeQuery,
+      (value) {
+        vehiculeSearchFilter(value);
+      },
+      time: const Duration(milliseconds: 300),
+    );
     debounce<String>(
       searchQuery,
       (value) {
@@ -357,10 +364,9 @@ class HomeController extends GetxController {
     ),
   ];
 
-  // Met à jour le chauffeur sélectionné
   void selectChauffeur(DriverModel chauffeur) {
     selectedChauffeur.value = chauffeur;
-    Get.back(); // Ferme le BottomSheet
+    Get.back();
   }
 
   final List<String> lieuxDeRassemblement = [
@@ -406,11 +412,33 @@ class HomeController extends GetxController {
     "Oumé",
   ];
 
+  void vehiculeSearchFilter(String search) {
+    if (vehiculeInit.isEmpty) return;
+
+    if (search.trim().isEmpty) {
+      displayedVehicles.clear();
+      currentPage = 0;
+      loadMore();
+    } else {
+      final searchText = search.toLowerCase();
+
+      final filteredVehicules = vehiculeInit.where((item) {
+        return item.name.toLowerCase().contains(searchText) ||
+            item.economyPrice.toString().contains(searchText) ||
+            //item.neighborhood.toLowerCase().contains(searchText) ||
+            item.businessPrice.toString().contains(searchText);
+      }).toList();
+
+      displayedVehicles.assignAll(filteredVehicules);
+    }
+
+    update();
+  }
+
   void hotelSearchFilter(String search) {
     if (hotelsInit.isEmpty) return;
 
     if (search.trim().isEmpty) {
-      // Réinitialise la pagination aussi si tu veux
       displayedHotels.clear();
       currentPage = 0;
       loadMoreHotels();
