@@ -50,8 +50,11 @@ class _AllVehiculeItemsState extends State<AllVehiculeItems> {
                   padding: const EdgeInsets.all(AppDefaults.padding),
                   child: Column(
                     children: [
-                      const SearchBarComponent(
+                      SearchBarComponent(
                         text: "Rechercher un véhicule",
+                        onChanged: (text) {
+                          ctrl.hotelSearchFilter(text);
+                        },
                       ),
                       const PublicityContainer(
                         name:

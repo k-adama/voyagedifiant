@@ -4,7 +4,9 @@ import 'package:voyagedifiant/core/widgets/components/SearchBottomSheetComponent
 
 class SejourDecouverteTravel extends StatefulWidget {
   final String text;
-  const SejourDecouverteTravel({super.key, required this.text});
+  final String emplacement;
+  const SejourDecouverteTravel(
+      {super.key, required this.text, required this.emplacement});
 
   @override
   State<SejourDecouverteTravel> createState() => _SejourDecouverteTravelState();
@@ -29,7 +31,7 @@ class _SejourDecouverteTravelState extends State<SejourDecouverteTravel> {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-         Text(widget.text),
+          Text(widget.text),
           const SizedBox(
             height: 10,
           ),
@@ -37,7 +39,7 @@ class _SejourDecouverteTravelState extends State<SejourDecouverteTravel> {
             alignment: Alignment.centerLeft,
             padding: const EdgeInsets.symmetric(horizontal: 8),
             child: Text(
-              'Yamoussoukro, cité milliardaires',
+              widget.emplacement,
               style: AppColors.interBold(size: 12),
               overflow: TextOverflow.ellipsis,
               maxLines: 2,
@@ -61,8 +63,7 @@ class _SejourDecouverteTravelState extends State<SejourDecouverteTravel> {
                   _currentLocation = selected;
                   // setState() si nécessaire
                 },
-              )
-              ;
+              );
             },
             child: Container(
               width: MediaQuery.of(context).size.width * 0.8,

@@ -4,10 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/extension_navigation.dart';
 import 'package:get/get_navigation/src/snackbar/snackbar.dart';
 import 'package:get/get_rx/src/rx_types/rx_types.dart';
+import 'package:get/get_rx/src/rx_workers/rx_workers.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:get/instance_manager.dart';
 import 'package:intl/intl.dart';
 import 'package:voyagedifiant/core/models/driver_model.dart';
+import 'package:voyagedifiant/core/models/hotel.dart';
 import 'package:voyagedifiant/core/models/touristic_discovery.dart';
 import 'package:voyagedifiant/core/models/vehicule.dart';
 import 'package:voyagedifiant/core/repositories/Auth/home.repository.dart';
@@ -21,7 +23,9 @@ class HomeController extends GetxController {
   RxString selectedLieu = "Sélectionner un lieu".obs;
   bool isVehicleLoading = true;
   bool isTouristicSiteLoading = true;
+  bool isHotelsLoading = true;
   bool hasConnection = true;
+  final RxString searchQuery = ''.obs;
   List<VehicleModel> vehicles = List<VehicleModel>.empty().obs;
   List<VehicleModel> vehiculeInit = List<VehicleModel>.empty().obs;
   List<VehicleModel> displayedVehicles = List<VehicleModel>.empty().obs;
@@ -33,25 +37,43 @@ class HomeController extends GetxController {
   List<TouristicDiscovery> displayedTouristicSites =
       List<TouristicDiscovery>.empty().obs;
 
+  List<HotelModel> hotels = List<HotelModel>.empty().obs;
+  List<HotelModel> hotelsInit = List<HotelModel>.empty().obs;
+  List<HotelModel> displayedHotels = List<HotelModel>.empty().obs;
+
   int currentPage = 0;
   final int itemsPerPage = 10;
   bool isLoadingMore = false;
   bool isLoadingMoreTouristicSite = false;
+  bool isLoadingMoreHotels = false;
 
   var randomVehicle = Rx<VehicleModel?>(null);
   RxList<VehicleModel> randomVehicles = <VehicleModel>[].obs;
   RxList<TouristicDiscovery> randomTouristicSites = <TouristicDiscovery>[].obs;
+  RxList<HotelModel> randomHotels = <HotelModel>[].obs;
 
   final homeRepository = HomeRepository();
-
-  // Format des dates
   final DateFormat dateFormat = DateFormat('dd MMM');
+
+  @override
+  void onInit() {
+    super.onInit();
+
+    debounce<String>(
+      searchQuery,
+      (value) {
+        hotelSearchFilter(value);
+      },
+      time: const Duration(milliseconds: 300),
+    );
+  }
 
   @override
   void onReady() async {
     await Future.wait([
       fetchVehicles(),
       fetchTouristicSites(),
+      fetchHotels(),
     ]);
     super.onReady();
   }
@@ -137,6 +159,60 @@ class HomeController extends GetxController {
     }
   }
 
+  Future<void> fetchHotels() async {
+    final connected = await AppConnectivityService.connectivity();
+
+    if (!connected) {
+      hasConnection = false;
+      isHotelsLoading = false;
+      update();
+      Get.snackbar(
+          "Erreur", 'Aucune connexion internet. Vérifiez votre réseau.',
+          snackPosition: SnackPosition.TOP,
+          backgroundColor: Colors.red,
+          colorText: Colors.white);
+    } else {
+      hasConnection = true;
+      isHotelsLoading = true;
+      update();
+
+      try {
+        final result = await homeRepository.getHotels();
+
+        result.when(
+          success: (data) {
+            hotels.assignAll(data);
+            hotelsInit.assignAll(data);
+            displayedHotels.clear();
+            currentPage = 0;
+            loadMoreHotels();
+
+            if (hotels.isNotEmpty) {
+              final shuffled = hotels.toList()..shuffle();
+              randomHotels.assignAll(shuffled.take(20));
+            }
+          },
+          failure: (message) {
+            debugPrint("Erreur lors du chargement des hôtels : $message");
+            Get.snackbar("Erreur", message,
+                snackPosition: SnackPosition.TOP,
+                backgroundColor: Colors.red,
+                colorText: Colors.white);
+          },
+        );
+      } catch (e) {
+        debugPrint("Erreur inconnue lors du chargement des hôtels : $e");
+        Get.snackbar("Erreur", 'Une erreur est survenue, veuillez réessayer.',
+            snackPosition: SnackPosition.TOP,
+            backgroundColor: Colors.red,
+            colorText: Colors.white);
+      }
+
+      isHotelsLoading = false;
+      update();
+    }
+  }
+
   Future<void> loadMore() async {
     if (isLoadingMore) return;
 
@@ -166,6 +242,21 @@ class HomeController extends GetxController {
     displayedTouristicSites.addAll(nextItems);
 
     isLoadingMoreTouristicSite = false;
+    update();
+  }
+
+  Future<void> loadMoreHotels() async {
+    if (isLoadingMoreHotels) return;
+
+    isLoadingMoreHotels = true;
+    update();
+
+    await Future.delayed(const Duration(seconds: 1));
+
+    final currentLength = displayedHotels.length;
+    final nextItems = hotels.skip(currentLength).take(10).toList();
+    displayedHotels.addAll(nextItems);
+    isLoadingMoreHotels = false;
     update();
   }
 
@@ -314,4 +405,30 @@ class HomeController extends GetxController {
     "Arrah",
     "Oumé",
   ];
+
+  void hotelSearchFilter(String search) {
+    if (hotelsInit.isEmpty) return;
+
+    if (search.trim().isEmpty) {
+      // Réinitialise la pagination aussi si tu veux
+      displayedHotels.clear();
+      currentPage = 0;
+      loadMoreHotels();
+    } else {
+      final searchText = search.toLowerCase();
+
+      final filteredHotels = hotelsInit.where((item) {
+        return item.name.toLowerCase().contains(searchText) ||
+            item.city.toLowerCase().contains(searchText) ||
+            //item.neighborhood.toLowerCase().contains(searchText) ||
+            item.priceStandard.toString().contains(searchText) ||
+            item.pricePremium.toString().contains(searchText) ||
+            item.priceSuite.toString().contains(searchText);
+      }).toList();
+
+      displayedHotels.assignAll(filteredHotels);
+    }
+
+    update();
+  }
 }

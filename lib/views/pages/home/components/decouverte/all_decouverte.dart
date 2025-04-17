@@ -52,8 +52,11 @@ class _AllDecouverteItemsState extends State<AllDecouverteItems> {
                   padding: const EdgeInsets.all(AppDefaults.padding),
                   child: Column(
                     children: [
-                      const SearchBarComponent(
+                      SearchBarComponent(
                         text: 'Rechercher un site',
+                        onChanged: (text) {
+                          homeController.hotelSearchFilter(text);
+                        },
                       ),
                       const PublicityContainer(
                         name:
@@ -94,7 +97,7 @@ class _AllDecouverteItemsState extends State<AllDecouverteItems> {
                                       touristicSites.standardPrice.toString(),
                                   onTap: () {
                                     Get.toNamed(Routes.DECOUVERTE_DETAILS,
-                                     arguments: touristicSites);
+                                        arguments: touristicSites);
                                   },
                                   depart: AppConstants.formatTime(
                                       touristicSites.visitStartTime),

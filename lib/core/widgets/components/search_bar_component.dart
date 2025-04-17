@@ -5,9 +5,11 @@ import 'package:voyagedifiant/core/constants/app_colors.dart';
 class SearchBarComponent extends StatefulWidget {
   // final bool checkboxstatus;
   final String text;
-  const SearchBarComponent({
+  void Function(String)? onChanged;
+   SearchBarComponent({
     super.key,
     required this.text,
+    required this.onChanged,
     //required this.checkboxstatus
   });
 
@@ -54,7 +56,7 @@ class _SearchBarComponentState extends State<SearchBarComponent> {
                 ),
                 child: TextField(
                   controller: recherch,
-                  onChanged: (text) {},
+                  onChanged: widget.onChanged,
                   focusNode: searchFocusNode,
                   decoration: InputDecoration(
                     hintText:

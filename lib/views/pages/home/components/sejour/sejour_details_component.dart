@@ -4,14 +4,13 @@ import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:get/route_manager.dart';
 import 'package:voyagedifiant/core/constants/app_colors.dart';
 import 'package:voyagedifiant/core/constants/app_defaults.dart';
-import 'package:voyagedifiant/core/constants/app_helpers.dart';
+import 'package:voyagedifiant/core/models/hotel.dart';
 import 'package:voyagedifiant/core/routes/app_pages.dart';
 import 'package:voyagedifiant/core/widgets/buttons/app_button.dart';
 import 'package:voyagedifiant/core/widgets/components/appbar/app_bar.dart';
 import 'package:voyagedifiant/core/widgets/components/appbar/drawer_page.component.dart';
 import 'package:voyagedifiant/core/widgets/components/sejour_decouverte_maps_card.dart';
 import 'package:voyagedifiant/views/controllers/home/controllers/home.controllers.dart';
-import 'package:voyagedifiant/views/pages/home/components/vehicule/components/driver_cart_component.dart';
 
 class SejourDetails extends StatefulWidget {
   const SejourDetails({super.key});
@@ -21,6 +20,7 @@ class SejourDetails extends StatefulWidget {
 }
 
 class _SejourDetailsState extends State<SejourDetails> {
+  final HotelModel? hotel = Get.arguments;
   String? selectedClass;
 
   void selectClass(String className) {
@@ -75,7 +75,7 @@ class _SejourDetailsState extends State<SejourDetails> {
                         const SizedBox(
                           width: 5,
                         ),
-                        const Text('2 lits'),
+                        Text('${hotel?.numberOfBeds.toString()} lits' ?? ''),
                       ],
                     ),
                     const SizedBox(width: 20),
@@ -88,7 +88,8 @@ class _SejourDetailsState extends State<SejourDetails> {
                         const SizedBox(
                           width: 5,
                         ),
-                        const Text('2 salles de bains'),
+                        Text(
+                            '${hotel?.numberOfBathrooms.toString()} salle(s) de bain'),
                       ],
                     ),
                     const SizedBox(width: 20),
@@ -101,7 +102,7 @@ class _SejourDetailsState extends State<SejourDetails> {
                         const SizedBox(
                           width: 5,
                         ),
-                        const Text('3 climatiseurs'),
+                        Text('${hotel?.numberOfAc.toString()} climatiseur(s)'),
                       ],
                     )
                   ],
@@ -119,7 +120,7 @@ class _SejourDetailsState extends State<SejourDetails> {
                   height: 10,
                 ),
                 Text(
-                  "Excellent choix pour les voyageurs visitant Yamoussoukro, l'Hotel des Parlementaires offre de nombreux services conçus pour sublimer votre séjour. L'Hotel des Parlementaires est un hôtel proposant des chambres équipées d'une climatisation.",
+                  hotel!.details,
                   style: AppColors.interNormal(
                     size: 12,
                   ),
@@ -127,14 +128,15 @@ class _SejourDetailsState extends State<SejourDetails> {
                 const SizedBox(
                   height: 30,
                 ),
-                _buildClassButton('Standard', '3000'),
-                _buildClassButton('Premium', '3000'),
-                _buildClassButton('Suite', '3000'),
+                _buildClassButton('Standard', hotel!.priceStandard.toString()),
+                _buildClassButton('Premium', hotel!.pricePremium.toString()),
+                _buildClassButton('Suite', hotel!.priceSuite.toString()),
                 const SizedBox(
                   height: 30,
                 ),
-                const SejourDecouverteMapsCard(
+                SejourDecouverteMapsCard(
                   text: "Emplacement",
+                  emplacement: hotel!.neighborhood,
                 ),
                 /* Row(
                   children: [

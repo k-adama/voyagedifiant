@@ -11,15 +11,15 @@ import 'package:voyagedifiant/views/pages/home/components/vehicule/components/dr
 class SejourDecouverteMapsCard extends StatefulWidget {
   final String text;
   final bool isSejour;
+  final String? emplacement;
   const SejourDecouverteMapsCard(
-      {super.key, required this.text, this.isSejour = true});
+      {super.key, required this.text, this.isSejour = true, this.emplacement});
 
   @override
   State<SejourDecouverteMapsCard> createState() => _MapsDatetimeCardState();
 }
 
 class _MapsDatetimeCardState extends State<SejourDecouverteMapsCard> {
-
   @override
   Widget build(BuildContext context) {
     return GetBuilder<HomeController>(builder: (homeController) {
@@ -55,6 +55,7 @@ class _MapsDatetimeCardState extends State<SejourDecouverteMapsCard> {
             widget.isSejour == true
                 ? SejourDecouverteTravel(
                     text: widget.text,
+                    emplacement: widget.emplacement ?? 'aucun emplacement',
                   )
                 : Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
