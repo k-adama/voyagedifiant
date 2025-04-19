@@ -55,7 +55,7 @@ class _AllDecouverteItemsState extends State<AllDecouverteItems> {
                       SearchBarComponent(
                         text: 'Rechercher un site',
                         onChanged: (text) {
-                          homeController.hotelSearchFilter(text);
+                          homeController.searchTouristicSiteQuery.value = text;
                         },
                       ),
                       const PublicityContainer(

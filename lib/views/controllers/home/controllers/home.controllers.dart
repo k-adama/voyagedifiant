@@ -27,6 +27,7 @@ class HomeController extends GetxController {
   bool hasConnection = true;
   final RxString searchQuery = ''.obs;
   final RxString searchVehiculeQuery = ''.obs;
+  final RxString searchTouristicSiteQuery = ''.obs;
   List<VehicleModel> vehicles = List<VehicleModel>.empty().obs;
   List<VehicleModel> vehiculeInit = List<VehicleModel>.empty().obs;
   List<VehicleModel> displayedVehicles = List<VehicleModel>.empty().obs;
@@ -63,6 +64,13 @@ class HomeController extends GetxController {
       searchVehiculeQuery,
       (value) {
         vehiculeSearchFilter(value);
+      },
+      time: const Duration(milliseconds: 300),
+    );
+    debounce<String>(
+      searchTouristicSiteQuery,
+      (value) {
+        touristicSiteSearchFilter(value);
       },
       time: const Duration(milliseconds: 300),
     );
@@ -430,6 +438,31 @@ class HomeController extends GetxController {
       }).toList();
 
       displayedVehicles.assignAll(filteredVehicules);
+    }
+
+    update();
+  }
+
+  void touristicSiteSearchFilter(String search) {
+    if (touristicSitesInit.isEmpty) return;
+
+    if (search.trim().isEmpty) {
+      displayedTouristicSites.clear();
+      currentPage = 0;
+      loadMoreTouristicSites();
+    } else {
+      final searchText = search.toLowerCase();
+
+      final filteredTouristicSites = touristicSitesInit.where((item) {
+        return item.name.toLowerCase().contains(searchText) ||
+            item.location.toLowerCase().contains(searchText);
+        // ||
+        //  item.economyPrice.toString().contains(searchText) ||
+        //item.neighborhood.toLowerCase().contains(searchText) ||
+        // item.businessPrice.toString().contains(searchText);
+      }).toList();
+
+      displayedTouristicSites.assignAll(filteredTouristicSites);
     }
 
     update();
