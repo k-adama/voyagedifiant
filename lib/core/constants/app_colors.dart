@@ -11,7 +11,10 @@ class AppColors {
   static const Color scaffoldBackground = Color(0xFFFFFFFF);
 
   /// used for page with box background
+  /// 
   static const Color scaffoldWithBoxBackground = Color(0xFFF7F7F7);
+  static Color shimmerBase = Colors.grey.shade300;
+   static Color shimmerHighlight = Colors.grey.shade100;
   static const Color cardColor = Color(0xFFF2F2F2);
   static const Color coloredBackground = Color(0xFFE4F8EA);
   static const Color placeholder = Color(0xFF8B8B97);

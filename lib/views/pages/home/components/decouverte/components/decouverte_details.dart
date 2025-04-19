@@ -4,10 +4,12 @@ import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:get/route_manager.dart';
 import 'package:voyagedifiant/core/constants/app_colors.dart';
 import 'package:voyagedifiant/core/constants/app_defaults.dart';
+import 'package:voyagedifiant/core/models/touristic_discovery.dart';
 import 'package:voyagedifiant/core/routes/app_pages.dart';
 import 'package:voyagedifiant/core/widgets/buttons/app_button.dart';
 import 'package:voyagedifiant/core/widgets/components/appbar/app_bar.dart';
 import 'package:voyagedifiant/core/widgets/components/appbar/drawer_page.component.dart';
+import 'package:voyagedifiant/core/widgets/components/product_images_slider.dart';
 import 'package:voyagedifiant/core/widgets/components/sejour_decouverte_maps_card.dart';
 import 'package:voyagedifiant/views/controllers/home/controllers/home.controllers.dart';
 
@@ -19,6 +21,7 @@ class DecouverteDetails extends StatefulWidget {
 }
 
 class _DecouverteDetailsState extends State<DecouverteDetails> {
+  final TouristicDiscovery? touristicSite = Get.arguments;
   String? selectedClass;
 
   void selectClass(String className) {
@@ -47,7 +50,14 @@ class _DecouverteDetailsState extends State<DecouverteDetails> {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Container(
+                const ProductImagesSlider(
+                  images: [
+                    'assets/icons/Cascade.png',
+                    'assets/icons/Cascade.png',
+                    'assets/icons/Cascade.png',
+                  ],
+                ),
+                /*Container(
                   height: 200,
                   decoration: BoxDecoration(
                     image: const DecorationImage(
@@ -60,7 +70,7 @@ class _DecouverteDetailsState extends State<DecouverteDetails> {
                       width: 1,
                     ),
                   ),
-                ),
+                ),*/
                 const SizedBox(
                   height: 30,
                 ),
@@ -83,7 +93,7 @@ class _DecouverteDetailsState extends State<DecouverteDetails> {
                       width: 10,
                     ),
                     Text(
-                      "Man",
+                      touristicSite!.name ?? '',
                       style: AppColors.interBold(
                         size: 14,
                         color: AppColors.signUpColor,
@@ -95,7 +105,7 @@ class _DecouverteDetailsState extends State<DecouverteDetails> {
                   height: 10,
                 ),
                 Text(
-                  "Excellent choix pour les voyageurs visitant Yamoussoukro, l'Hotel des Parlementaires offre de nombreux services conçus pour sublimer votre séjour. L'Hotel des Parlementaires est un hôtel proposant des chambres équipées d'une climatisation.",
+                  touristicSite!.description ?? '',
                   style: AppColors.interNormal(
                     size: 12,
                   ),
@@ -103,8 +113,10 @@ class _DecouverteDetailsState extends State<DecouverteDetails> {
                 const SizedBox(
                   height: 30,
                 ),
-                _buildClassButton('Standard', '3000'),
-                _buildClassButton('Premium', '3000'),
+                _buildClassButton(
+                    'Standard', touristicSite!.standardPrice.toString()),
+                _buildClassButton(
+                    'Premium', touristicSite!.premiumPrice.toString()),
                 _buildClassButton('Suite', '3000'),
                 const SizedBox(
                   height: 30,

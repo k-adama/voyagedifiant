@@ -1,6 +1,7 @@
 import 'package:auto_height_grid_view/auto_height_grid_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
+import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:get/route_manager.dart';
 import 'package:voyagedifiant/core/constants/app_colors.dart';
 import 'package:voyagedifiant/core/constants/app_defaults.dart';
@@ -9,6 +10,7 @@ import 'package:voyagedifiant/core/widgets/components/appbar/app_bar.dart';
 import 'package:voyagedifiant/core/widgets/components/appbar/drawer_page.component.dart';
 import 'package:voyagedifiant/core/widgets/components/publicity_container.dart';
 import 'package:voyagedifiant/core/widgets/components/search_bar_component.dart';
+import 'package:voyagedifiant/views/controllers/home/controllers/home.controllers.dart';
 import 'package:voyagedifiant/views/pages/home/components/sejour/components/sejour_card.dart';
 
 class AllSejourItems extends StatefulWidget {
@@ -31,49 +33,88 @@ class _AllSejourItemsState extends State<AllSejourItems> {
         backgroundColor: AppColors.white,
         child: DrawerPageComponent(),
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(AppDefaults.padding),
-          child: Column(
-            children: [
-              const SearchBarComponent(
-                text: 'Rechercher un Motel',
-              ),
-              const PublicityContainer(
-                name:
-                    'Voulez-vous passer un séjour memorable? Vous êtes à la bonne porte',
-                background: 'assets/icons/Hotel Booking-rafiki 1.png',
-              ),
-              AutoHeightGridView(
-                shrinkWrap: true,
-                crossAxisCount: 1,
-                mainAxisSpacing: 2,
-                itemCount: 5,
-                builder: (context, index) {
-                  return AnimationConfiguration.staggeredGrid(
-                    columnCount: 4,
-                    position: index,
-                    duration: const Duration(milliseconds: 375),
-                    child: ScaleAnimation(
-                      scale: 0.5,
-                      child: FadeInAnimation(
-                          child: SejourCard(
-                        name: 'Hôtel parlementaire',
-                        description: 'Ceci est un hotel de luxe 5 étoiles',
-                        price: '35000',
-                        location: 'Yamoussoukro',
-                        onTap: () {
-                          Get.toNamed(Routes.SEJOUR_DETAILS);
-                        },
-                      )),
+      body: GetBuilder<HomeController>(builder: (homeController) {
+        return NotificationListener<ScrollNotification>(
+          onNotification: (scrollNotification) {
+            if (scrollNotification.metrics.pixels >=
+                    scrollNotification.metrics.maxScrollExtent - 100 &&
+                !homeController.isLoadingMoreHotels &&
+                homeController.displayedHotels.length <
+                    homeController.hotels.length) {
+              homeController.loadMoreHotels();
+            }
+            return true;
+          },
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.all(AppDefaults.padding),
+              child: Column(
+                children: [
+                   SearchBarComponent(
+                    text: 'Rechercher un Motel',
+                    onChanged: (text) {
+                     homeController.searchQuery.value = text;
+                    },
+                  ),
+                  const PublicityContainer(
+                    name:
+                        'Voulez-vous passer un séjour memorable? Vous êtes à la bonne porte',
+                    background: 'assets/icons/Hotel Booking-rafiki 1.png',
+                  ),
+                  if (homeController.isHotelsLoading ||
+                      !homeController.hasConnection)
+                    const Center(
+                      child: CircularProgressIndicator(
+                        color: AppColors.signUpColor,
+                      ),
+                    )
+                  else if (homeController.hotels.isEmpty)
+                    const Center(child: Text("Aucun hôtel disponible"))
+                  else
+                    AutoHeightGridView(
+                      shrinkWrap: true,
+                      crossAxisCount: 1,
+                      mainAxisSpacing: 2,
+                      itemCount: homeController.displayedHotels.length,
+                      builder: (context, index) {
+                        final hotels = homeController.displayedHotels[index];
+                        return AnimationConfiguration.staggeredGrid(
+                          columnCount: 4,
+                          position: index,
+                          duration: const Duration(milliseconds: 375),
+                          child: ScaleAnimation(
+                            scale: 0.5,
+                            child: FadeInAnimation(
+                                child: SejourCard(
+                              name: hotels.name,
+                              description: hotels.description,
+                              price: hotels.priceStandard.toString(),
+                              location: hotels.city,
+                              hasWifi: hotels.hasWifi.toString(),
+                              hasCleaning: hotels.hasCleaning.toString(),
+                              hasBreakfast: hotels.hasBreakfast.toString(),
+                              onTap: () {
+                                Get.toNamed(Routes.SEJOUR_DETAILS,
+                                    arguments: hotels);
+                              },
+                            )),
+                          ),
+                        );
+                      },
                     ),
-                  );
-                },
+                  if (homeController.isLoadingMoreHotels)
+                    const Padding(
+                      padding: EdgeInsets.symmetric(vertical: 16),
+                      child: CircularProgressIndicator(
+                        color: AppColors.signUpColor,
+                      ),
+                    ),
+                ],
               ),
-            ],
+            ),
           ),
-        ),
-      ),
+        );
+      }),
     );
   }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:voyagedifiant/core/constants/app_colors.dart';
 import 'package:voyagedifiant/core/constants/app_defaults.dart';
+import 'package:voyagedifiant/core/widgets/common_image.dart';
 
 class VehiculeCard extends StatelessWidget {
   const VehiculeCard({
@@ -67,8 +68,13 @@ class VehiculeCard extends StatelessWidget {
                     Expanded(
                       flex: 5,
                       child: Padding(
-                          padding: const EdgeInsets.all(AppDefaults.padding),
-                          child: Container(
+                        padding: const EdgeInsets.all(AppDefaults.padding),
+                        child: CommonImage(
+                          height: 130,
+                          imageUrl: 'assets/images/Rectangle 11.png',
+                          radius: 0,
+                        ),
+                        /* Container(
                             decoration: BoxDecoration(
                               color: color ?? AppColors.transparent,
                               borderRadius: AppDefaults.borderRadius,
@@ -79,7 +85,8 @@ class VehiculeCard extends StatelessWidget {
                                 fit: BoxFit.cover,
                               ),
                             ),
-                          )),
+                          )*/
+                      ),
                     ),
                     Expanded(
                       flex: 5,
