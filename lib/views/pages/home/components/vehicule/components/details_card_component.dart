@@ -11,16 +11,20 @@ class DetailsCardComponent extends StatefulWidget {
     this.couponBackground,
     required this.name,
     required this.price,
+    required this.businessPrice,
     required this.person,
     required this.bag,
     this.color,
+    required this.airConditioning,
   });
 
   final String? couponBackground;
   final String name;
   final String price;
+  final String businessPrice;
   final String person;
   final String bag;
+  final String airConditioning;
   final Color? color;
 
   @override
@@ -110,7 +114,7 @@ class _DetailsCardComponentState extends State<DetailsCardComponent> {
                               children: [
                                 Text(widget.name,
                                     style: AppColors.interBold(
-                                      size: 20,
+                                      size: 14,
                                     )),
                                 const SizedBox(
                                   height: 12,
@@ -180,7 +184,7 @@ class _DetailsCardComponentState extends State<DetailsCardComponent> {
                                           ),
                                           Expanded(
                                             child: Text(
-                                              '${widget.bag} climatisation',
+                                              '${widget.airConditioning} climatisation',
                                               style: AppColors.interNormal(
                                                 color: AppColors.white,
                                                 size: 12,
@@ -233,7 +237,7 @@ class _DetailsCardComponentState extends State<DetailsCardComponent> {
           ),
           _buildClassButton('Economie', widget.price),
           const Divider(thickness: 2, color: AppColors.gray),
-          _buildClassButton('Business', widget.price),
+          _buildClassButton('Business', widget.businessPrice),
           const SizedBox(
             height: AppDefaults.padding,
           ),
@@ -264,7 +268,7 @@ class _DetailsCardComponentState extends State<DetailsCardComponent> {
                   },
                   child: Container(
                     padding: const EdgeInsets.all(10),
-                     alignment: Alignment.center,
+                    alignment: Alignment.center,
                     decoration: BoxDecoration(
                       color: isSelected
                           ? AppColors.signUpColor
@@ -272,7 +276,8 @@ class _DetailsCardComponentState extends State<DetailsCardComponent> {
                       borderRadius: AppDefaults.borderRadius,
                     ),
                     child: Text(className,
-                        style: const TextStyle(color: AppColors.white,
+                        style: const TextStyle(
+                          color: AppColors.white,
                         )),
                   ),
                 ),

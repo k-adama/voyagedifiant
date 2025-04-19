@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
 import 'package:voyagedifiant/core/constants/app_colors.dart';
 import 'package:voyagedifiant/core/constants/app_defaults.dart';
+import 'package:voyagedifiant/core/models/vehicule.dart';
 import 'package:voyagedifiant/core/routes/app_pages.dart';
 import 'package:voyagedifiant/core/widgets/buttons/app_button.dart';
 import 'package:voyagedifiant/core/widgets/components/appbar/app_bar.dart';
@@ -10,7 +11,9 @@ import 'package:voyagedifiant/views/pages/home/components/vehicule/components/de
 import 'package:voyagedifiant/views/pages/home/components/vehicule/components/maps_datetime_card.dart';
 
 class VehiculeDetails extends StatefulWidget {
-  const VehiculeDetails({super.key});
+  const VehiculeDetails({
+    super.key,
+  });
 
   @override
   State<VehiculeDetails> createState() => _VehiculeDetailsState();
@@ -18,6 +21,7 @@ class VehiculeDetails extends StatefulWidget {
 
 class _VehiculeDetailsState extends State<VehiculeDetails> {
   Color _buttonColor = AppColors.primaryColor;
+  final VehicleModel? vehicle = Get.arguments;
 
   @override
   Widget build(BuildContext context) {
@@ -36,12 +40,17 @@ class _VehiculeDetailsState extends State<VehiculeDetails> {
           padding: const EdgeInsets.all(AppDefaults.padding),
           child: Column(
             children: [
-              const DetailsCardComponent(
-                name: 'HUNDAI',
-                price: '13000',
-                person: '03',
-                bag: '01',
-                couponBackground: 'assets/images/Rectangle 11.png',
+              DetailsCardComponent(
+                name: vehicle?.name ?? '',
+                price: vehicle?.economyPrice.toString() ?? '',
+                businessPrice: vehicle?.businessPrice.toString() ?? '',
+                person: vehicle?.numberOfSeats.toString() ?? '',
+                bag: vehicle?.luggage.toString() ?? '',
+                couponBackground:
+                    // vehicle?.imageUrl ??
+                    'assets/images/Rectangle 11.png',
+                airConditioning:
+                    (vehicle?.airConditioning ?? false) ? '1' : '0',
               ),
               const MapsDatetimeCard(),
               Padding(

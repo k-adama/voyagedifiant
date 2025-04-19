@@ -12,6 +12,9 @@ class SejourCard extends StatelessWidget {
     this.color,
     required this.onTap,
     this.description,
+    required this.hasCleaning,
+    required this.hasWifi,
+    required this.hasBreakfast,
   });
 
   final String? image;
@@ -21,9 +24,18 @@ class SejourCard extends StatelessWidget {
   final String location;
   final Color? color;
   final void Function() onTap;
+  final String hasCleaning;
+  final String hasWifi;
+  final String hasBreakfast;
 
   @override
   Widget build(BuildContext context) {
+    final visibleItemsCount = [
+      hasCleaning,
+      hasWifi,
+      hasBreakfast,
+    ].where((e) => e == "true").length;
+
     return Card(
       // margin: const EdgeInsets.all(10),
       //padding: const EdgeInsets.all(AppDefaults.padding),
@@ -62,6 +74,8 @@ class SejourCard extends StatelessWidget {
       child: InkWell(
         onTap: onTap,
         child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Expanded(
               flex: 5,
@@ -106,61 +120,39 @@ class SejourCard extends StatelessWidget {
                       height: 12,
                     ),
                     FractionallySizedBox(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
+                        child: Row(
+                      mainAxisAlignment: visibleItemsCount <= 1
+                          ? MainAxisAlignment.start
+                          : MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment
+                          .center, // ou start selon ton besoin
+                      children: [
+                        if (hasCleaning == "true")
                           Column(
                             children: [
                               Image.asset('assets/icons/menage.png'),
-                              const SizedBox(
-                                width: 5,
-                              ),
+                              const SizedBox(height: 5),
                               const Text('ménage'),
                             ],
                           ),
+                        if (hasWifi == "true")
                           Column(
                             children: [
                               Image.asset('assets/icons/wifi.png'),
-                              const SizedBox(
-                                width: 5,
-                              ),
+                              const SizedBox(height: 5),
                               const Text('wifi'),
                             ],
                           ),
+                        if (hasBreakfast == "true")
                           Column(
                             children: [
                               Image.asset('assets/icons/hamb.png'),
-                              const SizedBox(
-                                width: 5,
-                              ),
-                              const Text('petit dej'),
+                              const SizedBox(height: 5),
+                              const Text('petit déj'),
                             ],
                           ),
-
-                          /* Row(
-                            children: [
-                              Image.asset('assets/icons/person_place.png'),
-                              const SizedBox(
-                                width: 5,
-                              ),
-                              Text(person),
-                            ],
-                          ),
-                          const SizedBox(
-                            width: 20,
-                          ),
-                          Row(
-                            children: [
-                              Image.asset('assets/icons/bagage.png'),
-                              const SizedBox(
-                                width: 5,
-                              ),
-                              Text(bag),
-                            ],
-                          ),*/
-                        ],
-                      ),
-                    ),
+                      ],
+                    )),
                     const SizedBox(
                       height: 12,
                     ),

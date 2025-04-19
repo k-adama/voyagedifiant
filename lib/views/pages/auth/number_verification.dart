@@ -1,10 +1,11 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get_instance/src/extension_instance.dart';
 import 'package:get/get_utils/src/extensions/internacionalization.dart';
 import 'package:get/route_manager.dart';
 import 'package:voyagedifiant/core/constants/app_colors.dart';
-import 'package:voyagedifiant/core/routes/app_pages.dart';
 import 'package:pinput/pinput.dart';
 import 'package:voyagedifiant/core/widgets/components/translate_pop_item.dart';
 import 'package:voyagedifiant/views/controllers/auth/controllers/auth.controllers.dart';
@@ -21,6 +22,45 @@ class _NumberVerificationPageState extends State<NumberVerificationPage> {
   final AuthController _authController = Get.find();
   Color getBorderColor() {
     return _authController.checkOtp ? AppColors.signUpColor : AppColors.black;
+  }
+
+  bool isButtonDisabled = true;
+  int countdown = 20;
+  Timer? timer;
+
+  @override
+  void initState() {
+    super.initState();
+    _startCountdown();
+  }
+
+  void _startCountdown() {
+    timer = Timer.periodic(const Duration(seconds: 1), (Timer t) {
+      if (countdown == 0) {
+        t.cancel();
+        setState(() {
+          isButtonDisabled = false;
+        });
+      } else {
+        setState(() {
+          countdown--;
+        });
+      }
+    });
+  }
+
+  void _restartCountdown() {
+    setState(() {
+      isButtonDisabled = true;
+      countdown = 20;
+    });
+    _startCountdown();
+  }
+
+  @override
+  void dispose() {
+    timer?.cancel();
+    super.dispose();
   }
 
   @override
@@ -146,8 +186,9 @@ class _NumberVerificationPageState extends State<NumberVerificationPage> {
                                           color: AppColors.signUpColor),
                                     ),
                                   ),
-                                  onCompleted: (pin) {
-                                    // authController.otpEnters = pin;
+                                  onCompleted: (pin) async {
+                                    await _authController.verifyOtp(
+                                        enteredOtp: enteredOtp);
                                   },
                                 ),
                                 const SizedBox(height: 24),
@@ -155,16 +196,39 @@ class _NumberVerificationPageState extends State<NumberVerificationPage> {
                                   "dont_receive_code".tr,
                                   style: AppColors.interNormal(),
                                 ),
-                                TextButton(
-                                    onPressed: () {
-                                      Get.offAllNamed(Routes.HOME_PAGE);
+                                isButtonDisabled
+                                    ? Text(
+                                        "Réessayez dans ${countdown}s",
+                                        style: AppColors.interNormal(
+                                            color: Colors.grey),
+                                      )
+                                    : TextButton(
+                                        onPressed: () async {
+                                          _restartCountdown();
+                                          await _authController.sendOtpToEmail(
+                                            _authController.email,
+                                          );
+                                        },
+                                        child: Text(
+                                          'Réessayer',
+                                          style: AppColors.interNormal(
+                                            color: AppColors.signUpColor,
+                                          ),
+                                        ),
+                                      ),
+                                /* TextButton(
+                                    onPressed: () async {
+                                      await _authController.sendOtpToEmail(
+                                        _authController.email,
+                                      );
+                                      // Get.offAllNamed(Routes.HOME_PAGE);
                                     },
                                     child: Text(
                                       'try_again'.tr,
                                       style: AppColors.interNormal(
                                         color: AppColors.signUpColor,
                                       ),
-                                    ))
+                                    ))*/
                               ],
                             ),
                           ),

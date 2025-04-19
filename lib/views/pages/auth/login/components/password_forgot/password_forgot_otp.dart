@@ -1,12 +1,11 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/instance_manager.dart';
-import 'package:get/route_manager.dart';
 import 'package:pinput/pinput.dart';
 import 'package:voyagedifiant/core/constants/app_colors.dart';
 import 'package:voyagedifiant/core/constants/app_defaults.dart';
-import 'package:voyagedifiant/core/routes/app_pages.dart';
-import 'package:voyagedifiant/core/widgets/buttons/app_button.dart';
 import 'package:voyagedifiant/core/widgets/components/translate_pop_item.dart';
 import 'package:voyagedifiant/views/controllers/auth/controllers/auth.controllers.dart';
 
@@ -22,6 +21,45 @@ class _PasswordForgotPageOtpState extends State<PasswordForgotPageOtp> {
   final AuthController _authController = Get.find();
   Color getBorderColor() {
     return _authController.checkOtp ? AppColors.signUpColor : AppColors.black;
+  }
+
+  bool isButtonDisabled = true;
+  int countdown = 20;
+  Timer? timer;
+
+  @override
+  void initState() {
+    super.initState();
+    _startCountdown();
+  }
+
+  void _startCountdown() {
+    timer = Timer.periodic(const Duration(seconds: 1), (Timer t) {
+      if (countdown == 0) {
+        t.cancel();
+        setState(() {
+          isButtonDisabled = false;
+        });
+      } else {
+        setState(() {
+          countdown--;
+        });
+      }
+    });
+  }
+
+  void _restartCountdown() {
+    setState(() {
+      isButtonDisabled = true;
+      countdown = 20;
+    });
+    _startCountdown();
+  }
+
+  @override
+  void dispose() {
+    timer?.cancel();
+    super.dispose();
   }
 
   @override
@@ -94,9 +132,10 @@ class _PasswordForgotPageOtpState extends State<PasswordForgotPageOtp> {
                                 topRight: Radius.circular(97),
                               ),
                             ),
-                            padding: const EdgeInsets.symmetric(horizontal: 20,
-                            vertical: 40,
-                          ),
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 20,
+                              vertical: 40,
+                            ),
                             child: Column(
                               children: [
                                 const SizedBox(
@@ -105,6 +144,15 @@ class _PasswordForgotPageOtpState extends State<PasswordForgotPageOtp> {
                                 Text(
                                   'Entrez le code reçu',
                                   style: AppColors.interBold(),
+                                ),
+                                 Padding(
+                                  padding: const EdgeInsets.all(
+                                    15.0,
+                                  ),
+                                  child: Text(
+                                    'Veuillez saisir le code reçu par e-mail afin de réinitialiser votre mot de passe',
+                                    style: AppColors.interNormal(),
+                                  ),
                                 ),
                                 const SizedBox(
                                   height: 40,
@@ -144,11 +192,39 @@ class _PasswordForgotPageOtpState extends State<PasswordForgotPageOtp> {
                                                 color: AppColors.signUpColor),
                                           ),
                                         ),
-                                        onCompleted: (pin) {
-                                          // authController.otpEnters = pin;
+                                        onCompleted: (pin) async {
+                                          await _authController
+                                              .verifyOtpForgotPassword(
+                                                  enteredOtp: enteredOtp);
                                         },
                                       ),
-                                      const SizedBox(
+                                      const SizedBox(height: 24),
+                                      Text(
+                                        "Vous n'avez pas reçu de code ?",
+                                        style: AppColors.interNormal(),
+                                      ),
+                                      isButtonDisabled
+                                          ? Text(
+                                              "Réessayez dans ${countdown}s",
+                                              style: AppColors.interNormal(
+                                                  color: Colors.grey),
+                                            )
+                                          : TextButton(
+                                              onPressed: () async {
+                                                _restartCountdown();
+                                                await _authController
+                                                    .sendOtpToForgotPassword(
+                                                  _authController.email,
+                                                );
+                                              },
+                                              child: Text(
+                                                'Réessayer',
+                                                style: AppColors.interNormal(
+                                                  color: AppColors.signUpColor,
+                                                ),
+                                              ),
+                                            ),
+                                      /* const SizedBox(
                                         height: 30,
                                       ),
                                       AppCustomButton(
@@ -158,7 +234,7 @@ class _PasswordForgotPageOtpState extends State<PasswordForgotPageOtp> {
                                         buttonText: "VALIDER",
                                         textColor: AppColors.white,
                                         buttonColor: AppColors.primaryColor,
-                                      ),
+                                      ),*/
                                     ],
                                   ),
                                 ),

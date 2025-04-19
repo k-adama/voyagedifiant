@@ -17,7 +17,7 @@ class AppTranslations extends Translations {
           'register': 'INSCRIPTION',
           'full_name': 'Nom et prénoms',
           'email_adress': 'Entrer votre e-mail',
-          'select_city': 'Sélectionner une ville',
+          'select_city': 'Sélectionner votre pays',
           'sign_up_register': 'S\'INSCRIRE',
           'already_account': 'Dèjà un compte ?',
           'login_in_register': 'Connectez-vous',

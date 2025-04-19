@@ -5,11 +5,22 @@ import 'package:voyagedifiant/core/constants/app_defaults.dart';
 import 'package:voyagedifiant/core/widgets/components/translate_pop_item.dart';
 
 class ContactUsPage extends StatelessWidget {
-  final String phoneNumber = "0749468616";
+  final String phoneNumber = "+225 0749468616";
   final String address = "Angré nouveau chu";
 
   ContactUsPage({super.key});
   final Uri whatsappUrl = Uri.parse("https://wa.me/+2250749468616");
+
+  void callPhoneNumber(String phoneNumber) async {
+    final Uri telUri = Uri(scheme: 'tel', path: phoneNumber);
+
+    if (await canLaunchUrl(telUri)) {
+      await launchUrl(telUri);
+    } else {
+      throw 'Impossible de lancer un appel vers $phoneNumber';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -56,6 +67,7 @@ class ContactUsPage extends StatelessWidget {
                   children: [
                     Row(
                       children: [
+                        const SizedBox(width: 5,),
                         const Icon(Icons.location_on,
                             color: AppColors.signUpColor, size: 28),
                         const SizedBox(width: 10),
@@ -69,19 +81,43 @@ class ContactUsPage extends StatelessWidget {
                       ],
                     ),
                     Divider(thickness: 1, height: 25, color: Colors.grey[300]),
-                    Row(
-                      children: [
-                        const Icon(Icons.phone,
-                            color: AppColors.signUpColor, size: 28),
-                        const SizedBox(width: 10),
-                        Expanded(
-                          child: Text(
-                            phoneNumber,
-                            style: const TextStyle(
-                                fontSize: 16, fontWeight: FontWeight.w500),
-                          ),
-                        ),
-                      ],
+                    GestureDetector(
+                      onTap: () async {
+                        callPhoneNumber(phoneNumber);
+                      },
+                      child: LayoutBuilder(
+                        builder: (context, constraints) {
+                          return Container(
+                            width: constraints.maxWidth * 0.9,
+                            padding: const EdgeInsets.all(15),
+                            decoration: BoxDecoration(
+                              color: AppColors.primaryColor,
+                              borderRadius: AppDefaults.borderRadius,
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const Icon(
+                                  Icons.phone,
+                                  color: AppColors.signUpColor,
+                                  size: 20,
+                                ),
+                                const SizedBox(width: 10),
+                                Expanded(
+                                  child: Text(
+                                    phoneNumber,
+                                    style: const TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          );
+                        },
+                      ),
                     ),
                     Divider(thickness: 1, height: 25, color: Colors.grey[300]),
                     const SizedBox(height: 10),

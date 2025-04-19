@@ -4,15 +4,27 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:voyagedifiant/core/constants/app_colors.dart';
+import 'package:voyagedifiant/core/repositories/Auth/auth.repository.dart';
 import 'package:voyagedifiant/core/routes/app_pages.dart';
+import 'package:voyagedifiant/core/services/api_result.service.dart';
+import 'package:voyagedifiant/views/controllers/Main/bindings/main.binding.dart';
 import 'package:voyagedifiant/app_translate.dart';
 import 'package:voyagedifiant/core/services/local_storage.dart';
-import 'package:voyagedifiant/views/controllers/Main/bindings/main.binding.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await LocalStorage.getInstance();
   runApp(const MyApp());
+  //final apiService = AuthRepository();
+
+  // Test de la connexion
+  //ApiResultService result = await apiService.getConnexion();
+
+  /* if (result.data != null) {
+    print('Connexion réussie: ${result.data}');
+  } else {
+    print('Erreur de connexion: ${result.error}');
+  }*/
 }
 
 class MyApp extends StatelessWidget {

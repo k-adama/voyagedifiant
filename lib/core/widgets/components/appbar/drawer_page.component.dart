@@ -5,6 +5,7 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:get/route_manager.dart';
 import 'package:voyagedifiant/core/constants/app_colors.dart';
 import 'package:voyagedifiant/core/routes/app_pages.dart';
+import 'package:voyagedifiant/core/services/local_storage.dart';
 import 'package:voyagedifiant/core/widgets/buttons/app_button.dart';
 import 'package:voyagedifiant/core/widgets/components/appbar/drawer_page_body.component.dart';
 import 'package:voyagedifiant/core/widgets/components/appbar/drawer_page_header.component.dart';
@@ -80,9 +81,9 @@ class DrawerPageComponent extends StatelessWidget {
 }
 
 void _closeDrawerAndShowDialog(BuildContext context) {
-  Navigator.pop(context); // Ferme le Drawer
+  Navigator.pop(context);
 
-  Future.delayed(Duration(milliseconds: 2), () {
+  Future.delayed(const Duration(milliseconds: 2), () {
     _showLogoutConfirmationDialog(context);
   });
 }
@@ -91,24 +92,18 @@ void _showLogoutConfirmationDialog(BuildContext context) {
   showDialog(
     context: context,
     builder: (BuildContext context) {
-      return
-          // BackdropFilter(
-          //   filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0), // Réglage de l'intensité du flou
-          //   child: Container(
-          //   color:  Colors.white.withOpacity(0), // Transparence de l'arrière-plan
-          //   child:
-          AlertDialog(
+      return AlertDialog(
         elevation: 5,
         shadowColor: AppColors.placeholder,
         shape: RoundedRectangleBorder(
           borderRadius:
-              BorderRadius.circular(15.0), // Optionnel : arrondir les bords
+              BorderRadius.circular(15.0), 
         ),
-        title: Text(
+        title: const Text(
           "ÊTES VOUS SÛR DE VOULOIR VOUS DECONNECTER ?",
           style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
         ),
-        content: Text(
+        content: const Text(
           "A quand votre retour vous nous manquer déjà",
           style: TextStyle(fontSize: 12),
         ),
@@ -118,6 +113,9 @@ void _showLogoutConfirmationDialog(BuildContext context) {
               children: [
                 AppCustomButton(
                   onPressed: () {
+                    LocalStorage.instance.removeToken();
+                    LocalStorage.instance.removeBool("otp_verified");
+                    LocalStorage.instance.removeUserId("userId");
                     Get.offAllNamed(Routes.LOGIN_PAGE);
                   },
                   buttonText: "SE DECONNECTER",
@@ -126,7 +124,7 @@ void _showLogoutConfirmationDialog(BuildContext context) {
                   buttonColor: AppColors.primaryColor,
                   borderRadius: BorderRadius.circular(5),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 15,
                 ),
                 TextButton(
