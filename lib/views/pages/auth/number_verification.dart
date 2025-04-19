@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get_instance/src/extension_instance.dart';
+import 'package:get/get_utils/src/extensions/internacionalization.dart';
 import 'package:get/route_manager.dart';
 import 'package:voyagedifiant/core/constants/app_colors.dart';
 import 'package:voyagedifiant/core/routes/app_pages.dart';
@@ -44,8 +45,8 @@ class _NumberVerificationPageState extends State<NumberVerificationPage> {
         iconTheme: const IconThemeData(color: AppColors.white),
         backgroundColor: AppColors.primaryColor,
         shape: const Border(
-        bottom: BorderSide.none,
-      ),
+          bottom: BorderSide.none,
+        ),
         actions: const [
           TranslatePopItem(),
         ],
@@ -96,15 +97,15 @@ class _NumberVerificationPageState extends State<NumberVerificationPage> {
                                 topRight: Radius.circular(97),
                               ),
                             ),
-                            padding: const EdgeInsets.symmetric(horizontal: 20,
-                            vertical: 30),
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 20, vertical: 30),
                             child: Column(
                               children: [
                                 const SizedBox(
                                   height: 30,
                                 ),
                                 Text(
-                                  'Entrez le code reçu',
+                                  'enter_the_code'.tr,
                                   style: AppColors.interBold(),
                                 ),
                                 Padding(
@@ -112,7 +113,7 @@ class _NumberVerificationPageState extends State<NumberVerificationPage> {
                                     15.0,
                                   ),
                                   child: Text(
-                                    'Veuillez saisir le code reçu par e-mail afin de terminer votre inscription',
+                                    'otp_message'.tr,
                                     style: AppColors.interNormal(),
                                   ),
                                 ),
@@ -133,8 +134,8 @@ class _NumberVerificationPageState extends State<NumberVerificationPage> {
                                         fontSize: 24,
                                         fontWeight: FontWeight.bold),
                                     decoration: BoxDecoration(
-                                      border: Border.all(color: AppColors.gray,
-                                      width: 1),
+                                      border: Border.all(
+                                          color: AppColors.gray, width: 1),
                                       borderRadius: BorderRadius.circular(8),
                                     ),
                                   ),
@@ -151,7 +152,7 @@ class _NumberVerificationPageState extends State<NumberVerificationPage> {
                                 ),
                                 const SizedBox(height: 24),
                                 Text(
-                                  "Vous n'avez pas reçu de code ?",
+                                  "dont_receive_code".tr,
                                   style: AppColors.interNormal(),
                                 ),
                                 TextButton(
@@ -159,7 +160,7 @@ class _NumberVerificationPageState extends State<NumberVerificationPage> {
                                       Get.offAllNamed(Routes.HOME_PAGE);
                                     },
                                     child: Text(
-                                      'Rééssayer',
+                                      'try_again'.tr,
                                       style: AppColors.interNormal(
                                         color: AppColors.signUpColor,
                                       ),

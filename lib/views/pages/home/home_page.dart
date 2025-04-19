@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get_utils/src/extensions/internacionalization.dart';
 import 'package:get/route_manager.dart';
 import 'package:voyagedifiant/core/constants/app_colors.dart';
 import 'package:voyagedifiant/core/constants/app_defaults.dart';
@@ -61,9 +62,7 @@ class _HomePageState extends State<HomePage> {
                     ),
                     child: Center(
                       child: Text(
-                          "ENVIE D'UN SÉJOUR DE QUALITÉ SANS\n"
-                          "SOUCIS DE DÉPLACEMENT ?\n"
-                          "VOUS ÊTES À LA BONNE PORTE.",
+                          "sejour_home_text".tr.toUpperCase(),
                           textAlign: TextAlign.center,
                           style: AppColors.interBold(
                             size: 14,
@@ -102,7 +101,7 @@ class _HomePageState extends State<HomePage> {
                         children: [
                           const SizedBox(height: 70),
                           Text(
-                            'Louez un vehicule avec chauffeur',
+                            'louer_vehicule'.tr,
                             style: AppColors.interBold(
                               size: 14,
                             ),

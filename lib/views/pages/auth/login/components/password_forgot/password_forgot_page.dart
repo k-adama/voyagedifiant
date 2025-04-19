@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get_utils/src/extensions/internacionalization.dart';
 import 'package:get/route_manager.dart';
 import 'package:voyagedifiant/core/constants/app_colors.dart';
 import 'package:voyagedifiant/core/constants/app_defaults.dart';
@@ -86,7 +87,7 @@ class _PasswordForgotPageState extends State<PasswordForgotPage> {
                                       height: 30,
                                     ),
                                     Text(
-                                      'MOT DE PASSE OUBLIE',
+                                      'forg_pass'.tr,
                                       style: AppColors.interBold(),
                                     ),
                                     const SizedBox(
@@ -98,7 +99,7 @@ class _PasswordForgotPageState extends State<PasswordForgotPage> {
                                       child: Column(
                                         children: [
                                           Text(
-                                            'S\'il vous plaît, entrez votre adresse e-mail pour pouvoir récupérer votre mot de passe',
+                                            'forg_pass_message'.tr,
                                             style: AppColors.interNormal(),
                                           ),
                                           const SizedBox(
@@ -110,9 +111,9 @@ class _PasswordForgotPageState extends State<PasswordForgotPage> {
                                                         'email')
                                                 .call,
                                             //textInputAction: TextInputAction.next,
-                                            decoration: const InputDecoration(
-                                              labelText: 'Entrer votre E-mail',
-                                              border: OutlineInputBorder(
+                                            decoration: InputDecoration(
+                                              labelText: 'email_adress'.tr,
+                                              border: const OutlineInputBorder(
                                                 borderSide: BorderSide(),
                                               ),
                                             ),
@@ -125,7 +126,7 @@ class _PasswordForgotPageState extends State<PasswordForgotPage> {
                                               Get.toNamed(
                                                   Routes.PASSWORD_FORGOT_OTP);
                                             },
-                                            buttonText: "CONFIRMER",
+                                            buttonText: "confirm".tr.toUpperCase(),
                                             textColor: AppColors.white,
                                             buttonColor: AppColors.primaryColor,
                                           ),

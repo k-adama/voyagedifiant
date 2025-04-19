@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get_utils/src/extensions/internacionalization.dart';
 import 'package:voyagedifiant/core/constants/app_colors.dart';
 import 'package:voyagedifiant/core/constants/app_defaults.dart';
 import 'package:voyagedifiant/core/themes/app_themes.dart';
@@ -82,7 +83,7 @@ class _NewPasswordPageState extends State<NewPasswordPage> {
                                       height: 30,
                                     ),
                                     Text(
-                                      'MOT DE PASSE OUBLIE',
+                                      'forg_pass'.tr,
                                       style: AppColors.interBold(),
                                     ),
                                     const SizedBox(
@@ -101,8 +102,8 @@ class _NewPasswordPageState extends State<NewPasswordPage> {
                                             height: 50,
                                           ),
                                           CustomField(
-                                            label: const Text(
-                                                "Entrer nouveau mot de passe"),
+                                            label:  Text(
+                                                'new_password'.tr),
                                             onFieldSubmitted: (v) => (),
                                             validator: Validators.password.call,
                                           ),
@@ -110,8 +111,8 @@ class _NewPasswordPageState extends State<NewPasswordPage> {
                                             height: 15,
                                           ),
                                           CustomField(
-                                            label: const Text(
-                                                "Confirmer nouveau mot de passe"),
+                                            label:  Text(
+                                                "confirm_new_password".tr),
                                             onFieldSubmitted: (v) => (),
                                             validator: Validators.password.call,
                                           ),
@@ -120,7 +121,7 @@ class _NewPasswordPageState extends State<NewPasswordPage> {
                                           ),
                                           AppCustomButton(
                                             onPressed: () {},
-                                            buttonText: "VALIDER",
+                                            buttonText: "validate".tr.toUpperCase(),
                                             textColor: AppColors.white,
                                             buttonColor: AppColors.primaryColor,
                                           ),
