@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
+import 'package:get/get_utils/src/extensions/internacionalization.dart';
 import 'package:get/route_manager.dart';
 import 'package:voyagedifiant/core/constants/app_colors.dart';
 import 'package:voyagedifiant/core/constants/app_defaults.dart';
@@ -32,6 +33,10 @@ class _DecouverteDetailsState extends State<DecouverteDetails> {
 
   @override
   Widget build(BuildContext context) {
+    final currentLocale = Get.locale?.languageCode ?? 'fr';
+    final description = currentLocale == 'en'
+        ? touristicSite!.descriptionEn
+        : touristicSite!.descriptionFr;
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: const PreferredSize(
@@ -105,7 +110,7 @@ class _DecouverteDetailsState extends State<DecouverteDetails> {
                   height: 10,
                 ),
                 Text(
-                  touristicSite!.description ?? '',
+                  description ?? '',
                   style: AppColors.interNormal(
                     size: 12,
                   ),

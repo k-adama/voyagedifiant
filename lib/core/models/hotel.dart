@@ -1,7 +1,8 @@
 class HotelModel {
   final int id;
   final String name;
-  final String description;
+  final String descriptionFr;
+  final String descriptionEn;
   final bool hasCleaning;
   final bool hasWifi;
   final bool hasBreakfast;
@@ -10,7 +11,8 @@ class HotelModel {
   final int numberOfBeds;
   final int numberOfBathrooms;
   final int numberOfAc;
-  final String details;
+  final String detailsFr;
+  final String detailsEn;
   final double priceStandard;
   final double pricePremium;
   final double priceSuite;
@@ -18,7 +20,8 @@ class HotelModel {
   HotelModel({
     required this.id,
     required this.name,
-    required this.description,
+    required this.descriptionFr,
+    required this.descriptionEn,
     required this.hasCleaning,
     required this.hasWifi,
     required this.hasBreakfast,
@@ -27,7 +30,8 @@ class HotelModel {
     required this.numberOfBeds,
     required this.numberOfBathrooms,
     required this.numberOfAc,
-    required this.details,
+    required this.detailsFr,
+    required this.detailsEn,
     required this.priceStandard,
     required this.pricePremium,
     required this.priceSuite,
@@ -37,7 +41,8 @@ class HotelModel {
     return HotelModel(
       id: json['id'],
       name: json['name'],
-      description: json['description'],
+      descriptionFr: json['description_fr'] ?? '',
+      descriptionEn: json['description_en'] ?? '',
       hasCleaning: json['has_cleaning'] == 1,
       hasWifi: json['has_wifi'] == 1,
       hasBreakfast: json['has_breakfast'] == 1,
@@ -46,11 +51,22 @@ class HotelModel {
       numberOfBeds: json['number_of_beds'] ?? 0,
       numberOfBathrooms: json['number_of_bathrooms'] ?? 0,
       numberOfAc: json['number_of_ac'] ?? 0,
-      details: json['details'] ?? '',
+      detailsFr: json['details_fr'] ?? '',
+      detailsEn: json['details_en'] ?? '',
       priceStandard: _parsePrice(json['price_standard']),
       pricePremium: _parsePrice(json['price_premium']),
       priceSuite: _parsePrice(json['price_suite']),
     );
+  }
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'name': name,
+      'description_fr': descriptionFr,
+      'description_en': descriptionEn,
+      'details_fr': detailsFr,
+      'details_en': detailsEn,
+    };
   }
 
   static double _parsePrice(dynamic price) {

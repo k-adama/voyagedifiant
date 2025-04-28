@@ -12,9 +12,9 @@ class SejourCard extends StatelessWidget {
     this.color,
     required this.onTap,
     this.description,
-    required this.hasCleaning,
-    required this.hasWifi,
-    required this.hasBreakfast,
+    //required this.hasCleaning,
+    //required this.hasWifi,
+    // required this.hasBreakfast,
   });
 
   final String? image;
@@ -24,17 +24,17 @@ class SejourCard extends StatelessWidget {
   final String location;
   final Color? color;
   final void Function() onTap;
-  final String hasCleaning;
-  final String hasWifi;
-  final String hasBreakfast;
+  //final String hasCleaning;
+  //final String hasWifi;
+  //final String hasBreakfast;
 
   @override
   Widget build(BuildContext context) {
-    final visibleItemsCount = [
+    /* final visibleItemsCount = [
       hasCleaning,
       hasWifi,
       hasBreakfast,
-    ].where((e) => e == "true").length;
+    ].where((e) => e == "true").length;*/
 
     return Card(
       // margin: const EdgeInsets.all(10),
@@ -116,7 +116,7 @@ class SejourCard extends StatelessWidget {
                         style: AppColors.interNormal(
                           size: 12,
                         )),
-                    const SizedBox(
+                    /*  const SizedBox(
                       height: 12,
                     ),
                     FractionallySizedBox(
@@ -152,7 +152,7 @@ class SejourCard extends StatelessWidget {
                             ],
                           ),
                       ],
-                    )),
+                    )),*/
                     const SizedBox(
                       height: 12,
                     ),

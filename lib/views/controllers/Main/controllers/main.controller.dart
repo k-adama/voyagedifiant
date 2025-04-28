@@ -24,9 +24,38 @@ class MainController extends GetxController {
   }
 
   void changeLanguage(String languageCode) async {
-    currentLocale.value = _localeFromCode(languageCode);
-    Get.updateLocale(currentLocale.value);
-    await LocalStorage.instance.getLanguage(languageCode);
+    // Affiche un loader
+    Get.dialog(
+      const Center(child: CircularProgressIndicator()),
+      barrierDismissible: false,
+    );
+
+    try {
+      currentLocale.value = _localeFromCode(languageCode);
+      Get.updateLocale(currentLocale.value);
+      await LocalStorage.instance.getLanguage(languageCode);
+      Get.back();
+      String successMessage = languageCode == 'en'
+          ? 'Language changed successfully!'
+          : 'Langue changée avec succès !';
+
+      Get.snackbar(
+        'Success',
+        successMessage,
+        snackPosition: SnackPosition.TOP,
+        backgroundColor: Colors.green,
+        colorText: Colors.white,
+      );
+    } catch (e) {
+      Get.back();
+      Get.snackbar(
+        'Erreur',
+        'Erreur lors du changement de langue.',
+        snackPosition: SnackPosition.TOP,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+    }
   }
 
   Locale _localeFromCode(String code) {

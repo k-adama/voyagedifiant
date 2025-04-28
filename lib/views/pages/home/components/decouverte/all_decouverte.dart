@@ -2,6 +2,7 @@ import 'package:auto_height_grid_view/auto_height_grid_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
+import 'package:get/get_utils/src/extensions/internacionalization.dart';
 import 'package:get/route_manager.dart';
 import 'package:voyagedifiant/core/constants/app_colors.dart';
 import 'package:voyagedifiant/core/constants/app_constants.dart';
@@ -83,6 +84,11 @@ class _AllDecouverteItemsState extends State<AllDecouverteItems> {
                           builder: (context, index) {
                             final touristicSites =
                                 homeController.displayedTouristicSites[index];
+                            final currentLocale =
+                                Get.locale?.languageCode ?? 'fr';
+                            final description = currentLocale == 'en'
+                                ? touristicSites.descriptionEn
+                                : touristicSites.descriptionFr;
                             return AnimationConfiguration.staggeredGrid(
                               columnCount: 4,
                               position: index,
@@ -92,7 +98,7 @@ class _AllDecouverteItemsState extends State<AllDecouverteItems> {
                                 child: FadeInAnimation(
                                     child: DecouverteCardComponent(
                                   name: touristicSites.name,
-                                  description: touristicSites.description,
+                                  description: description,
                                   price:
                                       touristicSites.standardPrice.toString(),
                                   onTap: () {

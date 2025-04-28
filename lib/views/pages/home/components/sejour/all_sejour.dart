@@ -2,6 +2,7 @@ import 'package:auto_height_grid_view/auto_height_grid_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
+import 'package:get/get_utils/src/extensions/internacionalization.dart';
 import 'package:get/route_manager.dart';
 import 'package:voyagedifiant/core/constants/app_colors.dart';
 import 'package:voyagedifiant/core/constants/app_defaults.dart';
@@ -78,6 +79,11 @@ class _AllSejourItemsState extends State<AllSejourItems> {
                       itemCount: homeController.displayedHotels.length,
                       builder: (context, index) {
                         final hotels = homeController.displayedHotels[index];
+                          final currentLocale =
+                                Get.locale?.languageCode ?? 'fr';
+                            final description = currentLocale == 'en'
+                                ? hotels.descriptionEn
+                                : hotels.descriptionFr;
                         return AnimationConfiguration.staggeredGrid(
                           columnCount: 4,
                           position: index,
@@ -87,12 +93,12 @@ class _AllSejourItemsState extends State<AllSejourItems> {
                             child: FadeInAnimation(
                                 child: SejourCard(
                               name: hotels.name,
-                              description: hotels.description,
+                              description: description,
                               price: hotels.priceStandard.toString(),
                               location: hotels.city,
-                              hasWifi: hotels.hasWifi.toString(),
-                              hasCleaning: hotels.hasCleaning.toString(),
-                              hasBreakfast: hotels.hasBreakfast.toString(),
+                              //hasWifi: hotels.hasWifi.toString(),
+                              //hasCleaning: hotels.hasCleaning.toString(),
+                             // hasBreakfast: hotels.hasBreakfast.toString(),
                               onTap: () {
                                 Get.toNamed(Routes.SEJOUR_DETAILS,
                                     arguments: hotels);
