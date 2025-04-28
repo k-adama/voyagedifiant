@@ -1,30 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:auto_height_grid_view/auto_height_grid_view.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
+import 'package:get/route_manager.dart';
 import 'package:voyagedifiant/core/constants/app_colors.dart';
 import 'package:voyagedifiant/core/constants/app_defaults.dart';
+import 'package:voyagedifiant/core/models/hotel.dart';
+import 'package:voyagedifiant/core/routes/app_pages.dart';
 
 class HotelComponents extends StatelessWidget {
-  //final Product product;
+  final List<HotelModel> hotels;
   final String? image;
-  final String? name;
   const HotelComponents({
     super.key,
     this.image,
-    this.name,
-    //required this.product
+    required this.hotels,
   });
 
   @override
   Widget build(BuildContext context) {
-    //var controller =
-    //  Get.put<DetailController>(DetailController(product: product));
+    if (hotels.isEmpty) {
+      return const Center(
+        child: CircularProgressIndicator(color: AppColors.signUpColor),
+      );
+    }
     return AutoHeightGridView(
       shrinkWrap: true,
       crossAxisCount: 3,
       mainAxisSpacing: 15,
-      itemCount: 3,
+      itemCount: hotels.take(3).length,
       builder: (context, index) {
+        final hotel = hotels[index];
         return AnimationConfiguration.staggeredGrid(
           columnCount: 4,
           position: index,
@@ -33,7 +38,9 @@ class HotelComponents extends StatelessWidget {
             scale: 0.5,
             child: FadeInAnimation(
                 child: InkWell(
-              onTap: () {},
+              onTap: () {
+                Get.toNamed(Routes.SEJOUR_DETAILS, arguments: hotel);
+              },
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
                 child: Column(
@@ -44,7 +51,7 @@ class HotelComponents extends StatelessWidget {
                         height: 80,
                         width: MediaQuery.of(context).size.width,
                         child: Image.asset(
-                          image ?? 'assets/icons/location-icon.png',
+                          image ?? 'assets/images/sofi.png',
                           fit: BoxFit.cover,
                         ),
                       ),
@@ -53,8 +60,7 @@ class HotelComponents extends StatelessWidget {
                       height: 1,
                     ),
                     Text(
-                      name ?? 'pas de nom',
-                      //controller.productList[index].name,
+                      hotel.name ?? 'pas de nom',
                       style: AppColors.interBold(
                         size: 14,
                       ),
