@@ -82,7 +82,6 @@ class _OrdersHistoriePageState extends State<OrdersHistoriePage> {
                         : homeController.orders.length,
                     itemBuilder: (context, index) {
                       if (index == homeController.orders.length) {
-                        // Afficher un loader à la fin pendant le chargement
                         return const Center(
                             child: CircularProgressIndicator(
                           color: AppColors.signUpColor,
@@ -128,7 +127,8 @@ class _OrdersHistoriePageState extends State<OrdersHistoriePage> {
                                               AppConstants
                                                   .extractFormattedDateRange(
                                                       order.rentalPeriod),
-                                              style: TextStyle(fontSize: 15),
+                                              style:
+                                                  const TextStyle(fontSize: 15),
                                             ),
                                           ),
                                         ],
