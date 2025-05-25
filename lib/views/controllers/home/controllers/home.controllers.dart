@@ -8,12 +8,18 @@ import 'package:get/get_rx/src/rx_workers/rx_workers.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:get/instance_manager.dart';
 import 'package:intl/intl.dart';
+import 'package:voyagedifiant/core/constants/app_helpers.dart';
+import 'package:voyagedifiant/core/models/VehiculeInvoiceModel.dart';
 import 'package:voyagedifiant/core/models/driver_model.dart';
 import 'package:voyagedifiant/core/models/hotel.dart';
+import 'package:voyagedifiant/core/models/orders_model.dart';
 import 'package:voyagedifiant/core/models/touristic_discovery.dart';
 import 'package:voyagedifiant/core/models/vehicule.dart';
 import 'package:voyagedifiant/core/repositories/Auth/home.repository.dart';
+import 'package:voyagedifiant/core/routes/app_pages.dart';
 import 'package:voyagedifiant/core/services/app_connectivity.service.dart';
+import 'package:voyagedifiant/core/widgets/dialogs/successfull.dialog.dart';
+import 'package:voyagedifiant/views/pages/home/home_page.dart';
 
 class HomeController extends GetxController {
   DateTime? startDate;
@@ -25,6 +31,11 @@ class HomeController extends GetxController {
   bool isTouristicSiteLoading = true;
   bool isHotelsLoading = true;
   bool hasConnection = true;
+
+  var page = 1.obs;
+  var isVehicleOrdersLoading = false.obs;
+  var hasMore = true.obs;
+
   final RxString searchQuery = ''.obs;
   final RxString searchVehiculeQuery = ''.obs;
   final RxString searchTouristicSiteQuery = ''.obs;
@@ -42,6 +53,9 @@ class HomeController extends GetxController {
   List<HotelModel> hotels = List<HotelModel>.empty().obs;
   List<HotelModel> hotelsInit = List<HotelModel>.empty().obs;
   List<HotelModel> displayedHotels = List<HotelModel>.empty().obs;
+
+  List<OrderModel> orders = List<OrderModel>.empty().obs;
+  List<OrderModel> ordersInit = List<OrderModel>.empty().obs;
 
   int currentPage = 0;
   final int itemsPerPage = 10;
@@ -83,14 +97,47 @@ class HomeController extends GetxController {
     );
   }
 
+
   @override
   void onReady() async {
     await Future.wait([
       fetchVehicles(),
       fetchTouristicSites(),
       fetchHotels(),
+      getVehiclesOrders(),
     ]);
     super.onReady();
+  }
+
+  Future<void> getVehiclesOrders({bool isRefresh = false}) async {
+    if (isVehicleOrdersLoading.value) return;
+
+    if (isRefresh) {
+      page.value = 1;
+      hasMore.value = true;
+      orders.clear();
+    }
+
+    if (!hasMore.value) return;
+
+    isVehicleOrdersLoading.value = true;
+
+    final result = await homeRepository.getUserOrders(page: page.value);
+
+    result.when(
+      success: (data) {
+        if (data.length < 10) {
+          hasMore.value = false; // plus de pages
+        }
+        orders.addAll(data);
+        page.value++;
+      },
+      failure: (message) {
+        Get.snackbar("Erreur", message, snackPosition: SnackPosition.TOP);
+      },
+    );
+
+    isVehicleOrdersLoading.value = false;
   }
 
   Future<void> fetchVehicles() async {
@@ -331,7 +378,7 @@ class HomeController extends GetxController {
   }
 
   // Affichage du texte résumé
-  String get displayText {
+  String get displayLocationPeriodText {
     if (startDate == null ||
         endDate == null ||
         startTime == null ||
@@ -375,6 +422,7 @@ class HomeController extends GetxController {
   void selectChauffeur(DriverModel chauffeur) {
     selectedChauffeur.value = chauffeur;
     Get.back();
+    update();
   }
 
   final List<String> lieuxDeRassemblement = [
@@ -492,4 +540,148 @@ class HomeController extends GetxController {
 
     update();
   }
+
+  void goToVehiculeInvoicePage(VehicleModel? vehicle, String? selectedClass) {
+    if (startDate == null || endDate == null) {
+      Get.snackbar(
+        'Période requise',
+        'Veuillez choisir une période de location',
+        snackPosition: SnackPosition.TOP,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+      return;
+    }
+
+    if (selectedClass == null) {
+      Get.snackbar('Erreur', 'Veuillez sélectionner une classe',
+          snackPosition: SnackPosition.TOP,
+          backgroundColor: Colors.red,
+          colorText: Colors.white);
+      return;
+    }
+
+    final String price = selectedClass == 'Economie'
+        ? vehicle?.economyPrice.toString() ?? '0'
+        : selectedClass == 'Business'
+            ? vehicle?.businessPrice.toString() ?? '0'
+            : '0';
+
+    final int numberOfDays = endDate!.difference(startDate!).inDays + 1;
+    final double dailyPrice = double.tryParse(price) ?? 0.0;
+    final double totalPrice = dailyPrice * numberOfDays;
+
+    final invoice = VehiculeInvoiceModel(
+      name: vehicle?.name ?? '',
+      bag: vehicle?.luggage.toString() ?? '',
+      person: vehicle?.numberOfSeats.toString() ?? '',
+      airConditioning: (vehicle?.airConditioning ?? false) ? '1' : '0',
+      classe: selectedClass,
+      locationVehiclePeriod: displayLocationPeriodText,
+      driver: selectedChauffeur.value.name,
+      price: price,
+      totalPrice: totalPrice,
+      totalPriceOperation:
+          '${dailyPrice.toStringAsFixed(0)} * $numberOfDays = ${totalPrice.toStringAsFixed(0)} FCFA',
+    );
+
+    Get.toNamed(Routes.INVOICE_PAGE, arguments: invoice.toJson());
+  }
+
+  Future<void> saveInvoiceToDatabase(
+      BuildContext context, Map<String, dynamic> data) async {
+    final Map<String, dynamic> dataToSend = {
+      'vehicle_name': data['name']?.toString() ?? '',
+      'bags': data['bag']?.toString() ?? '',
+      'passengers': data['person']?.toString() ?? '',
+      'air_conditioning': data['airConditioning']?.toString() ?? '',
+      'vehicle_class': data['class']?.toString() ?? '',
+      'rental_period': data['locationVehiclePeriod']?.toString() ?? '',
+      'driver': data['driver']?.toString() ?? '',
+      'price': data['price']?.toString() ?? '',
+      'total_price': data['totalPrice']?.toString() ?? '',
+      'username': data['username']?.toString() ?? '',
+      'phone': data['phone']?.toString() ?? '',
+      'amount_paid': data['montantApaye']?.toString() ?? '',
+    };
+
+    try {
+      await homeRepository.createReservation(dataToSend);
+
+      AppHelpersCommon.showAlertDialog(
+        context: context,
+        canPop: false,
+        child: SuccessfullDialog(
+          isCustomerAdded: false,
+          haveButton: false,
+          svgPicture: "assets/icons/undraw_happy_news_re_tsbd 1.svg",
+          content: 'Réservation enregistrée',
+          redirect: () => Get.offAll((Routes.HOME_PAGE)),
+        ),
+      );
+    } catch (e) {
+      Get.snackbar('Erreur', 'Échec de l’enregistrement : $e',
+          snackPosition: SnackPosition.TOP,
+          backgroundColor: Colors.red,
+          colorText: Colors.white);
+    }
+  }
+
+  /*void goToVehiculeInvoicePage(VehicleModel? vehicle, String? selectedClass) {
+    if (startDate == null || endDate == null) {
+      Get.snackbar(
+          'Période requise', 'Veuillez choisir une période de location',
+          snackPosition: SnackPosition.TOP,
+          backgroundColor: Colors.red,
+          colorText: Colors.white);
+      return;
+    }
+    String? className = selectedClass;
+    String name = vehicle?.name ?? '';
+    String price = '';
+    String person = vehicle?.numberOfSeats.toString() ?? '';
+    String bag = vehicle?.luggage.toString() ?? '';
+    String airConditioning = (vehicle?.airConditioning ?? false) ? '1' : '0';
+    String locationVehiclePeriod = displayLocationPeriodText;
+    String driver = selectedChauffeur.value.name;
+
+    if (className == 'Economie') {
+      price = vehicle?.economyPrice.toString() ?? '';
+    } else if (className == 'Business') {
+      price = vehicle?.businessPrice.toString() ?? '';
+    } else {
+      Get.snackbar('Erreur', 'Veuillez sélectionner une classe',
+          snackPosition: SnackPosition.TOP,
+          backgroundColor: Colors.red,
+          colorText: Colors.white);
+      return;
+    }
+
+    int numberOfDays = endDate!.difference(startDate!).inDays + 1;
+    double dailyPrice = double.tryParse(price) ?? 0.0;
+    double totalPrice = dailyPrice * numberOfDays;
+    String totalPriceFormatted =
+        '${dailyPrice.toStringAsFixed(0)} * $numberOfDays = ${totalPrice.toStringAsFixed(0)} FCFA';
+    print('...............');
+    print(name);
+    print(className);
+    print(price);
+    print(locationVehiclePeriod);
+    print(driver);
+    print(totalPrice);
+    Get.toNamed(Routes.INVOICE_PAGE, arguments: {
+      'name': name,
+      'class': className,
+      'price': price,
+      'bag': bag,
+      'person': person,
+      'airConditioning': airConditioning,
+      'locationVehiclePeriod': locationVehiclePeriod,
+      'driver': driver,
+      'totalPrice': totalPrice,
+      'totalPriceOperation': totalPriceFormatted,
+
+      //'$price * $numberOfDays ${numberOfDays > 1 ? '' : ''} = ${totalPrice.toStringAsFixed(0)} FCFA',
+    });
+  }*/
 }

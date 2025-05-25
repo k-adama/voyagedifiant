@@ -3,7 +3,6 @@ import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:voyagedifiant/core/constants/app_colors.dart';
 import 'package:voyagedifiant/core/constants/app_defaults.dart';
 import 'package:voyagedifiant/core/constants/app_helpers.dart';
-import 'package:voyagedifiant/core/widgets/buttons/app_button.dart';
 import 'package:voyagedifiant/core/widgets/components/app_divider.dart';
 import 'package:voyagedifiant/views/controllers/home/controllers/home.controllers.dart';
 import 'package:voyagedifiant/views/pages/home/components/vehicule/components/driver_cart_component.dart';
@@ -68,9 +67,8 @@ class _MapsDatetimeCardState extends State<MapsDatetimeCard> {
                       const Icon(Icons.calendar_today, color: AppColors.black),
                       const SizedBox(width: 12),
                       Expanded(
-                        child: Text(homeController.displayText),
+                        child: Text(homeController.displayLocationPeriodText),
                       ),
-                    
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(
                           backgroundColor: AppColors.primaryColor,
@@ -123,8 +121,10 @@ class _MapsDatetimeCardState extends State<MapsDatetimeCard> {
                                   borderRadius: BorderRadius.circular(8),
                                 ),
                               ),
-                              onPressed: () =>
-                                  homeController.selectChauffeur(chauffeur),
+                              onPressed: () {
+                                homeController.selectChauffeur(chauffeur);
+                                print(chauffeur.name);
+                              },
                               child: const Text('Choisir'),
                             ),
                           );

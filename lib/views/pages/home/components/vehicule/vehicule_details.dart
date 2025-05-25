@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/instance_manager.dart';
 import 'package:get/route_manager.dart';
+import 'package:voyagedifiant/app_translate.dart';
 import 'package:voyagedifiant/core/constants/app_colors.dart';
 import 'package:voyagedifiant/core/constants/app_defaults.dart';
 import 'package:voyagedifiant/core/models/vehicule.dart';
@@ -7,6 +9,7 @@ import 'package:voyagedifiant/core/routes/app_pages.dart';
 import 'package:voyagedifiant/core/widgets/buttons/app_button.dart';
 import 'package:voyagedifiant/core/widgets/components/appbar/app_bar.dart';
 import 'package:voyagedifiant/core/widgets/components/appbar/drawer_page.component.dart';
+import 'package:voyagedifiant/views/controllers/home/controllers/home.controllers.dart';
 import 'package:voyagedifiant/views/pages/home/components/vehicule/components/details_card_component.dart';
 import 'package:voyagedifiant/views/pages/home/components/vehicule/components/maps_datetime_card.dart';
 
@@ -20,8 +23,10 @@ class VehiculeDetails extends StatefulWidget {
 }
 
 class _VehiculeDetailsState extends State<VehiculeDetails> {
+  String? selectedClass;
   Color _buttonColor = AppColors.primaryColor;
   final VehicleModel? vehicle = Get.arguments;
+  HomeController homeController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -51,6 +56,11 @@ class _VehiculeDetailsState extends State<VehiculeDetails> {
                     'assets/images/Rectangle 11.png',
                 airConditioning:
                     (vehicle?.airConditioning ?? false) ? '1' : '0',
+                onClassSelected: (value) {
+                  setState(() {
+                    selectedClass = value;
+                  });
+                },
               ),
               const MapsDatetimeCard(),
               Padding(
@@ -157,7 +167,8 @@ class _VehiculeDetailsState extends State<VehiculeDetails> {
                       },
                       child: AppCustomButton(
                         onPressed: () {
-                          Get.toNamed(Routes.INVOICE_PAGE);
+                          homeController.goToVehiculeInvoicePage(
+                              vehicle, selectedClass);
                         },
                         borderRadius: AppDefaults.borderRadius,
                         buttonText: "Passer au paiement",

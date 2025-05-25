@@ -160,7 +160,7 @@ class _MapsDatetimeCardState extends State<SejourDecouverteMapsCard> {
                       const Icon(Icons.calendar_today, color: AppColors.black),
                       const SizedBox(width: 12),
                       Expanded(
-                        child: Text(homeController.displayText),
+                        child: Text(homeController.displayLocationPeriodText),
                       ),
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(

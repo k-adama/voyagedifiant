@@ -232,7 +232,6 @@ class _HomePageState extends State<HomePage> {
                                 size: 14,
                               ),
                             ),
-                            
                             TouristSiteItemsComponents(
                               sites: homeController.randomTouristicSites,
                             ),
@@ -245,9 +244,8 @@ class _HomePageState extends State<HomePage> {
                                 size: 14,
                               ),
                             ),
-                             HotelComponents(
-                               hotels: homeController.randomHotels,
-
+                            HotelComponents(
+                              hotels: homeController.randomHotels,
                             ),
                           ],
                         ),

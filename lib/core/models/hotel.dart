@@ -37,27 +37,28 @@ class HotelModel {
     required this.priceSuite,
   });
 
-  factory HotelModel.fromJson(Map<String, dynamic> json) {
-    return HotelModel(
-      id: json['id'],
-      name: json['name'],
-      descriptionFr: json['description_fr'] ?? '',
-      descriptionEn: json['description_en'] ?? '',
-      hasCleaning: json['has_cleaning'] == 1,
-      hasWifi: json['has_wifi'] == 1,
-      hasBreakfast: json['has_breakfast'] == 1,
-      city: json['city'],
-      neighborhood: json['emplacement'] ?? '',
-      numberOfBeds: json['number_of_beds'] ?? 0,
-      numberOfBathrooms: json['number_of_bathrooms'] ?? 0,
-      numberOfAc: json['number_of_ac'] ?? 0,
-      detailsFr: json['details_fr'] ?? '',
-      detailsEn: json['details_en'] ?? '',
-      priceStandard: _parsePrice(json['price_standard']),
-      pricePremium: _parsePrice(json['price_premium']),
-      priceSuite: _parsePrice(json['price_suite']),
-    );
-  }
+factory HotelModel.fromJson(Map<String, dynamic> json) {
+  return HotelModel(
+    id: int.tryParse(json['id'].toString()) ?? 0,
+    name: json['name'],
+    descriptionFr: json['description_fr'] ?? '',
+    descriptionEn: json['description_en'] ?? '',
+    hasCleaning: json['has_cleaning'].toString() == '1',
+    hasWifi: json['has_wifi'].toString() == '1',
+    hasBreakfast: json['has_breakfast'].toString() == '1',
+    city: json['city'],
+    neighborhood: json['emplacement'] ?? '',
+    numberOfBeds: int.tryParse(json['number_of_beds'].toString()) ?? 0,
+    numberOfBathrooms: int.tryParse(json['number_of_bathrooms'].toString()) ?? 0,
+    numberOfAc: int.tryParse(json['number_of_ac'].toString()) ?? 0,
+    detailsFr: json['details_fr'] ?? '',
+    detailsEn: json['details_en'] ?? '',
+    priceStandard: _parsePrice(json['price_standard']),
+    pricePremium: _parsePrice(json['price_premium']),
+    priceSuite: _parsePrice(json['price_suite']),
+  );
+}
+
   Map<String, dynamic> toJson() {
     return {
       'id': id,
@@ -75,4 +76,11 @@ class HotelModel {
     }
     return price?.toDouble() ?? 0.0;
   }
+  static bool _toBool(dynamic value) {
+  if (value is bool) return value;
+  if (value is int) return value == 1;
+  if (value is String) return value == '1' || value.toLowerCase() == 'true';
+  return false;
+}
+
 }

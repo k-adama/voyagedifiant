@@ -1,14 +1,21 @@
 import 'package:flutter/material.dart';
 
+
 class SearchBottomSheetComponent {
+
+ // final GooglePlace googlePlace = GooglePlace('TA_CLE_API_GOOGLE');
   static void show({
     required BuildContext context,
     required String title,
     required bool isCurrentLocation,
     required Function(String selectedLocation) onLocationSelected,
     required List<String> suggestions,
+    final TextEditingController? controller,
+    final int? itemCount,
+    final String? text,
   }) {
-    List<String> filteredSuggestions = [];
+   // List<String> filteredSuggestions = [];
+     List<String> filteredSuggestions = List.from(suggestions);
 
     showModalBottomSheet(
       backgroundColor: Colors.transparent,
@@ -47,6 +54,7 @@ class SearchBottomSheetComponent {
                       ),
                       const SizedBox(height: 10),
                       TextField(
+                        controller: controller,
                         decoration: InputDecoration(
                           hintText: "Recherchez une position...",
                           prefixIcon: const Icon(Icons.search),
@@ -67,20 +75,15 @@ class SearchBottomSheetComponent {
                       const SizedBox(height: 10),  // Liste des suggestions
                       Expanded(
                         child: ListView.builder(
-                          controller: scrollController,
-                          itemCount: filteredSuggestions.isEmpty
-                              ? suggestions.length
-                              : filteredSuggestions.length,
+                           physics: NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+                          itemCount: itemCount,
                           itemBuilder: (context, index) {
-                            String location = filteredSuggestions.isEmpty
-                                ? suggestions[index]
-                                : filteredSuggestions[index];
-
                             return ListTile(
                               leading: const Icon(Icons.location_on),
-                              title: Text(location),
+                              title:  Text(filteredSuggestions[index]),
                               onTap: () {
-                                onLocationSelected(location);
+                               // onLocationSelected(location);
                                 Navigator.of(context).pop();
                               },
                             );

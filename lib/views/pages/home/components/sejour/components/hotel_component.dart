@@ -60,7 +60,7 @@ class HotelComponents extends StatelessWidget {
                       height: 1,
                     ),
                     Text(
-                      hotel.name ?? 'pas de nom',
+                      hotel.name,
                       style: AppColors.interBold(
                         size: 14,
                       ),

@@ -16,6 +16,7 @@ class DetailsCardComponent extends StatefulWidget {
     required this.bag,
     this.color,
     required this.airConditioning,
+    this.onClassSelected,
   });
 
   final String? couponBackground;
@@ -26,6 +27,7 @@ class DetailsCardComponent extends StatefulWidget {
   final String bag;
   final String airConditioning;
   final Color? color;
+  final void Function(String? selectedClass)? onClassSelected;
 
   @override
   State<DetailsCardComponent> createState() => _DetailsCardComponentState();
@@ -265,6 +267,10 @@ class _DetailsCardComponentState extends State<DetailsCardComponent> {
                     setState(() {
                       selectedClass = isSelected ? null : className;
                     });
+                    widget.onClassSelected?.call(selectedClass);
+                    /* setState(() {
+                      selectedClass = isSelected ? null : className;
+                    });*/
                   },
                   child: Container(
                     padding: const EdgeInsets.all(10),
