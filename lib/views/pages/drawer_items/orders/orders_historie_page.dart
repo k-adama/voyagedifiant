@@ -126,7 +126,8 @@ class _OrdersHistoriePageState extends State<OrdersHistoriePage> {
                                             child: Text(
                                               AppConstants
                                                   .extractFormattedDateRange(
-                                                      order.rentalPeriod),
+                                                      order.vehicleDetails!
+                                                          .rentalPeriod),
                                               style:
                                                   const TextStyle(fontSize: 15),
                                             ),
@@ -142,13 +143,14 @@ class _OrdersHistoriePageState extends State<OrdersHistoriePage> {
                                               fontWeight: FontWeight.w400),
                                           children: [
                                             TextSpan(
-                                              text: order.vehicleName,
+                                              text: order
+                                                  .vehicleDetails!.vehicleName,
                                               style: const TextStyle(
                                                   fontWeight: FontWeight.w400),
                                             ),
                                             TextSpan(
                                               text:
-                                                  " pour ${AppConstants.calculateRentalDays(order.rentalPeriod)} jours",
+                                                  " pour ${AppConstants.calculateRentalDays(order.vehicleDetails!.rentalPeriod)}",
                                             ),
                                           ],
                                         ),
@@ -162,7 +164,7 @@ class _OrdersHistoriePageState extends State<OrdersHistoriePage> {
                                                   fontWeight: FontWeight.w400,
                                                   fontSize: 15)),
                                           Text(
-                                              "${order.totalPrice.toStringAsFixed(0)} FCFA",
+                                              "${order.vehicleDetails!.totalPrice.toStringAsFixed(0)} FCFA",
                                               style: const TextStyle(
                                                   color: AppColors.black,
                                                   fontWeight: FontWeight.bold,
@@ -177,7 +179,7 @@ class _OrdersHistoriePageState extends State<OrdersHistoriePage> {
                                                   color: AppColors.black,
                                                   fontWeight: FontWeight.w400,
                                                   fontSize: 15)),
-                                          Text(order.driverName,
+                                          Text(order.vehicleDetails!.driverName,
                                               style: TextStyle(
                                                   color: AppColors.black,
                                                   fontWeight: FontWeight.bold,
@@ -230,138 +232,10 @@ class _OrdersHistoriePageState extends State<OrdersHistoriePage> {
                           ),
                         ),
                       );
-                      /*  ListTile(
-                        // leading: Image.network(order.vehicleImageUrl, width: 50, height: 50, fit: BoxFit.cover),
-                        title: Text(order.vehicleName),
-                        subtitle: Text(
-                            "Chauffeur: ${order.driverName}\nPériode: ${order.rentalPeriod}"),
-                        trailing:
-                            Text("${order.totalPrice.toStringAsFixed(2)} €"),
-                      );*/
                     },
                   ),
                 );
               }),
-              /*  Expanded(
-                child: ListView.builder(
-                  itemCount: 5,
-                  itemBuilder: (context, index) {
-                    return Card(
-                      elevation: 3,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                          side: const BorderSide(
-                            width: 2,
-                            color: AppColors.cardColor,
-                          )),
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Row(
-                          children: [
-                            Image.asset("assets/images/VoitureDetail.png"),
-                            const Expanded(
-                              child: Padding(
-                                padding: EdgeInsets.symmetric(
-                                    vertical: 8, horizontal: 10),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Row(
-                                      children: [
-                                        Text("Date : ",
-                                            style: TextStyle(
-                                                color: AppColors.black,
-                                                fontWeight: FontWeight.w400,
-                                                fontSize: 15)),
-                                        Text("04-11-2024 au 07-04-2024"),
-                                      ],
-                                    ),
-                                    SizedBox(height: 8),
-                                    Text(
-                                      "Location de Hundrai pour 3jours",
-                                      style: TextStyle(
-                                          color: AppColors.black,
-                                          fontWeight: FontWeight.w400),
-                                    ),
-                                    SizedBox(height: 8),
-                                    Row(
-                                      children: [
-                                        Text("Coût: ",
-                                            style: TextStyle(
-                                                color: AppColors.black,
-                                                fontWeight: FontWeight.w400,
-                                                fontSize: 15)),
-                                        Text("210 000FCFA ",
-                                            style: TextStyle(
-                                                color: AppColors.black,
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 18)),
-                                      ],
-                                    ),
-                                    SizedBox(height: 8),
-                                    Row(
-                                      children: [
-                                        Text("Chauffeur: ",
-                                            style: TextStyle(
-                                                color: AppColors.black,
-                                                fontWeight: FontWeight.w400,
-                                                fontSize: 15)),
-                                        Text("Koffi Laurent",
-                                            style: TextStyle(
-                                                color: AppColors.black,
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 18)),
-                                      ],
-                                    ),
-                                    SizedBox(height: 8),
-                                    Wrap(
-                                      crossAxisAlignment:
-                                          WrapCrossAlignment.center,
-                                      children: [
-                                        Text("Lieu de prise en charge: ",
-                                            style: TextStyle(
-                                                color: AppColors.black,
-                                                fontWeight: FontWeight.w400,
-                                                fontSize: 15)),
-                                        Text(
-                                          "Yopougon, toit rouge",
-                                          style: TextStyle(
-                                              color: AppColors.black,
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 18),
-                                        ),
-                                      ],
-                                    ),
-                                    SizedBox(height: 8),
-                                    Wrap(
-                                      crossAxisAlignment:
-                                          WrapCrossAlignment.center,
-                                      children: [
-                                        Text("Lieu de restitution: ",
-                                            style: TextStyle(
-                                                color: AppColors.black,
-                                                fontWeight: FontWeight.w400,
-                                                fontSize: 15)),
-                                        Text(
-                                          "Angré, nouveau chu",
-                                          style: TextStyle(
-                                              color: AppColors.black,
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 18),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    );
-                  },
-                ),
-              ),*/
             ],
           ),
         ));

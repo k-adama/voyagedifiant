@@ -97,7 +97,6 @@ class HomeController extends GetxController {
     );
   }
 
-
   @override
   void onReady() async {
     await Future.wait([
@@ -616,7 +615,8 @@ class HomeController extends GetxController {
           haveButton: false,
           svgPicture: "assets/icons/undraw_happy_news_re_tsbd 1.svg",
           content: 'Réservation enregistrée',
-          redirect: () => Get.offAll((Routes.HOME_PAGE)),
+          redirect: () => Get.offAll(() => const HomePage()),
+
         ),
       );
     } catch (e) {
@@ -627,6 +627,31 @@ class HomeController extends GetxController {
     }
   }
 
+  void goToTouristicSiteInvoicePage(
+      TouristicDiscovery? touristicSite, String? selectedClass) {
+    if (startDate == null || endDate == null) {
+      Get.snackbar(
+        'Période requise',
+        'Veuillez choisir une période de location',
+        snackPosition: SnackPosition.TOP,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+      return;
+    }
+    if (selectedClass == null) {
+      Get.snackbar('Erreur', 'Veuillez sélectionner une classe',
+          snackPosition: SnackPosition.TOP,
+          backgroundColor: Colors.red,
+          colorText: Colors.white);
+      return;
+    }
+    final String price = selectedClass == 'Standard'
+        ? touristicSite?.standardPrice.toString() ?? '0'
+        : selectedClass == 'Premium'
+            ? touristicSite?.premiumPrice.toString() ?? '0'
+            : '0';
+  }
   /*void goToVehiculeInvoicePage(VehicleModel? vehicle, String? selectedClass) {
     if (startDate == null || endDate == null) {
       Get.snackbar(

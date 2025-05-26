@@ -85,21 +85,22 @@ class HomeRepository {
 Future<ApiResultService<List<OrderModel>>> getUserOrders({int page = 1}) async {
   try {
     final client = server.client(requireAuth: true);
-    final response = await client.get('/user/orders?page=$page');
+    final response = await client.get('/orders?page=$page');
 
-    final rawData = response.data['data'];
-    final list = rawData['data'] as List;
+   final list = response.data['data'] as List;
 
-    final orders = list.map((e) => OrderModel.fromJson(e)).toList();
+   final orders = list.map((e) => OrderModel.fromJson(e)).toList();
 
     return ApiResultService.success(data: orders);
   } catch (e) {
-    if (e is DioException) {
-      final message = e.response?.data["message"] ?? "Une erreur est survenue historique commandes";
-      return ApiResultService.failure(message);
-    }
-    return ApiResultService.failure("Erreur check hisoriques commandes");
+  if (e is DioException) {
+    print("Dio error: ${e.response}");
+    final message = e.response?.data["message"] ?? "Une erreur est survenue historique commandes";
+    return ApiResultService.failure(message);
   }
+  print("Unexpected error: $e");
+  return ApiResultService.failure("Erreur check historiques commandes");
+}
 }
 
 }

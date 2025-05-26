@@ -140,6 +140,8 @@ class _DecouverteDetailsState extends State<DecouverteDetails> {
                     widthFactor: 0.5,
                     child: AppCustomButton(
                       onPressed: () {
+                      /*  homeController.goToTouristicSiteInvoicePage(
+                            touristicSite, selectedClass);*/
                         Get.toNamed(Routes.INVOICE_DECOUVERTE_PAGE);
                       },
                       borderRadius: const BorderRadius.all(Radius.circular(8)),

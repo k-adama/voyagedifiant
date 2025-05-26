@@ -33,10 +33,10 @@ class AppConstants {
     }
   }
 
-  static int calculateRentalDays(String rentalPeriod) {
+  static String calculateRentalDays(String rentalPeriod) {
     try {
       final parts = rentalPeriod.split('→');
-      if (parts.length != 2) return 0;
+      if (parts.length != 2) return "";
 
       final startRaw = parts[0].trim();
       final endRaw = parts[1].trim();
@@ -47,14 +47,15 @@ class AppConstants {
       final start = DateFormat("d MMM h:mm a", "en_US").parse(startRaw);
       final end = DateFormat("d MMM h:mm a", "en_US").parse(endRaw);
 
-      // Ajoute l'année manquante
       final startWithYear = DateTime(year, start.month, start.day);
       final endWithYear = DateTime(year, end.month, end.day);
 
-      final diff = endWithYear.difference(startWithYear).inDays + 1;
-      return diff;
+      final days = endWithYear.difference(startWithYear).inDays + 1;
+      final label = days > 1 ? "jours" : "jour";
+
+      return "$days $label";
     } catch (e) {
-      return 0;
+      return "";
     }
   }
 }

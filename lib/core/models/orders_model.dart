@@ -1,28 +1,37 @@
+import 'package:voyagedifiant/core/models/vehicle_orders_model.dart';
+
 class OrderModel {
-  final String vehicleName;
-  final String driverName;
-  final String rentalPeriod;
-  final double totalPrice;
-  //final String vehicleImageUrl;
-  final DateTime createdAt; 
+  final int id;
+  final String type;
+  final String totalPrice;
+  final VehicleOrdersModels? vehicleDetails;
+  //final HotelOrdersModels? hotelDetails; // Exemple pour hotel
 
   OrderModel({
-    required this.vehicleName,
-    required this.driverName,
-    required this.rentalPeriod,
+    required this.id,
+    required this.type,
     required this.totalPrice,
-    //required this.vehicleImageUrl,
-    required this.createdAt,
+    this.vehicleDetails,
+    // this.hotelDetails,
   });
 
   factory OrderModel.fromJson(Map<String, dynamic> json) {
+    VehicleOrdersModels? vehicleDetails;
+    // HotelOrdersModels? hotelDetails;
+
+    if (json['type'] == 'vehicle' && json['details'] != null) {
+      vehicleDetails = VehicleOrdersModels.fromJson(
+          Map<String, dynamic>.from(json['details']));
+    } else if (json['type'] == 'hotel' && json['details'] != null) {
+      // hotelDetails = HotelOrdersModels.fromJson(Map<String, dynamic>.from(json['details']));
+    }
+
     return OrderModel(
-      vehicleName: json['vehicle_name'] ?? '',
-      driverName: json['driver'] ?? '',
-      rentalPeriod: json['rental_period'] ?? '',
-      totalPrice: double.tryParse(json['total_price'].toString()) ?? 0.0,
-      //vehicleImageUrl: json['vehicle_image'] ?? '',
-      createdAt: DateTime.parse(json['created_at']),  
+      id: json['id'],
+      type: json['type'],
+      totalPrice: json['total_price'].toString(),
+      vehicleDetails: vehicleDetails,
+      // hotelDetails: hotelDetails,
     );
   }
 }
