@@ -10,6 +10,7 @@ import 'package:get/instance_manager.dart';
 import 'package:intl/intl.dart';
 import 'package:voyagedifiant/core/constants/app_helpers.dart';
 import 'package:voyagedifiant/core/models/VehiculeInvoiceModel.dart';
+import 'package:voyagedifiant/core/models/discovery_invoice_model.dart';
 import 'package:voyagedifiant/core/models/driver_model.dart';
 import 'package:voyagedifiant/core/models/hotel.dart';
 import 'package:voyagedifiant/core/models/orders_model.dart';
@@ -616,7 +617,6 @@ class HomeController extends GetxController {
           svgPicture: "assets/icons/undraw_happy_news_re_tsbd 1.svg",
           content: 'Réservation enregistrée',
           redirect: () => Get.offAll(() => const HomePage()),
-
         ),
       );
     } catch (e) {
@@ -651,6 +651,24 @@ class HomeController extends GetxController {
         : selectedClass == 'Premium'
             ? touristicSite?.premiumPrice.toString() ?? '0'
             : '0';
+    final int numberOfDays = endDate!.difference(startDate!).inDays + 1;
+    final double dailyPrice = double.tryParse(price) ?? 0.0;
+    final double totalPrice = dailyPrice * numberOfDays;
+    final String lieuDeRassemblement = selectedLieu.value;
+
+    final discoveryInvoice = DiscoveryInvoiceModel(
+      name: touristicSite!.name,
+      classe: selectedClass,
+      lieuDeRassemblement: lieuDeRassemblement,
+      reservationPeriod: displayLocationPeriodText,
+      price: price,
+      totalPrice: totalPrice,
+      totalPriceOperation:
+          '${dailyPrice.toStringAsFixed(0)} * $numberOfDays = ${totalPrice.toStringAsFixed(0)} FCFA',
+    );
+     Get.toNamed(Routes.INVOICE_DECOUVERTE_PAGE,
+        arguments: discoveryInvoice.toJson());
+    print(discoveryInvoice.toJson());
   }
   /*void goToVehiculeInvoicePage(VehicleModel? vehicle, String? selectedClass) {
     if (startDate == null || endDate == null) {

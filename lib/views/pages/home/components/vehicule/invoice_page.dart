@@ -32,7 +32,6 @@ class _InvoicePageState extends State<InvoicePage> {
   final double alternateAmount = 200;
   final TextEditingController amountController = TextEditingController();
 
-  //final vehiculeInfo = Get.arguments;
   late final VehiculeInvoiceModel vehiculeInfo;
 
   @override
@@ -41,12 +40,6 @@ class _InvoicePageState extends State<InvoicePage> {
     vehiculeInfo = VehiculeInvoiceModel.fromJson(Get.arguments);
     amountController.text = '';
   }
-
-  /* @override
-  void initState() {
-    super.initState();
-    amountController.text = '';
-  }*/
 
   @override
   void dispose() {
@@ -136,13 +129,15 @@ class _InvoicePageState extends State<InvoicePage> {
                             style: ToggleStyle(
                               borderColor: AppColors.gray,
                               backgroundColor: isAvailable
-                                  ? AppColors.signUpColor
+                                  ? AppColors.primaryColor
                                   : AppColors.white,
                             ),
                             borderWidth: 4.0,
                             onChanged: _togglePayment,
-                            styleBuilder: (b) => const ToggleStyle(
-                                indicatorColor: AppColors.primaryColor),
+                            styleBuilder: (b) => ToggleStyle(
+                                indicatorColor: isAvailable
+                                    ? AppColors.white
+                                    : AppColors.primaryColor),
                           )),
                     ],
                   ),

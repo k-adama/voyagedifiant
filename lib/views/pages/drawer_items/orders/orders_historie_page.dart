@@ -4,6 +4,7 @@ import 'package:get/instance_manager.dart';
 import 'package:voyagedifiant/core/constants/app_colors.dart';
 import 'package:voyagedifiant/core/constants/app_constants.dart';
 import 'package:voyagedifiant/core/widgets/components/translate_pop_item.dart';
+import 'package:voyagedifiant/core/widgets/orders_history_card.dart';
 import 'package:voyagedifiant/views/controllers/home/controllers/home.controllers.dart';
 
 class OrdersHistoriePage extends StatefulWidget {
@@ -87,9 +88,49 @@ class _OrdersHistoriePageState extends State<OrdersHistoriePage> {
                           color: AppColors.signUpColor,
                         ));
                       }
-
                       final order = homeController.orders[index];
-                      return Card(
+                      final List<Widget> cards = [];
+
+                      if (order.vehicleDetails != null) {
+                        final vehicle = order.vehicleDetails!;
+                        cards.add(
+                          OrdersHistoryCard(
+                            rentalPeriod: vehicle.rentalPeriod,
+                            orderName: vehicle.vehicleName,
+                            rentalPeriodDays: vehicle.rentalPeriod,
+                            cout: order.totalPrice,
+                            driverName: vehicle.driverName,
+                          ),
+                        );
+                      }
+                      /* if (order.hotelDetails != null) {
+                        final h = order.hotelDetails!;
+                        cards.add(
+                          HotelOrderCard(
+                            stayPeriod: h.stayPeriod,
+                            hotelName: h.hotelName,
+                            cout: h.totalPrice,
+                          ),
+                        );
+                      }*/
+
+                      /*  if (order.siteDetails != null) {
+                        final s = order.siteDetails!;
+                        cards.add(
+                          SiteOrderCard(
+                            visitDate: s.visitDate,
+                            siteName: s.siteName,
+                            cout: s.price,
+                          ),
+                        );
+                      }*/
+
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: cards,
+                      );
+
+                      /* Card(
                         elevation: 3,
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10),
@@ -231,7 +272,7 @@ class _OrdersHistoriePageState extends State<OrdersHistoriePage> {
                             ],
                           ),
                         ),
-                      );
+                      );*/
                     },
                   ),
                 );
