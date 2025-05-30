@@ -121,8 +121,9 @@ class _OrdersHistoriePageState extends State<OrdersHistoriePage> {
                             rentalPeriod: discovery.reservationPeriod,
                             orderName: discovery.siteName,
                             rentalPeriodDays: discovery.reservationPeriod,
-                            cout: discovery.totalPrice.toString(),
+                            cout: order.totalPrice,
                             isDriver: false,
+                            isLocationText: false,
                           ),
                         );
                       }

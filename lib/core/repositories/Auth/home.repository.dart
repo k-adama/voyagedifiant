@@ -63,14 +63,11 @@ class HomeRepository {
         return ApiResultService.failure("Format de réponse invalide");
       }
     } catch (e) {
-      // Capturer et afficher plus d'informations selon le type d'erreur
       if (e is DioException) {
-        // Vérifie si l'exception Dio contient une réponse
         final message =
             e.response?.data["message"] ?? "Une erreur est survenue";
         return ApiResultService.failure(message);
       } else {
-        // Si ce n'est pas une erreur Dio, affiche plus d'infos
         return ApiResultService.failure("Erreur inconnue: $e");
       }
     }
@@ -78,12 +75,12 @@ class HomeRepository {
 
   Future<void> createReservation(Map<String, dynamic> data) async {
     final client = server.client(requireAuth: true);
-    final response = await client.post('/vehicle-reservations', data: data);
+    await client.post('/vehicle-reservations', data: data);
   }
 
   Future<void> createDiscoveryReservation(Map<String, dynamic> data) async {
     final client = server.client(requireAuth: true);
-     await client.post('/discovery-orders', data: data);
+    await client.post('/discovery-orders', data: data);
   }
 
   Future<ApiResultService<List<OrderModel>>> getUserOrders(
@@ -99,12 +96,10 @@ class HomeRepository {
       return ApiResultService.success(data: orders);
     } catch (e) {
       if (e is DioException) {
-        print("Dio error: ${e.response}");
         final message = e.response?.data["message"] ??
             "Une erreur est survenue historique commandes";
         return ApiResultService.failure(message);
       }
-      print("Unexpected error: $e");
       return ApiResultService.failure("Erreur check historiques commandes");
     }
   }

@@ -646,11 +646,24 @@ class HomeController extends GetxController {
           colorText: Colors.white);
       return;
     }
-    final String price = selectedClass == 'Standard'
-        ? touristicSite?.standardPrice.toString() ?? '0'
-        : selectedClass == 'Premium'
-            ? touristicSite?.premiumPrice.toString() ?? '0'
-            : '0';
+    if (!lieuxDeRassemblement.contains(selectedLieu.value)) {
+      Get.snackbar('Erreur', 'Veuillez sélectionner un lieu de rassemblement',
+          snackPosition: SnackPosition.TOP,
+          backgroundColor: Colors.red,
+          colorText: Colors.white);
+      return;
+    }
+
+    String price = '0';
+
+    if (selectedClass == 'Standard') {
+      price = touristicSite?.standardPrice.toString() ?? '0';
+    } else if (selectedClass == 'Premium') {
+      price = touristicSite?.premiumPrice.toString() ?? '0';
+    } else if (selectedClass == 'Suite') {
+      price = touristicSite?.suitePrice.toString() ?? '0';
+    }
+
     final int numberOfDays = endDate!.difference(startDate!).inDays + 1;
     final double dailyPrice = double.tryParse(price) ?? 0.0;
     final double totalPrice = dailyPrice * numberOfDays;

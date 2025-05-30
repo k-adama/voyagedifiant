@@ -119,10 +119,9 @@ class _DecouverteDetailsState extends State<DecouverteDetails> {
                   height: 30,
                 ),
                 _buildClassButton(
-                    'Standard', touristicSite!.standardPrice.toString()),
-                _buildClassButton(
-                    'Premium', touristicSite!.premiumPrice.toString()),
-                _buildClassButton('Suite', '3000'),
+                    'Standard', '${touristicSite!.standardPrice}'),
+                _buildClassButton('Premium', '${touristicSite!.premiumPrice}'),
+                _buildClassButton('Suite', '${touristicSite!.suitePrice}'),
                 const SizedBox(
                   height: 30,
                 ),

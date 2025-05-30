@@ -58,4 +58,6 @@ class AppConstants {
       return "";
     }
   }
+
+ static NumberFormat priceFormatter = NumberFormat('#,##0', 'en_US');
 }
