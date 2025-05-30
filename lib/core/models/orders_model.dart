@@ -1,3 +1,4 @@
+import 'package:voyagedifiant/core/models/discovery_orders_model.dart';
 import 'package:voyagedifiant/core/models/vehicle_orders_model.dart';
 
 class OrderModel {
@@ -5,6 +6,7 @@ class OrderModel {
   final String type;
   final String totalPrice;
   final VehicleOrdersModels? vehicleDetails;
+  final DiscoveryOrder? discoveryDetails;
   //final HotelOrdersModels? hotelDetails; // Exemple pour hotel
 
   OrderModel({
@@ -12,18 +14,22 @@ class OrderModel {
     required this.type,
     required this.totalPrice,
     this.vehicleDetails,
+    this.discoveryDetails,
     // this.hotelDetails,
   });
 
   factory OrderModel.fromJson(Map<String, dynamic> json) {
     VehicleOrdersModels? vehicleDetails;
-    // HotelOrdersModels? hotelDetails;
+    DiscoveryOrder? discoveryDetails;
 
     if (json['type'] == 'vehicle' && json['details'] != null) {
       vehicleDetails = VehicleOrdersModels.fromJson(
           Map<String, dynamic>.from(json['details']));
     } else if (json['type'] == 'hotel' && json['details'] != null) {
       // hotelDetails = HotelOrdersModels.fromJson(Map<String, dynamic>.from(json['details']));
+    } else if (json['type'] == 'site' && json['details'] != null) {
+      discoveryDetails = DiscoveryOrder.fromJson(
+          Map<String, dynamic>.from(json['details']));
     }
 
     return OrderModel(
@@ -31,6 +37,7 @@ class OrderModel {
       type: json['type'],
       totalPrice: json['total_price'].toString(),
       vehicleDetails: vehicleDetails,
+      discoveryDetails: discoveryDetails,
       // hotelDetails: hotelDetails,
     );
   }

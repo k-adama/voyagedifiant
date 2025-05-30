@@ -294,8 +294,49 @@ class _InvoiceDecouvertePageState extends State<InvoiceDecouvertePage> {
                   alignment: Alignment.centerRight,
                   widthFactor: 0.5,
                   child: AppCustomButton(
-                    onPressed: () {
-                      AppHelpersCommon.showAlertDialog(
+                    onPressed: () async {
+                      final Map<String, dynamic> invoiceData = Get.arguments;
+
+                      double montantPaye;
+                      if (isAvailable) {
+                        montantPaye = invoiceData['totalPrice'];
+                      } else {
+                        montantPaye =
+                            double.tryParse(amountController.text) ?? 0;
+                        if (montantPaye <= 0 ||
+                            montantPaye > invoiceData['totalPrice']) {
+                          Get.snackbar('Erreur', 'Montant saisi invalide',
+                              snackPosition: SnackPosition.TOP,
+                              backgroundColor: Colors.red,
+                              colorText: Colors.white);
+                          return;
+                        }
+                      }
+                      try {
+                        final cleanedData =
+                            Map<String, dynamic>.from(invoiceData);
+                        cleanedData.remove('totalPriceOperation');
+                        cleanedData['username'] = user!.name;
+                        cleanedData['phone'] = user!.phone;
+                        cleanedData['montantApaye'] = montantPaye;
+
+                        await homeController.saveDiscoveryInvoiceToDatabase(
+                            context, cleanedData);
+
+                        Get.snackbar(
+                            'Succès', 'Facture enregistrée avec succès',
+                            snackPosition: SnackPosition.TOP,
+                            backgroundColor: Colors.green,
+                            colorText: Colors.white);
+
+                        Get.back();
+                      } catch (e) {
+                        Get.snackbar('Erreur', 'Échec de l’enregistrement : $e',
+                            snackPosition: SnackPosition.TOP,
+                            backgroundColor: Colors.red,
+                            colorText: Colors.white);
+                      }
+                      /* AppHelpersCommon.showAlertDialog(
                         context: context,
                         canPop: false,
                         child: SuccessfullDialog(
@@ -309,7 +350,7 @@ class _InvoiceDecouvertePageState extends State<InvoiceDecouvertePage> {
                             Get.close(1);
                           },
                         ),
-                      );
+                      );*/
                     },
                     borderRadius: const BorderRadius.all(Radius.circular(8)),
                     buttonText: "Régler la facture",

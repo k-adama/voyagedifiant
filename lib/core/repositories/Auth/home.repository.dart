@@ -79,28 +79,33 @@ class HomeRepository {
   Future<void> createReservation(Map<String, dynamic> data) async {
     final client = server.client(requireAuth: true);
     final response = await client.post('/vehicle-reservations', data: data);
-    // Tu peux ici retourner response.data si besoin
   }
 
-Future<ApiResultService<List<OrderModel>>> getUserOrders({int page = 1}) async {
-  try {
+  Future<void> createDiscoveryReservation(Map<String, dynamic> data) async {
     final client = server.client(requireAuth: true);
-    final response = await client.get('/orders?page=$page');
-
-   final list = response.data['data'] as List;
-
-   final orders = list.map((e) => OrderModel.fromJson(e)).toList();
-
-    return ApiResultService.success(data: orders);
-  } catch (e) {
-  if (e is DioException) {
-    print("Dio error: ${e.response}");
-    final message = e.response?.data["message"] ?? "Une erreur est survenue historique commandes";
-    return ApiResultService.failure(message);
+     await client.post('/discovery-orders', data: data);
   }
-  print("Unexpected error: $e");
-  return ApiResultService.failure("Erreur check historiques commandes");
-}
-}
 
+  Future<ApiResultService<List<OrderModel>>> getUserOrders(
+      {int page = 1}) async {
+    try {
+      final client = server.client(requireAuth: true);
+      final response = await client.get('/orders?page=$page');
+
+      final list = response.data['data'] as List;
+
+      final orders = list.map((e) => OrderModel.fromJson(e)).toList();
+
+      return ApiResultService.success(data: orders);
+    } catch (e) {
+      if (e is DioException) {
+        print("Dio error: ${e.response}");
+        final message = e.response?.data["message"] ??
+            "Une erreur est survenue historique commandes";
+        return ApiResultService.failure(message);
+      }
+      print("Unexpected error: $e");
+      return ApiResultService.failure("Erreur check historiques commandes");
+    }
+  }
 }

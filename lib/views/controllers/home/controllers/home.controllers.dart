@@ -666,9 +666,47 @@ class HomeController extends GetxController {
       totalPriceOperation:
           '${dailyPrice.toStringAsFixed(0)} * $numberOfDays = ${totalPrice.toStringAsFixed(0)} FCFA',
     );
-     Get.toNamed(Routes.INVOICE_DECOUVERTE_PAGE,
+    Get.toNamed(Routes.INVOICE_DECOUVERTE_PAGE,
         arguments: discoveryInvoice.toJson());
     print(discoveryInvoice.toJson());
+  }
+
+  Future<void> saveDiscoveryInvoiceToDatabase(
+      BuildContext context, Map<String, dynamic> discoveryData) async {
+    final Map<String, dynamic> discoveryDatatoSend = {
+      'site_name': discoveryData['name']?.toString() ?? '',
+      'classe': discoveryData['class']?.toString() ?? '',
+      'lieu_de_rassemblement':
+          discoveryData['lieuDeRassemblement']?.toString() ?? '',
+      'reservation_period':
+          discoveryData['reservationPeriod']?.toString() ?? '',
+      'price': discoveryData['price']?.toString() ?? '',
+      'total_price': discoveryData['totalPrice']?.toString() ?? '',
+      'username': discoveryData['username']?.toString() ?? '',
+      'phone': discoveryData['phone']?.toString() ?? '',
+      'amount_paid': discoveryData['montantApaye']?.toString() ?? '',
+    };
+
+    try {
+      await homeRepository.createDiscoveryReservation(discoveryDatatoSend);
+
+      AppHelpersCommon.showAlertDialog(
+        context: context,
+        canPop: false,
+        child: SuccessfullDialog(
+          isCustomerAdded: false,
+          haveButton: false,
+          svgPicture: "assets/icons/undraw_happy_news_re_tsbd 1.svg",
+          content: 'Réservation enregistrée',
+          redirect: () => Get.offAll(() => const HomePage()),
+        ),
+      );
+    } catch (e) {
+      Get.snackbar('Erreur', 'Échec de l’enregistrement : $e',
+          snackPosition: SnackPosition.TOP,
+          backgroundColor: Colors.red,
+          colorText: Colors.white);
+    }
   }
   /*void goToVehiculeInvoicePage(VehicleModel? vehicle, String? selectedClass) {
     if (startDate == null || endDate == null) {

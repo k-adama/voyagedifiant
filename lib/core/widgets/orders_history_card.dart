@@ -6,14 +6,17 @@ class OrdersHistoryCard extends StatelessWidget {
   final String rentalPeriod;
   final String orderName;
   final String cout;
-  final String driverName;
+  final String? driverName;
   final String rentalPeriodDays;
+  final bool isDriver;
   const OrdersHistoryCard(
       {super.key,
       required this.rentalPeriod,
       required this.orderName,
       required this.cout,
-      required this.driverName, required this.rentalPeriodDays});
+      this.driverName,
+      required this.rentalPeriodDays,
+      this.isDriver = true});
 
   @override
   Widget build(BuildContext context) {
@@ -92,20 +95,22 @@ class OrdersHistoryCard extends StatelessWidget {
                       ],
                     ),
                     const SizedBox(height: 8),
-                    Row(
-                      children: [
-                        const Text("Chauffeur: ",
-                            style: TextStyle(
-                                color: AppColors.black,
-                                fontWeight: FontWeight.w400,
-                                fontSize: 15)),
-                        Text(driverName,
-                            style: const TextStyle(
-                                color: AppColors.black,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 18)),
-                      ],
-                    ),
+                    isDriver
+                        ? Row(
+                            children: [
+                              const Text("Chauffeur: ",
+                                  style: TextStyle(
+                                      color: AppColors.black,
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 15)),
+                              Text(driverName!,
+                                  style: const TextStyle(
+                                      color: AppColors.black,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 18)),
+                            ],
+                          )
+                        : const SizedBox.shrink(),
                     const SizedBox(height: 8),
                     const Wrap(
                       crossAxisAlignment: WrapCrossAlignment.center,

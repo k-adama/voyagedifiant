@@ -184,7 +184,6 @@ class _InvoicePageState extends State<InvoicePage> {
                     onPressed: () async {
                       final Map<String, dynamic> invoiceData = Get.arguments;
 
-                      // Récupérer le montant payé
                       double montantPaye;
                       if (isAvailable) {
                         montantPaye = invoiceData['totalPrice'];

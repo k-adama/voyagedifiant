@@ -114,16 +114,18 @@ class _OrdersHistoriePageState extends State<OrdersHistoriePage> {
                         );
                       }*/
 
-                      /*  if (order.siteDetails != null) {
-                        final s = order.siteDetails!;
+                      if (order.discoveryDetails != null) {
+                        final discovery = order.discoveryDetails!;
                         cards.add(
-                          SiteOrderCard(
-                            visitDate: s.visitDate,
-                            siteName: s.siteName,
-                            cout: s.price,
+                          OrdersHistoryCard(
+                            rentalPeriod: discovery.reservationPeriod,
+                            orderName: discovery.siteName,
+                            rentalPeriodDays: discovery.reservationPeriod,
+                            cout: discovery.totalPrice.toString(),
+                            isDriver: false,
                           ),
                         );
-                      }*/
+                      }
 
                       return Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
