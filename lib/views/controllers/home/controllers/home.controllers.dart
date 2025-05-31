@@ -789,7 +789,9 @@ class HomeController extends GetxController {
   }
 
   Future<void> saveHotelInvoiceToDatabase(
-      BuildContext context, Map<String, dynamic> hotelData) async {}
+      BuildContext context, Map<String, dynamic> hotelData) async {
+    print(hotelData);
+  }
   /*void goToVehiculeInvoicePage(VehicleModel? vehicle, String? selectedClass) {
     if (startDate == null || endDate == null) {
       Get.snackbar(

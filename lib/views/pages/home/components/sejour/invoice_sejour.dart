@@ -373,14 +373,13 @@ class _InvoiceSejourPageState extends State<InvoiceSejourPage> {
                     onPressed: () async {
                       final Map<String, dynamic> invoiceData = Get.arguments;
 
-                      double montantPaye;
+                      int montantPaye;
                       if (isAvailable) {
-                        montantPaye = invoiceData['totalPrice'];
+                        montantPaye = invoiceData['total_price'];
                       } else {
-                        montantPaye =
-                            double.tryParse(amountController.text) ?? 0;
+                        montantPaye = int.tryParse(amountController.text) ?? 0;
                         if (montantPaye <= 0 ||
-                            montantPaye > invoiceData['totalPrice']) {
+                            montantPaye > invoiceData['total_price']) {
                           Get.snackbar('Erreur', 'Montant saisi invalide',
                               snackPosition: SnackPosition.TOP,
                               backgroundColor: Colors.red,
@@ -392,12 +391,12 @@ class _InvoiceSejourPageState extends State<InvoiceSejourPage> {
                       try {
                         final cleanedData =
                             Map<String, dynamic>.from(invoiceData);
-                        cleanedData.remove('totalPriceOperation');
+                        cleanedData.remove('total_price_operation');
+                        cleanedData.remove('description_fr');
+                        cleanedData.remove('description_en');
                         cleanedData['username'] = user!.name;
                         cleanedData['phone'] = user!.phone;
                         cleanedData['montantApaye'] = montantPaye;
-                        /* cleanedData['datePaiement'] =
-                            DateTime.now().toIso8601String();*/
 
                         await homeController.saveHotelInvoiceToDatabase(
                             context, cleanedData);
@@ -415,22 +414,6 @@ class _InvoiceSejourPageState extends State<InvoiceSejourPage> {
                             backgroundColor: Colors.red,
                             colorText: Colors.white);
                       }
-
-                      /* AppHelpersCommon.showAlertDialog(
-                        context: context,
-                        canPop: false,
-                        child: SuccessfullDialog(
-                          isCustomerAdded: false,
-                          haveButton: false,
-                          // title: "Paiement effectué",
-                          svgPicture:
-                              "assets/icons/undraw_happy_news_re_tsbd 1.svg",
-                          content: 'Paiement effectué',
-                          redirect: () {
-                            Get.close(1);
-                          },
-                        ),
-                      );*/
                     },
                     borderRadius: const BorderRadius.all(Radius.circular(8)),
                     buttonText: "Régler la facture",
