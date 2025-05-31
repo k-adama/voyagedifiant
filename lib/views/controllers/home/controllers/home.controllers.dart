@@ -13,6 +13,7 @@ import 'package:voyagedifiant/core/models/VehiculeInvoiceModel.dart';
 import 'package:voyagedifiant/core/models/discovery_invoice_model.dart';
 import 'package:voyagedifiant/core/models/driver_model.dart';
 import 'package:voyagedifiant/core/models/hotel.dart';
+import 'package:voyagedifiant/core/models/hotel_invoice_model.dart';
 import 'package:voyagedifiant/core/models/orders_model.dart';
 import 'package:voyagedifiant/core/models/touristic_discovery.dart';
 import 'package:voyagedifiant/core/models/vehicule.dart';
@@ -104,12 +105,12 @@ class HomeController extends GetxController {
       fetchVehicles(),
       fetchTouristicSites(),
       fetchHotels(),
-      getVehiclesOrders(),
+      getAllOrders(),
     ]);
     super.onReady();
   }
 
-  Future<void> getVehiclesOrders({bool isRefresh = false}) async {
+  Future<void> getAllOrders({bool isRefresh = false}) async {
     if (isVehicleOrdersLoading.value) return;
 
     if (isRefresh) {
@@ -616,9 +617,11 @@ class HomeController extends GetxController {
           haveButton: false,
           svgPicture: "assets/icons/undraw_happy_news_re_tsbd 1.svg",
           content: 'Réservation enregistrée',
-          redirect: () => Get.offAll(() => const HomePage()),
+          redirect: () => Get.back(),
+          //redirect: () => Get.offAll(() => const HomePage()),
         ),
       );
+      getAllOrders();
     } catch (e) {
       Get.snackbar('Erreur', 'Échec de l’enregistrement : $e',
           snackPosition: SnackPosition.TOP,
@@ -712,8 +715,11 @@ class HomeController extends GetxController {
           svgPicture: "assets/icons/undraw_happy_news_re_tsbd 1.svg",
           content: 'Réservation enregistrée',
           redirect: () => Get.offAll(() => const HomePage()),
+          // redirect: () => Get.back(),
         ),
       );
+      getAllOrders();
+      update();
     } catch (e) {
       Get.snackbar('Erreur', 'Échec de l’enregistrement : $e',
           snackPosition: SnackPosition.TOP,
@@ -721,6 +727,69 @@ class HomeController extends GetxController {
           colorText: Colors.white);
     }
   }
+
+  void goToHotelInvoicePage(HotelModel? hotel, String? selectedClass) {
+    if (startDate == null || endDate == null) {
+      Get.snackbar(
+        'Période requise',
+        'Veuillez choisir une période de réservation',
+        snackPosition: SnackPosition.TOP,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+      return;
+    }
+    if (selectedClass == null) {
+      Get.snackbar('Erreur', 'Veuillez sélectionner une classe',
+          snackPosition: SnackPosition.TOP,
+          backgroundColor: Colors.red,
+          colorText: Colors.white);
+      return;
+    }
+    /* if (!lieuxDeRassemblement.contains(selectedLieu.value)) {
+      Get.snackbar('Erreur', 'Veuillez sélectionner un lieu de prise en charge',
+          snackPosition: SnackPosition.TOP,
+          backgroundColor: Colors.red,
+          colorText: Colors.white);
+      return;
+    }*/
+
+    String price = '0';
+
+    if (selectedClass == 'Standard') {
+      price = hotel?.priceStandard.toString() ?? '0';
+    } else if (selectedClass == 'Premium') {
+      price = hotel?.pricePremium.toString() ?? '0';
+    } else if (selectedClass == 'Suite') {
+      price = hotel?.priceSuite.toString() ?? '0';
+    }
+
+    final int numberOfDays = endDate!.difference(startDate!).inDays + 1;
+    final int dailyPrice = int.tryParse(price) ?? 0;
+    final int totalPrice = dailyPrice * numberOfDays;
+    // final String lieuDeRassemblement = selectedLieu.value;
+
+    final hotelInvoice = HotelInvoiceModel(
+      hotelName: hotel!.name,
+      classe: selectedClass,
+      driverName: selectedChauffeur.value.name,
+      neighborhood: hotel.neighborhood,
+      city: hotel.city,
+      descriptionEn: hotel.descriptionEn,
+      descriptionFr: hotel.descriptionFr,
+      // lieuDeRassemblement: lieuDeRassemblement,
+      rentalPeriod: displayLocationPeriodText,
+      price: price,
+      totalPrice: totalPrice,
+      totalPriceOperation:
+          '${dailyPrice.toStringAsFixed(0)} * $numberOfDays = ${totalPrice.toStringAsFixed(0)} FCFA',
+    );
+    Get.toNamed(Routes.INVOICE_SEJOUR_PAGE, arguments: hotelInvoice.toJson());
+    print(hotelInvoice.toJson());
+  }
+
+  Future<void> saveHotelInvoiceToDatabase(
+      BuildContext context, Map<String, dynamic> hotelData) async {}
   /*void goToVehiculeInvoicePage(VehicleModel? vehicle, String? selectedClass) {
     if (startDate == null || endDate == null) {
       Get.snackbar(

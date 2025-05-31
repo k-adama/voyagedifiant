@@ -10,9 +10,11 @@ import 'package:voyagedifiant/core/services/api_result.service.dart';
 import 'package:voyagedifiant/views/controllers/Main/bindings/main.binding.dart';
 import 'package:voyagedifiant/app_translate.dart';
 import 'package:voyagedifiant/core/services/local_storage.dart';
+import 'package:voyagedifiant/views/controllers/Main/controllers/main.controller.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  Get.put(MainController(), permanent: true);
   await LocalStorage.getInstance();
   runApp(const MyApp());
   //final apiService = AuthRepository();

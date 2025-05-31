@@ -5,7 +5,7 @@ import 'package:voyagedifiant/views/controllers/home/controllers/home.controller
 class MainBinding extends Bindings {
   @override
   void dependencies() {
-      Get.lazyPut(() => MainController());
-      Get.put(HomeController());
+    Get.lazyPut(() => MainController(), fenix: true);
+    Get.lazyPut(() => HomeController(), fenix: true);
   }
 }
