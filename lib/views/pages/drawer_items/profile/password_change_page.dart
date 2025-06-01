@@ -76,7 +76,7 @@ class _PasswordChangePageState extends State<PasswordChangePage> {
                       height: 35,
                     ),
                     AppCustomButton(
-                      onPressed: () {},
+                      onPressed: () async{},
                       buttonText: "Enregistrer",
                       textColor: AppColors.white,
                       buttonColor: AppColors.primaryColor,

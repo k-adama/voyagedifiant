@@ -87,7 +87,7 @@ class _ProfileInfoPageState extends State<ProfileInfoPage> {
               height: 30,
             ),
             AppCustomButton(
-              onPressed: () {},
+              onPressed: ()async {},
               buttonText: "Enregistrer",
               textColor: AppColors.white,
               buttonColor: AppColors.primaryColor,

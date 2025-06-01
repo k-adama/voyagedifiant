@@ -124,7 +124,7 @@ class OrdersHistoryCard extends StatelessWidget {
                                   style: const TextStyle(
                                       color: AppColors.black,
                                       fontWeight: FontWeight.bold,
-                                      fontSize: 18)),
+                                      fontSize: 15)),
                             ],
                           )
                         : const SizedBox.shrink(),

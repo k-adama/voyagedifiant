@@ -4,7 +4,7 @@ class DiscoveryInvoiceModel {
   final String lieuDeRassemblement;
   final String reservationPeriod;
   final String price;
-  final double totalPrice;
+  final int totalPrice;
   final String totalPriceOperation;
 
   DiscoveryInvoiceModel({

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:get/get_utils/src/extensions/internacionalization.dart';
 import 'package:get/instance_manager.dart';
 import 'package:get/route_manager.dart';
@@ -14,6 +15,7 @@ import 'package:voyagedifiant/core/widgets/components/appbar/drawer_page.compone
 import 'package:voyagedifiant/views/controllers/home/controllers/home.controllers.dart';
 import 'package:voyagedifiant/views/pages/home/components/sejour/components/invoice_sejour_details.dart';
 import 'package:animated_toggle_switch/animated_toggle_switch.dart';
+import 'package:voyagedifiant/views/pages/pdf/hotel_facture_pdf.dart';
 
 class InvoiceSejourPage extends StatefulWidget {
   const InvoiceSejourPage({super.key});
@@ -31,6 +33,8 @@ class _InvoiceSejourPageState extends State<InvoiceSejourPage> {
   final TextEditingController amountController = TextEditingController();
 
   late final HotelInvoiceModel hotelInfo;
+
+  bool isLoading = false;
 
   @override
   void initState() {
@@ -57,6 +61,47 @@ class _InvoiceSejourPageState extends State<InvoiceSejourPage> {
         amountController.text = '';
       }
     });
+  }
+
+  Future<void> handleButtonPressed() async {
+    final Map<String, dynamic> invoiceData = Get.arguments;
+
+    int montantPaye;
+    if (isAvailable) {
+      montantPaye = invoiceData['total_price'];
+    } else {
+      montantPaye = int.tryParse(amountController.text) ?? 0;
+      if (montantPaye <= 0 || montantPaye > invoiceData['total_price']) {
+        Get.snackbar('Erreur', 'Montant saisi invalide',
+            snackPosition: SnackPosition.TOP,
+            backgroundColor: Colors.red,
+            colorText: Colors.white);
+        return;
+      }
+    }
+
+    setState(() => isLoading = true);
+
+    try {
+      final cleanedData = Map<String, dynamic>.from(invoiceData);
+      cleanedData.remove('total_price_operation');
+      cleanedData.remove('description_fr');
+      cleanedData.remove('description_en');
+      cleanedData['username'] = user!.name;
+      cleanedData['phone'] = user!.phone;
+      cleanedData['montantApaye'] = montantPaye;
+
+      await homeController.saveHotelInvoiceToDatabase(context, cleanedData);
+      cleanedData['email'] = user!.email;
+      homeController.onSendInvoiceButtonPressed(cleanedData);
+    } catch (e) {
+      Get.snackbar('Erreur', 'Échec de l’enregistrement : $e',
+          snackPosition: SnackPosition.TOP,
+          backgroundColor: Colors.red,
+          colorText: Colors.white);
+    } finally {
+      setState(() => isLoading = false);
+    }
   }
 
   @override
@@ -370,8 +415,13 @@ class _InvoiceSejourPageState extends State<InvoiceSejourPage> {
                   alignment: Alignment.centerRight,
                   widthFactor: 0.5,
                   child: AppCustomButton(
-                    onPressed: () async {
-                      final Map<String, dynamic> invoiceData = Get.arguments;
+                    onPressed: isLoading
+                        ? null
+                        : () async {
+                            handleButtonPressed();
+                          },
+                    // () async {
+                    /*  final Map<String, dynamic> invoiceData = Get.arguments;
 
                       int montantPaye;
                       if (isAvailable) {
@@ -400,23 +450,17 @@ class _InvoiceSejourPageState extends State<InvoiceSejourPage> {
 
                         await homeController.saveHotelInvoiceToDatabase(
                             context, cleanedData);
-
-                        Get.snackbar(
-                            'Succès', 'Facture enregistrée avec succès',
-                            snackPosition: SnackPosition.TOP,
-                            backgroundColor: Colors.green,
-                            colorText: Colors.white);
-
-                        Get.back();
+                        cleanedData['email'] = user!.email;
+                        homeController.onSendInvoiceButtonPressed(cleanedData);
                       } catch (e) {
                         Get.snackbar('Erreur', 'Échec de l’enregistrement : $e',
                             snackPosition: SnackPosition.TOP,
                             backgroundColor: Colors.red,
                             colorText: Colors.white);
-                      }
-                    },
+                      }*/
+                    // },
                     borderRadius: const BorderRadius.all(Radius.circular(8)),
-                    buttonText: "Régler la facture",
+                    buttonText: isLoading ? 'En cours...' : "Régler la facture",
                     textColor: AppColors.white,
                     buttonColor: AppColors.primaryColor,
                   ),

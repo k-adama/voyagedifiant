@@ -25,7 +25,7 @@ class _InvoiceDecouvertePageState extends State<InvoiceDecouvertePage> {
   final user = AppHelpersCommon.getUserInLocalStorage();
   HomeController homeController = Get.find();
   bool isAvailable = false;
-  double amount = 0;
+  int amount = 0;
   final double alternateAmount = 200;
   final TextEditingController amountController = TextEditingController();
 
@@ -47,10 +47,10 @@ class _InvoiceDecouvertePageState extends State<InvoiceDecouvertePage> {
   void _togglePayment(bool value) {
     setState(() {
       isAvailable = value;
-      double totalPrice = discoveryeInfo.totalPrice;
+      int totalPrice = discoveryeInfo.totalPrice;
       if (isAvailable) {
         amount = totalPrice;
-        amountController.text = amount.toStringAsFixed(2);
+        amountController.text = amount.toStringAsFixed(0);
       } else {
         amount = 0;
         amountController.text = '';
@@ -60,7 +60,7 @@ class _InvoiceDecouvertePageState extends State<InvoiceDecouvertePage> {
 
   @override
   Widget build(BuildContext context) {
-    double totalPrice = discoveryeInfo.totalPrice;
+    int totalPrice = discoveryeInfo.totalPrice;
     return Scaffold(
       appBar: const PreferredSize(
         preferredSize: Size.fromHeight(kToolbarHeight),
@@ -268,7 +268,7 @@ class _InvoiceDecouvertePageState extends State<InvoiceDecouvertePage> {
                     ),
                     onChanged: (value) {
                       if (!isAvailable) {
-                        double? newAmount = double.tryParse(value);
+                        int? newAmount = int.tryParse(value);
                         if (newAmount != null && newAmount < totalPrice) {
                           amount = newAmount;
                         } else {
@@ -297,12 +297,12 @@ class _InvoiceDecouvertePageState extends State<InvoiceDecouvertePage> {
                     onPressed: () async {
                       final Map<String, dynamic> invoiceData = Get.arguments;
 
-                      double montantPaye;
+                      int montantPaye;
                       if (isAvailable) {
                         montantPaye = invoiceData['totalPrice'];
                       } else {
                         montantPaye =
-                            double.tryParse(amountController.text) ?? 0;
+                            int.tryParse(amountController.text) ?? 0;
                         if (montantPaye <= 0 ||
                             montantPaye > invoiceData['totalPrice']) {
                           Get.snackbar('Erreur', 'Montant saisi invalide',
@@ -322,6 +322,8 @@ class _InvoiceDecouvertePageState extends State<InvoiceDecouvertePage> {
 
                         await homeController.saveDiscoveryInvoiceToDatabase(
                             context, cleanedData);
+                        cleanedData['email'] = user!.email;
+                        homeController.onSendDiscoveryInvoice(cleanedData);
 
                         Get.snackbar(
                             'Succès', 'Facture enregistrée avec succès',

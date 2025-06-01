@@ -5,6 +5,7 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:voyagedifiant/core/constants/app_colors.dart';
 import 'package:voyagedifiant/core/constants/app_constants.dart';
 import 'package:voyagedifiant/core/widgets/components/translate_pop_item.dart';
+import 'package:voyagedifiant/core/widgets/hotel_history_card.dart';
 import 'package:voyagedifiant/core/widgets/orders_history_card.dart';
 import 'package:voyagedifiant/views/controllers/home/controllers/home.controllers.dart';
 
@@ -23,12 +24,12 @@ class _OrdersHistoriePageState extends State<OrdersHistoriePage> {
   final RefreshController _controller = RefreshController();
   void _onRefresh() async {
     homeController.getAllOrders();
-     _controller.refreshCompleted();
+    _controller.refreshCompleted();
   }
 
   void _onLoading() async {
     homeController.getAllOrders();
-     _controller.loadComplete();
+    _controller.loadComplete();
   }
 
   @override
@@ -99,9 +100,10 @@ class _OrdersHistoriePageState extends State<OrdersHistoriePage> {
                           color: AppColors.signUpColor,
                         ));
                       }
+
                       final order = homeController.orders[index];
                       final List<Widget> cards = [];
-                  
+
                       if (order.vehicleDetails != null) {
                         final vehicle = order.vehicleDetails!;
                         cards.add(
@@ -114,17 +116,18 @@ class _OrdersHistoriePageState extends State<OrdersHistoriePage> {
                           ),
                         );
                       }
-                      /* if (order.hotelDetails != null) {
-                    final h = order.hotelDetails!;
-                    cards.add(
-                      HotelOrderCard(
-                        stayPeriod: h.stayPeriod,
-                        hotelName: h.hotelName,
-                        cout: h.totalPrice,
-                      ),
-                    );
-                  }*/
-                  
+                      if (order.hotelDetails != null) {
+                        final hotel = order.hotelDetails!;
+                        cards.add(
+                          HotelsHistoryCard(
+                            rentalPeriod: hotel.reservationPeriod,
+                            orderName: hotel.hotelName,
+                            rentalPeriodDays: hotel.reservationPeriod,
+                            cout: order.totalPrice,
+                            driverName: hotel.driverName,
+                          ),
+                        );
+                      }
                       if (order.discoveryDetails != null) {
                         final discovery = order.discoveryDetails!;
                         cards.add(
@@ -138,12 +141,12 @@ class _OrdersHistoriePageState extends State<OrdersHistoriePage> {
                           ),
                         );
                       }
-                  
+
                       return Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: cards,
                       );
-                  
+
                       /* Card(
                     elevation: 3,
                     shape: RoundedRectangleBorder(

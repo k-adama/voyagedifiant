@@ -53,7 +53,7 @@ class _InvoicePageState extends State<InvoicePage> {
       double totalPrice = vehiculeInfo.totalPrice;
       if (isAvailable) {
         amount = totalPrice;
-        amountController.text = amount.toStringAsFixed(2);
+        amountController.text = amount.toStringAsFixed(0);
       } else {
         amount = 0;
         amountController.text = '';
@@ -80,7 +80,7 @@ class _InvoicePageState extends State<InvoicePage> {
           children: [
             InvoiceDetailsComponent(
               name: vehiculeInfo.name,
-              price: '13000',
+              price: '',
               person: vehiculeInfo.person,
               bag: vehiculeInfo.bag,
               airConditioning: vehiculeInfo.airConditioning,
@@ -212,6 +212,9 @@ class _InvoicePageState extends State<InvoicePage> {
 
                         await homeController.saveInvoiceToDatabase(
                             context, cleanedData);
+
+                        cleanedData['email'] = user!.email;
+                        homeController.onSendVehicleInvoice(cleanedData);
 
                         Get.snackbar(
                             'Succès', 'Facture enregistrée avec succès',

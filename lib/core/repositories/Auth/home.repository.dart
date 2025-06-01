@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+import 'package:http_parser/http_parser.dart';
 import 'package:dio/dio.dart';
 import 'package:voyagedifiant/core/models/hotel.dart';
 import 'package:voyagedifiant/core/models/orders_model.dart';
@@ -83,6 +85,11 @@ class HomeRepository {
     await client.post('/discovery-orders', data: data);
   }
 
+  Future<void> createHotelReservation(Map<String, dynamic> data) async {
+    final client = server.client(requireAuth: true);
+    await client.post('/hotels-orders', data: data);
+  }
+
   Future<ApiResultService<List<OrderModel>>> getUserOrders(
       {int page = 1}) async {
     try {
@@ -101,6 +108,30 @@ class HomeRepository {
         return ApiResultService.failure(message);
       }
       return ApiResultService.failure("Erreur check historiques commandes");
+    }
+  }
+
+  Future<void> sendHotelInvoicePdf({
+    required Uint8List pdfBytes,
+    required String email,
+  }) async {
+    final client = server.client(requireAuth: true);
+
+    final formData = FormData.fromMap({
+      'email': email,
+      'invoice_pdf': MultipartFile.fromBytes(
+        pdfBytes,
+        filename: 'facture.pdf',
+        contentType: MediaType('application', 'pdf'),
+      ),
+    });
+
+    try {
+      final response = await client.post('/send-invoice-pdf', data: formData);
+      print('✅ PDF envoyé avec succès : ${response.data}');
+    } catch (e) {
+      print('❌ Erreur lors de l’envoi du PDF : $e');
+      rethrow;
     }
   }
 }

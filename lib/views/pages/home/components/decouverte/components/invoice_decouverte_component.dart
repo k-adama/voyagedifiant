@@ -23,7 +23,7 @@ class _InvoiceDecouverteDetailsComponentState
   final user = AppHelpersCommon.getUserInLocalStorage();
   HomeController homeController = Get.find();
   bool isAvailable = false;
-  double amount = 0;
+  int amount = 0;
   final double alternateAmount = 200;
   final TextEditingController amountController = TextEditingController();
 
@@ -45,7 +45,7 @@ class _InvoiceDecouverteDetailsComponentState
   void _togglePayment(bool value) {
     setState(() {
       isAvailable = value;
-      double totalPrice = discoveryeInfo.totalPrice;
+      int totalPrice = discoveryeInfo.totalPrice;
       if (isAvailable) {
         amount = totalPrice;
         amountController.text = amount.toStringAsFixed(2);
@@ -58,7 +58,7 @@ class _InvoiceDecouverteDetailsComponentState
 
   @override
   Widget build(BuildContext context) {
-    double totalPrice = discoveryeInfo.totalPrice;
+    int totalPrice = discoveryeInfo.totalPrice;
     return 
     Container(
       margin: const EdgeInsets.all(10),

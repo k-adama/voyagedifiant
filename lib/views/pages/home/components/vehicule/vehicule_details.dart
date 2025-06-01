@@ -166,7 +166,7 @@ class _VehiculeDetailsState extends State<VehiculeDetails> {
                         });
                       },
                       child: AppCustomButton(
-                        onPressed: () {
+                        onPressed: () async{
                           homeController.goToVehiculeInvoicePage(
                               vehicle, selectedClass);
                         },

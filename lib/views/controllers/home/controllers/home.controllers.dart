@@ -22,6 +22,9 @@ import 'package:voyagedifiant/core/routes/app_pages.dart';
 import 'package:voyagedifiant/core/services/app_connectivity.service.dart';
 import 'package:voyagedifiant/core/widgets/dialogs/successfull.dialog.dart';
 import 'package:voyagedifiant/views/pages/home/home_page.dart';
+import 'package:voyagedifiant/views/pages/pdf/discovery_facture_pdf.dart';
+import 'package:voyagedifiant/views/pages/pdf/hotel_facture_pdf.dart';
+import 'package:voyagedifiant/views/pages/pdf/vehicle_invoice_pdf.dart';
 
 class HomeController extends GetxController {
   DateTime? startDate;
@@ -32,6 +35,7 @@ class HomeController extends GetxController {
   bool isVehicleLoading = true;
   bool isTouristicSiteLoading = true;
   bool isHotelsLoading = true;
+  bool isSejourLoading = false;
   bool hasConnection = true;
 
   var page = 1.obs;
@@ -72,6 +76,7 @@ class HomeController extends GetxController {
 
   final homeRepository = HomeRepository();
   final DateFormat dateFormat = DateFormat('dd MMM');
+  final user = AppHelpersCommon.getUserInLocalStorage();
 
   @override
   void onInit() {
@@ -568,8 +573,8 @@ class HomeController extends GetxController {
             ? vehicle?.businessPrice.toString() ?? '0'
             : '0';
 
-    final int numberOfDays = endDate!.difference(startDate!).inDays + 1;
-    final double dailyPrice = double.tryParse(price) ?? 0.0;
+    final double numberOfDays = endDate!.difference(startDate!).inDays + 1;
+    final double dailyPrice = double.tryParse(price) ?? 0;
     final double totalPrice = dailyPrice * numberOfDays;
 
     final invoice = VehiculeInvoiceModel(
@@ -617,11 +622,14 @@ class HomeController extends GetxController {
           haveButton: false,
           svgPicture: "assets/icons/undraw_happy_news_re_tsbd 1.svg",
           content: 'Réservation enregistrée',
-          redirect: () => Get.back(),
-          //redirect: () => Get.offAll(() => const HomePage()),
+          //redirect: () async => Get.back(),
+          redirect: () async => Get.offAll(() => const HomePage()),
         ),
       );
       getAllOrders();
+      startDate = null;
+      endDate = null;
+      update();
     } catch (e) {
       Get.snackbar('Erreur', 'Échec de l’enregistrement : $e',
           snackPosition: SnackPosition.TOP,
@@ -668,8 +676,8 @@ class HomeController extends GetxController {
     }
 
     final int numberOfDays = endDate!.difference(startDate!).inDays + 1;
-    final double dailyPrice = double.tryParse(price) ?? 0.0;
-    final double totalPrice = dailyPrice * numberOfDays;
+    final int dailyPrice = int.tryParse(price) ?? 0;
+    final int totalPrice = dailyPrice * numberOfDays;
     final String lieuDeRassemblement = selectedLieu.value;
 
     final discoveryInvoice = DiscoveryInvoiceModel(
@@ -714,11 +722,13 @@ class HomeController extends GetxController {
           haveButton: false,
           svgPicture: "assets/icons/undraw_happy_news_re_tsbd 1.svg",
           content: 'Réservation enregistrée',
-          redirect: () => Get.offAll(() => const HomePage()),
+          redirect: () async => Get.offAll(() => const HomePage()),
           // redirect: () => Get.back(),
         ),
       );
       getAllOrders();
+      startDate = null;
+      endDate = null;
       update();
     } catch (e) {
       Get.snackbar('Erreur', 'Échec de l’enregistrement : $e',
@@ -790,8 +800,111 @@ class HomeController extends GetxController {
 
   Future<void> saveHotelInvoiceToDatabase(
       BuildContext context, Map<String, dynamic> hotelData) async {
-    print(hotelData);
+    final Map<String, dynamic> hotelDatatoSend = {
+      'hotel_name': hotelData['hotel_name']?.toString() ?? '',
+      'driver_name': hotelData['driver']?.toString() ?? '',
+      'city': hotelData['neighborhood']?.toString() ?? '',
+      'reservation_period': hotelData['rental_period']?.toString() ?? '',
+      'classe': hotelData['class']?.toString() ?? '',
+      //'lieu_de_rassemblement':
+      //    hotelData['lieuDeRassemblement']?.toString() ?? '',
+
+      'price': hotelData['price']?.toString() ?? '',
+      'total_price': hotelData['total_price']?.toString() ?? '',
+      'amount_paid': hotelData['montantApaye']?.toString() ?? '',
+      'username': hotelData['username']?.toString() ?? '',
+      'phone': hotelData['phone']?.toString() ?? '',
+    };
+    //print(hotelDatatoSend);
+    try {
+      await homeRepository.createHotelReservation(hotelDatatoSend);
+      AppHelpersCommon.showAlertDialog(
+        context: context,
+        canPop: false,
+        child: SuccessfullDialog(
+          isCustomerAdded: false,
+          haveButton: false,
+          svgPicture: "assets/icons/undraw_happy_news_re_tsbd 1.svg",
+          content: 'Réservation enregistrée',
+          redirect: () async => Get.offAll(() => const HomePage()),
+          // redirect: () => Get.back(),
+        ),
+      );
+      getAllOrders();
+      startDate = null;
+      endDate = null;
+      update();
+    } catch (e) {
+      Get.snackbar('Erreur', 'Échec de l’enregistrement : $e',
+          snackPosition: SnackPosition.TOP,
+          backgroundColor: Colors.red,
+          colorText: Colors.white);
+    }
   }
+
+  void onSendInvoiceButtonPressed(Map<String, dynamic> invoiceData) async {
+    try {
+      final pdfFile = await generateHotelInvoicePdf(invoiceData);
+      final pdfBytes = await pdfFile.readAsBytes();
+
+      await homeRepository.sendHotelInvoicePdf(
+        pdfBytes: pdfBytes,
+        email: invoiceData['email'],
+      );
+
+      Get.snackbar(
+          'Facture', 'Facture envoyée par mail, vérifiez vos mails svp !',
+          snackPosition: SnackPosition.TOP,
+          backgroundColor: Colors.green,
+          colorText: Colors.white);
+    } catch (e) {
+      Get.snackbar('Erreur', 'Échec de l’envoi de la facture : $e',
+          backgroundColor: Colors.red, colorText: Colors.white);
+    }
+  }
+
+  void onSendDiscoveryInvoice(Map<String, dynamic> invoiceData) async {
+    try {
+      final pdfFile = await generateDiscoveryInvoicePdf(invoiceData);
+      final pdfBytes = await pdfFile.readAsBytes();
+
+      await homeRepository.sendHotelInvoicePdf(
+        pdfBytes: pdfBytes,
+        email: invoiceData['email'],
+      );
+
+      Get.snackbar(
+          'Facture', 'Facture envoyée par mail, vérifiez vos mails svp !',
+          snackPosition: SnackPosition.TOP,
+          backgroundColor: Colors.green,
+          colorText: Colors.white);
+    } catch (e) {
+      Get.snackbar('Erreur', 'Échec de l’envoi de la facture : $e',
+          backgroundColor: Colors.red, colorText: Colors.white);
+    }
+  }
+
+  void onSendVehicleInvoice(Map<String, dynamic> invoiceData) async {
+    try {
+      final pdfFile = await generateVehicleInvoicePdf(invoiceData);
+      final pdfBytes = await pdfFile.readAsBytes();
+
+      await homeRepository.sendHotelInvoicePdf(
+        pdfBytes: pdfBytes,
+        email: invoiceData['email'],
+      );
+
+      Get.snackbar(
+          'Facture', 'Facture envoyée par mail, vérifiez vos mails svp !',
+          snackPosition: SnackPosition.TOP,
+          backgroundColor: Colors.green,
+          colorText: Colors.white);
+    } catch (e) {
+      Get.snackbar('Erreur', 'Échec de l’envoi de la facture : $e',
+          backgroundColor: Colors.red, colorText: Colors.white);
+    }
+  }
+
   /*void goToVehiculeInvoicePage(VehicleModel? vehicle, String? selectedClass) {
     if (startDate == null || endDate == null) {
       Get.snackbar(

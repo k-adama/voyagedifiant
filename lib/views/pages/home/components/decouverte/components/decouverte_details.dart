@@ -138,7 +138,7 @@ class _DecouverteDetailsState extends State<DecouverteDetails> {
                     alignment: Alignment.centerRight,
                     widthFactor: 0.5,
                     child: AppCustomButton(
-                      onPressed: () {
+                      onPressed: () async{
                         homeController.goToTouristicSiteInvoicePage(
                             touristicSite, selectedClass);
                         //Get.toNamed(Routes.INVOICE_DECOUVERTE_PAGE);

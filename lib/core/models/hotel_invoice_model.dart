@@ -1,5 +1,3 @@
-import 'package:voyagedifiant/core/models/hotel.dart';
-
 class HotelInvoiceModel {
   final String hotelName;
   final String driverName;

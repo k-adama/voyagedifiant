@@ -18,8 +18,8 @@ class AppConstants {
       final now = DateTime.now();
       final currentYear = now.year;
 
-      final start = DateFormat("d MMM h:mm a", "en_US").parse("$startRaw");
-      final end = DateFormat("d MMM h:mm a", "en_US").parse("$endRaw");
+      final start = DateFormat("d MMM h:mm a", "en_US").parse(startRaw);
+      final end = DateFormat("d MMM h:mm a", "en_US").parse(endRaw);
 
       final startWithYear = DateTime(currentYear, start.month, start.day);
       final endWithYear = DateTime(currentYear, end.month, end.day);

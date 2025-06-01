@@ -169,7 +169,7 @@ class _SejourDetailsState extends State<SejourDetails> {
                     alignment: Alignment.centerRight,
                     widthFactor: 0.5,
                     child: AppCustomButton(
-                      onPressed: () {
+                      onPressed: () async{
                          homeController.goToHotelInvoicePage(
                             hotel, selectedClass);
                         //Get.toNamed(Routes.INVOICE_SEJOUR_PAGE);
