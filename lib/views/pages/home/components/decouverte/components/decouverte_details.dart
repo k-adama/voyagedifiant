@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
+import 'package:get/get_utils/src/extensions/internacionalization.dart';
 import 'package:get/route_manager.dart';
 import 'package:voyagedifiant/core/constants/app_colors.dart';
 import 'package:voyagedifiant/core/constants/app_defaults.dart';
@@ -32,6 +33,10 @@ class _DecouverteDetailsState extends State<DecouverteDetails> {
 
   @override
   Widget build(BuildContext context) {
+    final currentLocale = Get.locale?.languageCode ?? 'fr';
+    final description = currentLocale == 'en'
+        ? touristicSite!.descriptionEn
+        : touristicSite!.descriptionFr;
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: const PreferredSize(
@@ -105,7 +110,7 @@ class _DecouverteDetailsState extends State<DecouverteDetails> {
                   height: 10,
                 ),
                 Text(
-                  touristicSite!.description ?? '',
+                  description ?? '',
                   style: AppColors.interNormal(
                     size: 12,
                   ),
@@ -114,10 +119,9 @@ class _DecouverteDetailsState extends State<DecouverteDetails> {
                   height: 30,
                 ),
                 _buildClassButton(
-                    'Standard', touristicSite!.standardPrice.toString()),
-                _buildClassButton(
-                    'Premium', touristicSite!.premiumPrice.toString()),
-                _buildClassButton('Suite', '3000'),
+                    'Standard', '${touristicSite!.standardPrice}'),
+                _buildClassButton('Premium', '${touristicSite!.premiumPrice}'),
+                _buildClassButton('Suite', '${touristicSite!.suitePrice}'),
                 const SizedBox(
                   height: 30,
                 ),
@@ -134,8 +138,10 @@ class _DecouverteDetailsState extends State<DecouverteDetails> {
                     alignment: Alignment.centerRight,
                     widthFactor: 0.5,
                     child: AppCustomButton(
-                      onPressed: () {
-                        Get.toNamed(Routes.INVOICE_DECOUVERTE_PAGE);
+                      onPressed: () async{
+                        homeController.goToTouristicSiteInvoicePage(
+                            touristicSite, selectedClass);
+                        //Get.toNamed(Routes.INVOICE_DECOUVERTE_PAGE);
                       },
                       borderRadius: const BorderRadius.all(Radius.circular(8)),
                       buttonText: "Réserver maintenant",

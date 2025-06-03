@@ -92,7 +92,7 @@ class FaqsPage extends StatelessWidget {
             ),
             const Spacer(),
             AppCustomButton(
-              onPressed: () {
+              onPressed: () async{
                 Get.toNamed(Routes.CONTACT_PAGE);
               },
               buttonText: "Contactez le support",

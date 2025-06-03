@@ -32,7 +32,6 @@ class _HomePageState extends State<HomePage> {
     super.initState();
     _pageController =
         PageController(initialPage: _initialPage, viewportFraction: 0.85);
-
     _pageTimer = Timer.periodic(const Duration(seconds: 4), (Timer timer) {
       if (homeController.randomVehicles.isNotEmpty) {
         if (_currentPage < homeController.randomVehicles.length - 1) {
@@ -154,7 +153,7 @@ class _HomePageState extends State<HomePage> {
                                 !homeController.hasConnection)
                               const Center(
                                 child: CircularProgressIndicator(
-                                    color: Colors.red),
+                                    color: AppColors.signUpColor),
                               )
                             else if (homeController.vehicles.isEmpty)
                               const Center(
@@ -244,9 +243,8 @@ class _HomePageState extends State<HomePage> {
                                 size: 14,
                               ),
                             ),
-                            const HotelComponents(
-                              image: 'assets/images/sofi.png',
-                              name: 'Sofitel hôtel Ivoire',
+                            HotelComponents(
+                              hotels: homeController.randomHotels,
                             ),
                           ],
                         ),

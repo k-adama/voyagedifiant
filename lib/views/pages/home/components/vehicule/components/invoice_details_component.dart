@@ -14,6 +14,14 @@ class InvoiceDetailsComponent extends StatefulWidget {
     required this.person,
     required this.bag,
     this.color,
+    required this.classe,
+    required this.lieuDePriseEnCharge,
+    required this.lieuDeRestitution,
+    required this.periodeDeLocation,
+    required this.driverName,
+    required this.coutJournalier,
+    required this.coutTotal,
+    required this.airConditioning,
   });
 
   final String? couponBackground;
@@ -21,7 +29,15 @@ class InvoiceDetailsComponent extends StatefulWidget {
   final String price;
   final String person;
   final String bag;
+  final String airConditioning;
   final Color? color;
+  final String classe;
+  final String lieuDePriseEnCharge;
+  final String lieuDeRestitution;
+  final String periodeDeLocation;
+  final String driverName;
+  final String coutJournalier;
+  final String coutTotal;
 
   @override
   State<InvoiceDetailsComponent> createState() =>
@@ -127,7 +143,7 @@ class _InvoiceDetailsComponentState extends State<InvoiceDetailsComponent> {
                               children: [
                                 Text(widget.name,
                                     style: AppColors.interBold(
-                                      size: 20,
+                                      size: 14,
                                     )),
                                 const SizedBox(
                                   height: 12,
@@ -192,7 +208,7 @@ class _InvoiceDetailsComponentState extends State<InvoiceDetailsComponent> {
                                             width: 12,
                                           ),
                                           Text(
-                                            '${widget.bag} climatisation',
+                                            '${widget.airConditioning} climatisation',
                                             style: AppColors.interNormal(
                                               color: AppColors.white,
                                               size: 12,
@@ -240,14 +256,14 @@ class _InvoiceDetailsComponentState extends State<InvoiceDetailsComponent> {
               ],
             ),
           ),
-          buildRowText('Classe', 'Economie'),
-          buildRowText('Lieu de prise en charge', 'Economie'),
-          buildRowText('Lieu de restitution', 'Economie'),
-          buildRowText('Période de location', 'Economie'),
-          buildRowText('Chauffeur', 'Economie'),
+          buildRowText('Classe', widget.classe),
+          buildRowText('Lieu de prise en charge', widget.lieuDePriseEnCharge),
+          buildRowText('Lieu de restitution', widget.lieuDeRestitution),
+          buildRowText('Période de location', widget.periodeDeLocation),
+          buildRowText('Chauffeur', widget.driverName),
           const AppDivider(),
-          buildRowText('Coût journalier', '2000'),
-          buildRowText('Coût total', '360000'),
+          buildRowText('Coût journalier', widget.coutJournalier),
+          buildRowText('Coût total', widget.coutTotal),
           const SizedBox(
             height: AppDefaults.padding,
           ),

@@ -18,7 +18,7 @@ class TouristSiteItemsComponents extends StatelessWidget {
   Widget build(BuildContext context) {
     if (sites.isEmpty) {
       return const Center(
-        child: Text("Aucun site à afficher"),
+        child: CircularProgressIndicator(color: AppColors.signUpColor),
       );
     }
     return AutoHeightGridView(
