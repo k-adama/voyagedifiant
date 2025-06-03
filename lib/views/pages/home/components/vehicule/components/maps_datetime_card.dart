@@ -85,6 +85,18 @@ class _MapsDatetimeCardState extends State<MapsDatetimeCard> {
                 ],
               ),
             ),
+            Padding(
+              padding: const EdgeInsets.only(left: 18.0, bottom: 8),
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  "Chauffeur",
+                  style: AppColors.interBold(
+                    size: 12,
+                  ),
+                ),
+              ),
+            ),
             DriverCardComponent(
               driver: homeController.selectedChauffeur.value,
               onChange: () {
@@ -101,12 +113,11 @@ class _MapsDatetimeCardState extends State<MapsDatetimeCard> {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         const Text(
-                          'Choisir un autre chauffeur',
+                          'Choisir un chauffeur',
                           style: TextStyle(
                               fontSize: 18, fontWeight: FontWeight.bold),
                         ),
                         const SizedBox(height: 16),
-                        // Liste des chauffeurs avec bouton "Choisir"
                         ...homeController.chauffeurs.map((chauffeur) {
                           return ListTile(
                             leading: CircleAvatar(
@@ -123,7 +134,6 @@ class _MapsDatetimeCardState extends State<MapsDatetimeCard> {
                               ),
                               onPressed: () {
                                 homeController.selectChauffeur(chauffeur);
-                                print(chauffeur.name);
                               },
                               child: const Text('Choisir'),
                             ),

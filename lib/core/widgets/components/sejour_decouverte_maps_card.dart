@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
+import 'package:get/route_manager.dart';
 import 'package:voyagedifiant/core/constants/app_colors.dart';
 import 'package:voyagedifiant/core/constants/app_defaults.dart';
 import 'package:voyagedifiant/core/constants/app_helpers.dart';
@@ -178,60 +179,72 @@ class _MapsDatetimeCardState extends State<SejourDecouverteMapsCard> {
                 ],
               ),
             ),
-            widget.isSejour == true
-                ? DriverCardComponent(
-                    driver: homeController.selectedChauffeur.value,
-                    onChange: () {
-                      AppHelpersCommon.showCustomModalBottomSheet(
-                        context: context,
-                        modal: Container(
-                          padding: const EdgeInsets.all(16),
-                          decoration: const BoxDecoration(
-                            color: Colors.white,
-                            borderRadius:
-                                BorderRadius.vertical(top: Radius.circular(20)),
-                          ),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              const Text(
-                                'Choisir un autre chauffeur',
-                                style: TextStyle(
-                                    fontSize: 18, fontWeight: FontWeight.bold),
-                              ),
-                              const SizedBox(height: 16),
-                              // Liste des chauffeurs avec bouton "Choisir"
-                              ...homeController.chauffeurs.map((chauffeur) {
-                                return ListTile(
-                                  leading: CircleAvatar(
-                                    backgroundImage:
-                                        AssetImage(chauffeur.imageUrl),
-                                  ),
-                                  title: Text(chauffeur.name),
-                                  subtitle: Text(chauffeur.phoneNumber),
-                                  trailing: ElevatedButton(
-                                    style: ElevatedButton.styleFrom(
-                                      backgroundColor: AppColors.primaryColor,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(8),
-                                      ),
-                                    ),
-                                    onPressed: () => homeController
-                                        .selectChauffeur(chauffeur),
-                                    child: const Text('Choisir'),
-                                  ),
-                                );
-                              }).toList(),
-                            ],
-                          ),
+            Padding(
+              padding: const EdgeInsets.only(left: 18.0, bottom: 8),
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  "Chauffeur",
+                  style: AppColors.interBold(
+                    size: 12,
+                  ),
+                ),
+              ),
+            ),
+            //widget.isSejour == true
+            // ?
+            DriverCardComponent(
+              driver: homeController.selectedChauffeur.value,
+              onChange: () {
+                AppHelpersCommon.showCustomModalBottomSheet(
+                  context: context,
+                  modal: Container(
+                    padding: const EdgeInsets.all(16),
+                    decoration: const BoxDecoration(
+                      color: Colors.white,
+                      borderRadius:
+                          BorderRadius.vertical(top: Radius.circular(20)),
+                    ),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const Text(
+                          'Choisir un chauffeur',
+                          style: TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.bold),
                         ),
-                        isDarkMode: false,
-                        isDrag: true,
-                        radius: 12,
-                      );
-                    },
-                  )
-                : const SizedBox(),
+                        const SizedBox(height: 16),
+                        ...homeController.chauffeurs.map((chauffeur) {
+                          return ListTile(
+                            leading: CircleAvatar(
+                              backgroundImage: AssetImage(chauffeur.imageUrl),
+                            ),
+                            title: Text(chauffeur.name),
+                            subtitle: Text(chauffeur.phoneNumber),
+                            trailing: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: AppColors.primaryColor,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                              ),
+                              onPressed: () {
+                                homeController.selectChauffeur(chauffeur);
+                              },
+                              child: const Text('Choisir'),
+                            ),
+                          );
+                        }).toList(),
+                      ],
+                    ),
+                  ),
+                  isDarkMode: false,
+                  isDrag: true,
+                  radius: 12,
+                );
+              },
+            ),
+            //: const SizedBox(),
           ],
         ),
       );

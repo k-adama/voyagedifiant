@@ -4,6 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:voyagedifiant/core/models/hotel.dart';
 import 'package:voyagedifiant/core/models/orders_model.dart';
 import 'package:voyagedifiant/core/models/touristic_discovery.dart';
+import 'package:voyagedifiant/core/models/user.dart';
 import 'package:voyagedifiant/core/models/vehicule.dart';
 import 'package:voyagedifiant/core/services/api_result.service.dart';
 import 'package:voyagedifiant/core/services/http.service.dart';
@@ -133,5 +134,23 @@ class HomeRepository {
       print('❌ Erreur lors de l’envoi du PDF : $e');
       rethrow;
     }
+  }
+
+  Future<UserModel> updateUserProfile(Map<String, dynamic> data) async {
+    final client = server.client(requireAuth: true);
+    final response = await client.put('/profile/update', data: data);
+    final json = response.data;
+
+    final adaptedJson = {
+      'user': json['data'],
+      'token': null,
+    };
+
+    return UserModel.fromJson(adaptedJson);
+  }
+
+  Future<void> changePassword(Map<String, dynamic> data) async {
+    final client = server.client(requireAuth: true);
+    await client.put('/profile/change-password', data: data);
   }
 }

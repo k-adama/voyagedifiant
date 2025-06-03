@@ -37,15 +37,16 @@ class DrawerPageBodyComponent extends StatelessWidget {
             Get.toNamed(Routes.PROFIL_PASSWORD_CHANGE);
           },
         ),
-        ListTile(
-          title: const DrawerBodyListRowComponent(
+        const ListTile(
+          title: DrawerBodyListRowComponent(
             isMonney: true,
             name: "Monnaie",
             emoji: "assets/icons/majesticons_money-line.png",
           ),
-          onTap: () {
+          onTap: null,
+          /* () {
             Get.toNamed(Routes.MONEY);
-          },
+          },*/
         ),
         ListTile(
           title: const DrawerBodyListRowComponent(

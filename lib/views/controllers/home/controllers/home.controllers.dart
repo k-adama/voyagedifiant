@@ -1,5 +1,7 @@
+import 'dart:convert';
 import 'dart:math';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/extension_navigation.dart';
 import 'package:get/get_navigation/src/snackbar/snackbar.dart';
@@ -9,6 +11,7 @@ import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:get/instance_manager.dart';
 import 'package:intl/intl.dart';
 import 'package:voyagedifiant/core/constants/app_helpers.dart';
+import 'package:voyagedifiant/core/constants/auth.constant.dart';
 import 'package:voyagedifiant/core/models/VehiculeInvoiceModel.dart';
 import 'package:voyagedifiant/core/models/discovery_invoice_model.dart';
 import 'package:voyagedifiant/core/models/driver_model.dart';
@@ -20,6 +23,7 @@ import 'package:voyagedifiant/core/models/vehicule.dart';
 import 'package:voyagedifiant/core/repositories/Auth/home.repository.dart';
 import 'package:voyagedifiant/core/routes/app_pages.dart';
 import 'package:voyagedifiant/core/services/app_connectivity.service.dart';
+import 'package:voyagedifiant/core/services/local_storage.dart';
 import 'package:voyagedifiant/core/widgets/dialogs/successfull.dialog.dart';
 import 'package:voyagedifiant/views/pages/home/home_page.dart';
 import 'package:voyagedifiant/views/pages/pdf/discovery_facture_pdf.dart';
@@ -37,10 +41,13 @@ class HomeController extends GetxController {
   bool isHotelsLoading = true;
   bool isSejourLoading = false;
   bool hasConnection = true;
+  var isPaaswordChangeLoading = false.obs;
+  var isProfilChangeLoading = false.obs;
 
   var page = 1.obs;
   var isVehicleOrdersLoading = false.obs;
   var hasMore = true.obs;
+  final Rx<DriverModel?> selectedChauffeur = Rx<DriverModel?>(null);
 
   final RxString searchQuery = ''.obs;
   final RxString searchVehiculeQuery = ''.obs;
@@ -76,7 +83,6 @@ class HomeController extends GetxController {
 
   final homeRepository = HomeRepository();
   final DateFormat dateFormat = DateFormat('dd MMM');
-  final user = AppHelpersCommon.getUserInLocalStorage();
 
   @override
   void onInit() {
@@ -329,6 +335,62 @@ class HomeController extends GetxController {
   }
 
   Future<void> selectDateRange() async {
+    final pickedDate = await showDatePicker(
+      context: Get.context!,
+      initialDate: DateTime.now(),
+      firstDate: DateTime.now(),
+      lastDate: DateTime(DateTime.now().year + 1),
+      helpText: 'Choisissez une date',
+      locale: const Locale('fr'),
+    );
+
+    if (pickedDate != null) {
+      startDate = pickedDate;
+      endDate = null;
+      update();
+
+      await selectTime(isStartTime: true);
+
+      // Demander s'il veut ajouter une date de fin
+      final bool wantsRange = await showDialog(
+        context: Get.context!,
+        builder: (_) => AlertDialog(
+          title: const Text('Ajouter une date de fin ?'),
+          content: const Text("Souhaitez-vous ajouter une date de fin ?"),
+          actions: [
+            TextButton(
+                onPressed: () => Navigator.pop(_, false),
+                child: const Text("Non")),
+            ElevatedButton(
+                onPressed: () => Navigator.pop(_, true),
+                child: const Text("Oui")),
+          ],
+        ),
+      );
+
+      if (wantsRange == true) {
+        final pickedEndDate = await showDatePicker(
+          context: Get.context!,
+          initialDate: pickedDate,
+          firstDate: pickedDate,
+          lastDate: DateTime(DateTime.now().year + 1),
+          helpText: 'Choisissez une date de fin',
+          locale: const Locale('fr'),
+        );
+
+        if (pickedEndDate != null) {
+          endDate = pickedEndDate;
+          await selectTime(isStartTime: false);
+        }
+      } else {
+        update();
+      }
+
+      update();
+    }
+  }
+
+  /*Future<void> selectDateRange() async {
     DateTimeRange? picked = await showDateRangePicker(
       context: Get.context!,
       firstDate: DateTime.now(),
@@ -359,7 +421,7 @@ class HomeController extends GetxController {
       await selectTime(isStartTime: true);
       await selectTime(isStartTime: false);
     }
-  }
+  }*/
 
   // Sélection d'une heure avec un titre personnalisé
   Future<void> selectTime({required bool isStartTime}) async {
@@ -384,7 +446,25 @@ class HomeController extends GetxController {
   }
 
   // Affichage du texte résumé
+
   String get displayLocationPeriodText {
+    if (startDate == null || startTime == null) {
+      return 'Sélectionner une période';
+    }
+
+    final String formattedStart =
+        '${dateFormat.format(startDate!)} à ${startTime!.format(Get.context!)}';
+
+    if (endDate != null && endTime != null) {
+      final String formattedEnd =
+          '${dateFormat.format(endDate!)} à ${endTime!.format(Get.context!)}';
+      return 'Du $formattedStart → $formattedEnd';
+    }
+
+    return 'Le $formattedStart';
+  }
+
+  /* String get displayLocationPeriodText {
     if (startDate == null ||
         endDate == null ||
         startTime == null ||
@@ -393,15 +473,15 @@ class HomeController extends GetxController {
     }
     return '${dateFormat.format(startDate!)} ${startTime!.format(Get.context!)} → '
         '${dateFormat.format(endDate!)} ${endTime!.format(Get.context!)}';
-  }
+  }*/
 
   // Chauffeur sélectionné
-  var selectedChauffeur = Rx<DriverModel>(DriverModel(
+  /* var selectedChauffeur = Rx<DriverModel>(DriverModel(
     imageUrl: 'assets/icons/utilisateur.png',
     name: 'Chara',
     phoneNumber: 'xx00000000',
     rating: 4.5,
-  ));
+  ));*/
 
   // Liste des chauffeurs disponibles
   final List<DriverModel> chauffeurs = [
@@ -548,10 +628,20 @@ class HomeController extends GetxController {
   }
 
   void goToVehiculeInvoicePage(VehicleModel? vehicle, String? selectedClass) {
-    if (startDate == null || endDate == null) {
+    /*  if (startDate == null || endDate == null) {
       Get.snackbar(
         'Période requise',
         'Veuillez choisir une période de location',
+        snackPosition: SnackPosition.TOP,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+      return;
+    }*/
+    if (startDate == null || startTime == null) {
+      Get.snackbar(
+        'Période requise',
+        'Veuillez choisir au moins une date et une heure de début',
         snackPosition: SnackPosition.TOP,
         backgroundColor: Colors.red,
         colorText: Colors.white,
@@ -573,7 +663,9 @@ class HomeController extends GetxController {
             ? vehicle?.businessPrice.toString() ?? '0'
             : '0';
 
-    final double numberOfDays = endDate!.difference(startDate!).inDays + 1;
+    //final double numberOfDays = endDate!.difference(startDate!).inDays + 1;
+    final double numberOfDays =
+        endDate != null ? endDate!.difference(startDate!).inDays + 1 : 1;
     final double dailyPrice = double.tryParse(price) ?? 0;
     final double totalPrice = dailyPrice * numberOfDays;
 
@@ -584,7 +676,7 @@ class HomeController extends GetxController {
       airConditioning: (vehicle?.airConditioning ?? false) ? '1' : '0',
       classe: selectedClass,
       locationVehiclePeriod: displayLocationPeriodText,
-      driver: selectedChauffeur.value.name,
+      driver: selectedChauffeur.value!.name,
       price: price,
       totalPrice: totalPrice,
       totalPriceOperation:
@@ -613,23 +705,25 @@ class HomeController extends GetxController {
 
     try {
       await homeRepository.createReservation(dataToSend);
+      getAllOrders(isRefresh: true);
+      startDate = null;
+      endDate = null;
 
       AppHelpersCommon.showAlertDialog(
         context: context,
         canPop: false,
         child: SuccessfullDialog(
-          isCustomerAdded: false,
-          haveButton: false,
-          svgPicture: "assets/icons/undraw_happy_news_re_tsbd 1.svg",
-          content: 'Réservation enregistrée',
-          //redirect: () async => Get.back(),
-          redirect: () async => Get.offAll(() => const HomePage()),
-        ),
+            isCustomerAdded: false,
+            haveButton: false,
+            svgPicture: "assets/icons/undraw_happy_news_re_tsbd 1.svg",
+            content: 'Réservation enregistrée',
+            //redirect: () async => Get.back(),
+            redirect: () async {
+              Get.offAll(() => const HomePage());
+            }),
       );
-      getAllOrders();
-      startDate = null;
-      endDate = null;
-      update();
+      //     getAllOrders();
+      // update();
     } catch (e) {
       Get.snackbar('Erreur', 'Échec de l’enregistrement : $e',
           snackPosition: SnackPosition.TOP,
@@ -640,10 +734,10 @@ class HomeController extends GetxController {
 
   void goToTouristicSiteInvoicePage(
       TouristicDiscovery? touristicSite, String? selectedClass) {
-    if (startDate == null || endDate == null) {
+    if (startDate == null || startTime == null) {
       Get.snackbar(
         'Période requise',
-        'Veuillez choisir une période de location',
+        'Veuillez choisir au moins une date et une heure de début',
         snackPosition: SnackPosition.TOP,
         backgroundColor: Colors.red,
         colorText: Colors.white,
@@ -675,7 +769,9 @@ class HomeController extends GetxController {
       price = touristicSite?.suitePrice.toString() ?? '0';
     }
 
-    final int numberOfDays = endDate!.difference(startDate!).inDays + 1;
+    //final int numberOfDays = endDate!.difference(startDate!).inDays + 1;
+    final int numberOfDays =
+        endDate != null ? endDate!.difference(startDate!).inDays + 1 : 1;
     final int dailyPrice = int.tryParse(price) ?? 0;
     final int totalPrice = dailyPrice * numberOfDays;
     final String lieuDeRassemblement = selectedLieu.value;
@@ -692,7 +788,6 @@ class HomeController extends GetxController {
     );
     Get.toNamed(Routes.INVOICE_DECOUVERTE_PAGE,
         arguments: discoveryInvoice.toJson());
-    print(discoveryInvoice.toJson());
   }
 
   Future<void> saveDiscoveryInvoiceToDatabase(
@@ -713,7 +808,9 @@ class HomeController extends GetxController {
 
     try {
       await homeRepository.createDiscoveryReservation(discoveryDatatoSend);
-
+      getAllOrders(isRefresh: true);
+      startDate = null;
+      endDate = null;
       AppHelpersCommon.showAlertDialog(
         context: context,
         canPop: false,
@@ -726,10 +823,6 @@ class HomeController extends GetxController {
           // redirect: () => Get.back(),
         ),
       );
-      getAllOrders();
-      startDate = null;
-      endDate = null;
-      update();
     } catch (e) {
       Get.snackbar('Erreur', 'Échec de l’enregistrement : $e',
           snackPosition: SnackPosition.TOP,
@@ -782,7 +875,7 @@ class HomeController extends GetxController {
     final hotelInvoice = HotelInvoiceModel(
       hotelName: hotel!.name,
       classe: selectedClass,
-      driverName: selectedChauffeur.value.name,
+      driverName: selectedChauffeur.value!.name,
       neighborhood: hotel.neighborhood,
       city: hotel.city,
       descriptionEn: hotel.descriptionEn,
@@ -818,6 +911,9 @@ class HomeController extends GetxController {
     //print(hotelDatatoSend);
     try {
       await homeRepository.createHotelReservation(hotelDatatoSend);
+      getAllOrders(isRefresh: true);
+      startDate = null;
+      endDate = null;
       AppHelpersCommon.showAlertDialog(
         context: context,
         canPop: false,
@@ -830,10 +926,6 @@ class HomeController extends GetxController {
           // redirect: () => Get.back(),
         ),
       );
-      getAllOrders();
-      startDate = null;
-      endDate = null;
-      update();
     } catch (e) {
       Get.snackbar('Erreur', 'Échec de l’enregistrement : $e',
           snackPosition: SnackPosition.TOP,
@@ -902,6 +994,63 @@ class HomeController extends GetxController {
     } catch (e) {
       Get.snackbar('Erreur', 'Échec de l’envoi de la facture : $e',
           backgroundColor: Colors.red, colorText: Colors.white);
+    }
+  }
+
+  Future<void> updateUserProfile(Map<String, dynamic> data) async {
+    try {
+      isProfilChangeLoading.value = true;
+      final updatedUser = await homeRepository.updateUserProfile(data);
+
+      await LocalStorage.instance.set(
+        AuthConstant.keyUser,
+        jsonEncode(updatedUser.toJson()),
+      );
+
+      Get.snackbar("Succès", "Profil mis à jour avec succès",
+          colorText: Colors.white, backgroundColor: Colors.green);
+    } catch (e) {
+      Get.snackbar("Erreur", "Échec de la mise à jour",
+          colorText: Colors.white, backgroundColor: Colors.red);
+    } finally {
+      isProfilChangeLoading.value = false;
+    }
+  }
+
+  Future<void> changePassword(
+      BuildContext context, String oldPassword, String newPassword) async {
+    try {
+      isPaaswordChangeLoading.value = true;
+
+      await homeRepository.changePassword({
+        'current_password': oldPassword,
+        'new_password': newPassword,
+      });
+
+      AppHelpersCommon.showAlertDialog(
+        context: context,
+        canPop: false,
+        child: SuccessfullDialog(
+            isCustomerAdded: false,
+            haveButton: false,
+            svgPicture: "assets/icons/undraw_happy_news_re_tsbd 1.svg",
+            content: 'Mot de passe modifié avec succès',
+            redirect: () async {
+              LocalStorage.instance.removeToken();
+              LocalStorage.instance.removeBool("otp_verified");
+              LocalStorage.instance.removeUserId("userId");
+              Get.offAllNamed(Routes.LOGIN_PAGE);
+            }),
+      );
+    } on DioException catch (e) {
+      final errorMessage =
+          e.response?.data['message'] ?? "Une erreur est survenue";
+      Get.snackbar("Erreur", errorMessage,
+          colorText: Colors.white, backgroundColor: Colors.red);
+    } catch (e) {
+      Get.snackbar("Erreur", "Échec de la modification : ${e.toString()}");
+    } finally {
+      isPaaswordChangeLoading.value = false;
     }
   }
 

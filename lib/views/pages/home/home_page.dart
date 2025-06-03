@@ -32,7 +32,6 @@ class _HomePageState extends State<HomePage> {
     super.initState();
     _pageController =
         PageController(initialPage: _initialPage, viewportFraction: 0.85);
-
     _pageTimer = Timer.periodic(const Duration(seconds: 4), (Timer timer) {
       if (homeController.randomVehicles.isNotEmpty) {
         if (_currentPage < homeController.randomVehicles.length - 1) {
