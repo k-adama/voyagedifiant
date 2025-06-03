@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:get/instance_manager.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:voyagedifiant/core/animation/images_rotations.dart';
 import 'package:voyagedifiant/core/constants/app_colors.dart';
-import 'package:voyagedifiant/core/constants/app_constants.dart';
 import 'package:voyagedifiant/core/widgets/components/translate_pop_item.dart';
 import 'package:voyagedifiant/core/widgets/hotel_history_card.dart';
 import 'package:voyagedifiant/core/widgets/orders_history_card.dart';
@@ -89,8 +90,11 @@ class _OrdersHistoriePageState extends State<OrdersHistoriePage> {
 
                 return Expanded(
                   child: homeController.orders.isEmpty
-                      ? Center(
-                          child: Image.asset("assets/icons/orders_empty.jpg"),
+                      ? const Center(
+                          child: RotatingSvgImage(
+                            assetPath: "assets/svgs/orders_empty.svg",
+                            size: 250,
+                          ),
                         )
                       : ListView.builder(
                           controller: _scrollController,

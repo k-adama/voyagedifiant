@@ -43,6 +43,8 @@ class HomeController extends GetxController {
   bool hasConnection = true;
   var isPaaswordChangeLoading = false.obs;
   var isProfilChangeLoading = false.obs;
+  var isUserVehicleOrdersLoading = false.obs;
+  var isUserDiscoveryOrdersLoading = false.obs;
 
   var page = 1.obs;
   var isVehicleOrdersLoading = false.obs;
@@ -704,6 +706,7 @@ class HomeController extends GetxController {
     };
 
     try {
+      isUserVehicleOrdersLoading.value = true;
       await homeRepository.createReservation(dataToSend);
       getAllOrders(isRefresh: true);
       startDate = null;
@@ -717,7 +720,6 @@ class HomeController extends GetxController {
             haveButton: false,
             svgPicture: "assets/icons/undraw_happy_news_re_tsbd 1.svg",
             content: 'Réservation enregistrée',
-            //redirect: () async => Get.back(),
             redirect: () async {
               Get.offAllNamed('/home_page');
             }),
@@ -727,6 +729,8 @@ class HomeController extends GetxController {
           snackPosition: SnackPosition.TOP,
           backgroundColor: Colors.red,
           colorText: Colors.white);
+    } finally {
+      isUserVehicleOrdersLoading.value = false;
     }
   }
 
@@ -805,6 +809,7 @@ class HomeController extends GetxController {
     };
 
     try {
+      isUserDiscoveryOrdersLoading.value = true;
       await homeRepository.createDiscoveryReservation(discoveryDatatoSend);
       getAllOrders(isRefresh: true);
       startDate = null;
@@ -825,6 +830,8 @@ class HomeController extends GetxController {
           snackPosition: SnackPosition.TOP,
           backgroundColor: Colors.red,
           colorText: Colors.white);
+    } finally {
+      isUserDiscoveryOrdersLoading.value = false;
     }
   }
 
@@ -887,7 +894,6 @@ class HomeController extends GetxController {
           '${dailyPrice.toStringAsFixed(0)} * $numberOfDays = ${totalPrice.toStringAsFixed(0)} FCFA',
     );
     Get.toNamed(Routes.INVOICE_SEJOUR_PAGE, arguments: hotelInvoice.toJson());
-    print(hotelInvoice.toJson());
   }
 
   Future<void> saveHotelInvoiceToDatabase(

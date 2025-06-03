@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:get/instance_manager.dart';
 import 'package:get/route_manager.dart';
 import 'package:voyagedifiant/app_translate.dart';
@@ -173,7 +174,8 @@ class _InvoicePageState extends State<InvoicePage> {
                 ],
               ),
             ),
-            Padding(
+          Obx(
+              () =>  Padding(
               padding: const EdgeInsets.all(8.0),
               child: Align(
                 alignment: Alignment.centerRight,
@@ -181,55 +183,59 @@ class _InvoicePageState extends State<InvoicePage> {
                   alignment: Alignment.centerRight,
                   widthFactor: 0.5,
                   child: AppCustomButton(
-                    onPressed: () async {
-                      final Map<String, dynamic> invoiceData = Get.arguments;
+                    onPressed: homeController.isUserVehicleOrdersLoading.value
+                        ? null
+                        : () async {
+                            final Map<String, dynamic> invoiceData =
+                                Get.arguments;
 
-                      double montantPaye;
-                      if (isAvailable) {
-                        montantPaye = invoiceData['totalPrice'];
-                      } else {
-                        montantPaye =
-                            double.tryParse(amountController.text) ?? 0;
-                        if (montantPaye <= 0 ||
-                            montantPaye > invoiceData['totalPrice']) {
-                          Get.snackbar('Erreur', 'Montant saisi invalide',
-                              snackPosition: SnackPosition.TOP,
-                              backgroundColor: Colors.red,
-                              colorText: Colors.white);
-                          return;
-                        }
-                      }
+                            double montantPaye;
+                            if (isAvailable) {
+                              montantPaye = invoiceData['totalPrice'];
+                            } else {
+                              montantPaye =
+                                  double.tryParse(amountController.text) ?? 0;
+                              if (montantPaye <= 0 ||
+                                  montantPaye > invoiceData['totalPrice']) {
+                                Get.snackbar('Erreur', 'Montant saisi invalide',
+                                    snackPosition: SnackPosition.TOP,
+                                    backgroundColor: Colors.red,
+                                    colorText: Colors.white);
+                                return;
+                              }
+                            }
 
-                      try {
-                        final cleanedData =
-                            Map<String, dynamic>.from(invoiceData);
-                        cleanedData.remove('totalPriceOperation');
-                        cleanedData['username'] = user!.name;
-                        cleanedData['phone'] = user!.phone;
-                        cleanedData['montantApaye'] = montantPaye;
-                        /* cleanedData['datePaiement'] =
+                            try {
+                              final cleanedData =
+                                  Map<String, dynamic>.from(invoiceData);
+                              cleanedData.remove('totalPriceOperation');
+                              cleanedData['username'] = user!.name;
+                              cleanedData['phone'] = user!.phone;
+                              cleanedData['montantApaye'] = montantPaye;
+                              /* cleanedData['datePaiement'] =
                             DateTime.now().toIso8601String();*/
 
-                        await homeController.saveInvoiceToDatabase(
-                            context, cleanedData);
+                              await homeController.saveInvoiceToDatabase(
+                                  context, cleanedData);
 
-                        cleanedData['email'] = user!.email;
-                        homeController.onSendVehicleInvoice(cleanedData);
+                              cleanedData['email'] = user!.email;
+                              homeController.onSendVehicleInvoice(cleanedData);
 
-                        Get.snackbar(
-                            'Succès', 'Facture enregistrée avec succès',
-                            snackPosition: SnackPosition.TOP,
-                            backgroundColor: Colors.green,
-                            colorText: Colors.white);
+                              Get.snackbar(
+                                  'Succès', 'Facture enregistrée avec succès',
+                                  snackPosition: SnackPosition.TOP,
+                                  backgroundColor: Colors.green,
+                                  colorText: Colors.white);
 
-                        Get.back();
-                      } catch (e) {
-                        Get.snackbar('Erreur', 'Échec de l’enregistrement : $e',
-                            snackPosition: SnackPosition.TOP,
-                            backgroundColor: Colors.red,
-                            colorText: Colors.white);
-                      }
-                      /* AppHelpersCommon.showAlertDialog(
+                              Get.back();
+                            } catch (e) {
+                              Get.snackbar(
+                                  'Erreur', 'Échec de l’enregistrement : $e',
+                                  snackPosition: SnackPosition.TOP,
+                                  backgroundColor: Colors.red,
+                                  colorText: Colors.white);
+                            }
+                            /* AppHelpersCommon.showAlertDialog(
                         context: context,
                         canPop: false,
                         child: SuccessfullDialog(
@@ -241,15 +247,17 @@ class _InvoicePageState extends State<InvoicePage> {
                           redirect: () => Get.close(1),
                         ),
                       );*/
-                    },
+                          },
                     borderRadius: const BorderRadius.all(Radius.circular(8)),
-                    buttonText: "Régler la facture",
+                    buttonText: homeController.isUserVehicleOrdersLoading.value
+                        ? 'Validation en cours...'
+                        : "Régler la facture",
                     textColor: AppColors.white,
                     buttonColor: AppColors.primaryColor,
                   ),
                 ),
               ),
-            ),
+          )),
           ],
         ),
       )),

@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
 import 'package:get/get_utils/src/extensions/internacionalization.dart';
+import 'package:get/instance_manager.dart';
 import 'package:get/route_manager.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:voyagedifiant/core/constants/app_colors.dart';
 import 'package:voyagedifiant/core/constants/app_constants.dart';
 import 'package:voyagedifiant/core/constants/app_defaults.dart';
@@ -23,6 +25,18 @@ class AllDecouverteItems extends StatefulWidget {
 }
 
 class _AllDecouverteItemsState extends State<AllDecouverteItems> {
+  final HomeController homeController = Get.find();
+  final RefreshController _controller = RefreshController();
+  void _onRefresh() async {
+    homeController.fetchTouristicSites();
+    _controller.refreshCompleted();
+  }
+
+  void _onLoading() async {
+    homeController.fetchTouristicSites();
+    _controller.loadComplete();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,91 +51,99 @@ class _AllDecouverteItemsState extends State<AllDecouverteItems> {
         ),
         body: GetBuilder<HomeController>(
           builder: (homeController) {
-            return NotificationListener<ScrollNotification>(
-              onNotification: (scrollNotification) {
-                if (scrollNotification.metrics.pixels >=
-                        scrollNotification.metrics.maxScrollExtent - 100 &&
-                    !homeController.isLoadingMoreTouristicSite &&
-                    homeController.displayedTouristicSites.length <
-                        homeController.touristicSites.length) {
-                  homeController.loadMoreTouristicSites();
-                }
-                return true;
-              },
-              child: SingleChildScrollView(
-                child: Padding(
-                  padding: const EdgeInsets.all(AppDefaults.padding),
-                  child: Column(
-                    children: [
-                      SearchBarComponent(
-                        text: 'Rechercher un site',
-                        onChanged: (text) {
-                          homeController.searchTouristicSiteQuery.value = text;
-                        },
-                      ),
-                      const PublicityContainer(
-                        name:
-                            "Plongez dans une expérience unique au coeur de la Côte D'Ivoire",
-                        background:
-                            'assets/icons/People sightseeing outdoors-cuate 1.png',
-                      ),
-                      if (homeController.isTouristicSiteLoading ||
-                          !homeController.hasConnection)
-                        const Center(
-                          child: CircularProgressIndicator(
-                            color: AppColors.signUpColor,
-                          ),
-                        )
-                      else if (homeController.touristicSites.isEmpty)
-                        const Center(child: Text("Aucun véhicule disponible"))
-                      else
-                        AutoHeightGridView(
-                          shrinkWrap: true,
-                          crossAxisCount: 1,
-                          mainAxisSpacing: 2,
-                          itemCount:
-                              homeController.displayedTouristicSites.length,
-                          builder: (context, index) {
-                            final touristicSites =
-                                homeController.displayedTouristicSites[index];
-                            final currentLocale =
-                                Get.locale?.languageCode ?? 'fr';
-                            final description = currentLocale == 'en'
-                                ? touristicSites.descriptionEn
-                                : touristicSites.descriptionFr;
-                            return AnimationConfiguration.staggeredGrid(
-                              columnCount: 4,
-                              position: index,
-                              duration: const Duration(milliseconds: 375),
-                              child: ScaleAnimation(
-                                scale: 0.5,
-                                child: FadeInAnimation(
-                                    child: DecouverteCardComponent(
-                                  name: touristicSites.name,
-                                  description: description,
-                                  price:
-                                      touristicSites.standardPrice.toString(),
-                                  onTap: () {
-                                    Get.toNamed(Routes.DECOUVERTE_DETAILS,
-                                        arguments: touristicSites);
-                                  },
-                                  depart: AppConstants.formatTime(
-                                      touristicSites.visitStartTime),
-                                  arrived: AppConstants.formatTime(
-                                      touristicSites.visitEndTime),
-                                )),
-                              ),
-                            );
+            return SmartRefresher(
+              controller: _controller,
+              enablePullDown: true,
+              enablePullUp: false,
+              onRefresh: _onRefresh,
+              onLoading: _onLoading,
+              child: NotificationListener<ScrollNotification>(
+                onNotification: (scrollNotification) {
+                  if (scrollNotification.metrics.pixels >=
+                          scrollNotification.metrics.maxScrollExtent - 100 &&
+                      !homeController.isLoadingMoreTouristicSite &&
+                      homeController.displayedTouristicSites.length <
+                          homeController.touristicSites.length) {
+                    homeController.loadMoreTouristicSites();
+                  }
+                  return true;
+                },
+                child: SingleChildScrollView(
+                  child: Padding(
+                    padding: const EdgeInsets.all(AppDefaults.padding),
+                    child: Column(
+                      children: [
+                        SearchBarComponent(
+                          text: 'Rechercher un site',
+                          onChanged: (text) {
+                            homeController.searchTouristicSiteQuery.value =
+                                text;
                           },
                         ),
-                      if (homeController.isLoadingMoreTouristicSite)
-                        const Padding(
-                          padding: EdgeInsets.symmetric(vertical: 16),
-                          child: CircularProgressIndicator(
-                            color: AppColors.signUpColor,
-                          ),
+                        const PublicityContainer(
+                          name:
+                              "Plongez dans une expérience unique au coeur de la Côte D'Ivoire",
+                          background:
+                              'assets/icons/People sightseeing outdoors-cuate 1.png',
                         ),
-                    ],
+                        if (homeController.isTouristicSiteLoading ||
+                            !homeController.hasConnection)
+                          const Center(
+                            child: CircularProgressIndicator(
+                              color: AppColors.signUpColor,
+                            ),
+                          )
+                        else if (homeController.touristicSites.isEmpty)
+                          const Center(child: Text("Aucun véhicule disponible"))
+                        else
+                          AutoHeightGridView(
+                            shrinkWrap: true,
+                            crossAxisCount: 1,
+                            mainAxisSpacing: 2,
+                            itemCount:
+                                homeController.displayedTouristicSites.length,
+                            builder: (context, index) {
+                              final touristicSites =
+                                  homeController.displayedTouristicSites[index];
+                              final currentLocale =
+                                  Get.locale?.languageCode ?? 'fr';
+                              final description = currentLocale == 'en'
+                                  ? touristicSites.descriptionEn
+                                  : touristicSites.descriptionFr;
+                              return AnimationConfiguration.staggeredGrid(
+                                columnCount: 4,
+                                position: index,
+                                duration: const Duration(milliseconds: 375),
+                                child: ScaleAnimation(
+                                  scale: 0.5,
+                                  child: FadeInAnimation(
+                                      child: DecouverteCardComponent(
+                                    name: touristicSites.name,
+                                    description: description,
+                                    price:
+                                        touristicSites.standardPrice.toString(),
+                                    onTap: () {
+                                      Get.toNamed(Routes.DECOUVERTE_DETAILS,
+                                          arguments: touristicSites);
+                                    },
+                                    depart: AppConstants.formatTime(
+                                        touristicSites.visitStartTime),
+                                    arrived: AppConstants.formatTime(
+                                        touristicSites.visitEndTime),
+                                  )),
+                                ),
+                              );
+                            },
+                          ),
+                        if (homeController.isLoadingMoreTouristicSite)
+                          const Padding(
+                            padding: EdgeInsets.symmetric(vertical: 16),
+                            child: CircularProgressIndicator(
+                              color: AppColors.signUpColor,
+                            ),
+                          ),
+                      ],
+                    ),
                   ),
                 ),
               ),

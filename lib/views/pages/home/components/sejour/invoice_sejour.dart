@@ -460,7 +460,9 @@ class _InvoiceSejourPageState extends State<InvoiceSejourPage> {
                       }*/
                     // },
                     borderRadius: const BorderRadius.all(Radius.circular(8)),
-                    buttonText: isLoading ? 'En cours...' : "Régler la facture",
+                    buttonText: isLoading
+                        ? 'Validation en cours...'
+                        : "Régler la facture",
                     textColor: AppColors.white,
                     buttonColor: AppColors.primaryColor,
                   ),
