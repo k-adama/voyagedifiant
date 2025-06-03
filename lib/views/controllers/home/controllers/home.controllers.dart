@@ -719,11 +719,9 @@ class HomeController extends GetxController {
             content: 'Réservation enregistrée',
             //redirect: () async => Get.back(),
             redirect: () async {
-              Get.offAll(() => const HomePage());
+              Get.offAllNamed('/home_page');
             }),
       );
-      //     getAllOrders();
-      // update();
     } catch (e) {
       Get.snackbar('Erreur', 'Échec de l’enregistrement : $e',
           snackPosition: SnackPosition.TOP,
@@ -819,8 +817,7 @@ class HomeController extends GetxController {
           haveButton: false,
           svgPicture: "assets/icons/undraw_happy_news_re_tsbd 1.svg",
           content: 'Réservation enregistrée',
-          redirect: () async => Get.offAll(() => const HomePage()),
-          // redirect: () => Get.back(),
+          redirect: () async => Get.offAllNamed('/home_page'),
         ),
       );
     } catch (e) {
@@ -910,7 +907,6 @@ class HomeController extends GetxController {
       'username': hotelData['username']?.toString() ?? '',
       'phone': hotelData['phone']?.toString() ?? '',
     };
-    //print(hotelDatatoSend);
     try {
       await homeRepository.createHotelReservation(hotelDatatoSend);
       getAllOrders(isRefresh: true);
@@ -924,8 +920,7 @@ class HomeController extends GetxController {
           haveButton: false,
           svgPicture: "assets/icons/undraw_happy_news_re_tsbd 1.svg",
           content: 'Réservation enregistrée',
-          redirect: () async => Get.offAll(() => const HomePage()),
-          // redirect: () => Get.back(),
+          redirect: () async => Get.offAllNamed('/home_page'),
         ),
       );
     } catch (e) {

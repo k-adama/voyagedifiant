@@ -129,9 +129,9 @@ class HomeRepository {
 
     try {
       final response = await client.post('/send-invoice-pdf', data: formData);
-      print('✅ PDF envoyé avec succès : ${response.data}');
+      print('PDF envoyé avec succès : ${response.data}');
     } catch (e) {
-      print('❌ Erreur lors de l’envoi du PDF : $e');
+      print('Erreur lors de l’envoi du PDF : $e');
       rethrow;
     }
   }

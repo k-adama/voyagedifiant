@@ -88,66 +88,70 @@ class _OrdersHistoriePageState extends State<OrdersHistoriePage> {
                 }
 
                 return Expanded(
-                  child: ListView.builder(
-                    controller: _scrollController,
-                    itemCount: homeController.hasMore.value
-                        ? homeController.orders.length + 1
-                        : homeController.orders.length,
-                    itemBuilder: (context, index) {
-                      if (index == homeController.orders.length) {
-                        return const Center(
-                            child: CircularProgressIndicator(
-                          color: AppColors.signUpColor,
-                        ));
-                      }
+                  child: homeController.orders.isEmpty
+                      ? Center(
+                          child: Image.asset("assets/icons/orders_empty.jpg"),
+                        )
+                      : ListView.builder(
+                          controller: _scrollController,
+                          itemCount: homeController.hasMore.value
+                              ? homeController.orders.length + 1
+                              : homeController.orders.length,
+                          itemBuilder: (context, index) {
+                            if (index == homeController.orders.length) {
+                              return const Center(
+                                  child: CircularProgressIndicator(
+                                color: AppColors.signUpColor,
+                              ));
+                            }
 
-                      final order = homeController.orders[index];
-                      final List<Widget> cards = [];
+                            final order = homeController.orders[index];
+                            final List<Widget> cards = [];
 
-                      if (order.vehicleDetails != null) {
-                        final vehicle = order.vehicleDetails!;
-                        cards.add(
-                          OrdersHistoryCard(
-                            rentalPeriod: vehicle.rentalPeriod,
-                            orderName: vehicle.vehicleName,
-                            rentalPeriodDays: vehicle.rentalPeriod,
-                            cout: order.totalPrice,
-                            driverName: vehicle.driverName,
-                          ),
-                        );
-                      }
-                      if (order.hotelDetails != null) {
-                        final hotel = order.hotelDetails!;
-                        cards.add(
-                          HotelsHistoryCard(
-                            rentalPeriod: hotel.reservationPeriod,
-                            orderName: hotel.hotelName,
-                            rentalPeriodDays: hotel.reservationPeriod,
-                            cout: order.totalPrice,
-                            driverName: hotel.driverName,
-                          ),
-                        );
-                      }
-                      if (order.discoveryDetails != null) {
-                        final discovery = order.discoveryDetails!;
-                        cards.add(
-                          OrdersHistoryCard(
-                            rentalPeriod: discovery.reservationPeriod,
-                            orderName: discovery.siteName,
-                            rentalPeriodDays: discovery.reservationPeriod,
-                            cout: order.totalPrice,
-                            isDriver: false,
-                            isLocationText: false,
-                          ),
-                        );
-                      }
+                            if (order.vehicleDetails != null) {
+                              final vehicle = order.vehicleDetails!;
+                              cards.add(
+                                OrdersHistoryCard(
+                                  rentalPeriod: vehicle.rentalPeriod,
+                                  orderName: vehicle.vehicleName,
+                                  rentalPeriodDays: vehicle.rentalPeriod,
+                                  cout: order.totalPrice,
+                                  driverName: vehicle.driverName,
+                                ),
+                              );
+                            }
+                            if (order.hotelDetails != null) {
+                              final hotel = order.hotelDetails!;
+                              cards.add(
+                                HotelsHistoryCard(
+                                  rentalPeriod: hotel.reservationPeriod,
+                                  orderName: hotel.hotelName,
+                                  rentalPeriodDays: hotel.reservationPeriod,
+                                  cout: order.totalPrice,
+                                  driverName: hotel.driverName,
+                                ),
+                              );
+                            }
+                            if (order.discoveryDetails != null) {
+                              final discovery = order.discoveryDetails!;
+                              cards.add(
+                                OrdersHistoryCard(
+                                  rentalPeriod: discovery.reservationPeriod,
+                                  orderName: discovery.siteName,
+                                  rentalPeriodDays: discovery.reservationPeriod,
+                                  cout: order.totalPrice,
+                                  isDriver: false,
+                                  isLocationText: false,
+                                ),
+                              );
+                            }
 
-                      return Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: cards,
-                      );
+                            return Column(
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              children: cards,
+                            );
 
-                      /* Card(
+                            /* Card(
                     elevation: 3,
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10),
@@ -290,8 +294,8 @@ class _OrdersHistoriePageState extends State<OrdersHistoriePage> {
                       ),
                     ),
                   );*/
-                    },
-                  ),
+                          },
+                        ),
                 );
               }),
             ],
