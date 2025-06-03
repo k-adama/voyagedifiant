@@ -9,6 +9,7 @@ class CustomField extends StatefulWidget {
   final Widget? label;
   final Function(String)? onChanged;
   String? errorText;
+  TextEditingController? controller;
   // final bool isPasswordValidator;
 
   CustomField({
@@ -19,6 +20,7 @@ class CustomField extends StatefulWidget {
     this.label,
     this.onChanged,
     this.errorText,
+    this.controller,
     // this.isPasswordValidator = true,
   }) : super(key: key);
 
@@ -38,6 +40,7 @@ class _CustomFieldState extends State<CustomField> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      controller: widget.controller,
       validator: widget.validator ?? Validators.password.call,
       onFieldSubmitted: widget.onFieldSubmitted,
       onChanged: widget.onChanged,

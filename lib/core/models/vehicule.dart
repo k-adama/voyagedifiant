@@ -21,12 +21,13 @@ class VehicleModel {
 
   factory VehicleModel.fromJson(Map<String, dynamic> json) {
     return VehicleModel(
-      id: json['id'],
-      name: json['name'],
-      imageUrl: json['image_url'],
-      luggage: json['luggage'],
-      numberOfSeats: json['number_of_seats'],
-      airConditioning: json['air_conditioning'],
+      id: int.tryParse(json['id'].toString()) ?? 0,
+      name: json['name'] ?? '',
+      imageUrl: json['image_url'] ?? '',
+      luggage: int.tryParse(json['luggage'].toString()) ?? 0,
+      numberOfSeats: int.tryParse(json['number_of_seats'].toString()) ?? 0,
+      airConditioning: json['air_conditioning'].toString() == 'true' ||
+          json['air_conditioning'].toString() == '1',
       economyPrice: double.tryParse(json['price_economy'].toString()) ?? 0.0,
       businessPrice: double.tryParse(json['price_business'].toString()) ?? 0.0,
     );

@@ -112,7 +112,7 @@ void _showLogoutConfirmationDialog(BuildContext context) {
             child: Column(
               children: [
                 AppCustomButton(
-                  onPressed: () {
+                  onPressed: ()async {
                     LocalStorage.instance.removeToken();
                     LocalStorage.instance.removeBool("otp_verified");
                     LocalStorage.instance.removeUserId("userId");

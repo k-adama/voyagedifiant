@@ -2,9 +2,11 @@ class TouristicDiscovery {
   final int id;
   final String name;
   final String location;
-  final String description;
-  final double standardPrice;
-  final double premiumPrice;
+  final String descriptionFr;
+  final String descriptionEn;
+  final int standardPrice;
+  final int suitePrice;
+  final int premiumPrice;
   final String visitStartTime;
   final String visitEndTime;
 
@@ -12,8 +14,10 @@ class TouristicDiscovery {
     required this.id,
     required this.name,
     required this.location,
-    required this.description,
+    required this.descriptionFr,
+    required this.descriptionEn,
     required this.standardPrice,
+    required this.suitePrice,
     required this.premiumPrice,
     required this.visitStartTime,
     required this.visitEndTime,
@@ -24,9 +28,11 @@ class TouristicDiscovery {
       id: json['id'],
       name: json['name'],
       location: json['location'],
-      description: json['description'],
-      standardPrice: double.tryParse(json['standard_price'].toString()) ?? 0.0,
-      premiumPrice: double.tryParse(json['premium_price'].toString()) ?? 0.0,
+      descriptionFr: json['description_fr'] ?? '',
+      descriptionEn: json['description_en'] ?? '',
+      standardPrice: int.tryParse(json['standard_price'].toString()) ?? 0,
+      suitePrice: int.tryParse(json['suite_price'].toString()) ?? 0,
+      premiumPrice: int.tryParse(json['premium_price'].toString()) ?? 0,
       visitStartTime: json['visit_start_time'],
       visitEndTime: json['visit_end_time'],
     );
@@ -37,8 +43,10 @@ class TouristicDiscovery {
       'id': id,
       'name': name,
       'location': location,
-      'description': description,
+      'description_fr': descriptionFr,
+      'description_en': descriptionEn,
       'standard_price': standardPrice,
+      'suite_price': suitePrice,
       'premium_price': premiumPrice,
       'visit_start_time': visitStartTime,
       'visit_end_time': visitEndTime,

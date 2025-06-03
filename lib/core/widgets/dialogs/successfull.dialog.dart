@@ -6,7 +6,7 @@ import 'package:voyagedifiant/core/widgets/buttons/app_button.dart';
 
 class SuccessfullDialog extends StatelessWidget {
   final String? title, content, buttonText, svgPicture, closeButton;
-  final Function()? onPressed, closePressed, redirect;
+  final Future<void> Function()? onPressed, closePressed, redirect;
   final bool haveButton, isCustomerAdded;
 
   const SuccessfullDialog({
@@ -104,13 +104,15 @@ class SuccessfullDialog extends StatelessWidget {
               AppCustomButton(
                 buttonText: buttonText ?? "",
                 textColor: AppColors.primaryColor,
-                onPressed: onPressed ?? () => Navigator.pop(context),
+               onPressed: onPressed ?? () async => Navigator.pop(context),
+
+
               ),
             if (haveButton)
               AppCustomButton(
                 buttonText: closeButton ?? "",
                 textColor: AppColors.white,
-                onPressed: closePressed ?? () => Navigator.pop(context),
+                onPressed: closePressed ?? () async => Navigator.pop(context),
               )
           ],
         ),

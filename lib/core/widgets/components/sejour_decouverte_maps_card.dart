@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
+import 'package:get/route_manager.dart';
 import 'package:voyagedifiant/core/constants/app_colors.dart';
 import 'package:voyagedifiant/core/constants/app_defaults.dart';
 import 'package:voyagedifiant/core/constants/app_helpers.dart';
@@ -160,7 +161,7 @@ class _MapsDatetimeCardState extends State<SejourDecouverteMapsCard> {
                       const Icon(Icons.calendar_today, color: AppColors.black),
                       const SizedBox(width: 12),
                       Expanded(
-                        child: Text(homeController.displayText),
+                        child: Text(homeController.displayLocationPeriodText),
                       ),
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(
@@ -178,6 +179,20 @@ class _MapsDatetimeCardState extends State<SejourDecouverteMapsCard> {
                 ],
               ),
             ),
+            Padding(
+              padding: const EdgeInsets.only(left: 18.0, bottom: 8),
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  "Chauffeur",
+                  style: AppColors.interBold(
+                    size: 12,
+                  ),
+                ),
+              ),
+            ),
+            //widget.isSejour == true
+            // ?
             DriverCardComponent(
               driver: homeController.selectedChauffeur.value,
               onChange: () {
@@ -194,12 +209,11 @@ class _MapsDatetimeCardState extends State<SejourDecouverteMapsCard> {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         const Text(
-                          'Choisir un autre chauffeur',
+                          'Choisir un chauffeur',
                           style: TextStyle(
                               fontSize: 18, fontWeight: FontWeight.bold),
                         ),
                         const SizedBox(height: 16),
-                        // Liste des chauffeurs avec bouton "Choisir"
                         ...homeController.chauffeurs.map((chauffeur) {
                           return ListTile(
                             leading: CircleAvatar(
@@ -214,8 +228,9 @@ class _MapsDatetimeCardState extends State<SejourDecouverteMapsCard> {
                                   borderRadius: BorderRadius.circular(8),
                                 ),
                               ),
-                              onPressed: () =>
-                                  homeController.selectChauffeur(chauffeur),
+                              onPressed: () {
+                                homeController.selectChauffeur(chauffeur);
+                              },
                               child: const Text('Choisir'),
                             ),
                           );
@@ -229,9 +244,7 @@ class _MapsDatetimeCardState extends State<SejourDecouverteMapsCard> {
                 );
               },
             ),
-            const SizedBox(
-              height: 10,
-            ),
+            //: const SizedBox(),
           ],
         ),
       );

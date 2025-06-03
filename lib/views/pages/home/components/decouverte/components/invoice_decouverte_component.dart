@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/instance_manager.dart';
+import 'package:get/route_manager.dart';
 import 'package:voyagedifiant/core/constants/app_colors.dart';
 import 'package:voyagedifiant/core/constants/app_defaults.dart';
+import 'package:voyagedifiant/core/constants/app_helpers.dart';
+import 'package:voyagedifiant/core/models/discovery_invoice_model.dart';
 import 'package:voyagedifiant/core/widgets/components/app_divider.dart';
 import 'package:voyagedifiant/views/controllers/home/controllers/home.controllers.dart';
 
@@ -17,19 +20,47 @@ class InvoiceDecouverteDetailsComponent extends StatefulWidget {
 
 class _InvoiceDecouverteDetailsComponentState
     extends State<InvoiceDecouverteDetailsComponent> {
-  String? selectedClass;
+  final user = AppHelpersCommon.getUserInLocalStorage();
+  HomeController homeController = Get.find();
+  bool isAvailable = false;
+  int amount = 0;
+  final double alternateAmount = 200;
+  final TextEditingController amountController = TextEditingController();
 
-  void selectClass(String className) {
+  late final DiscoveryInvoiceModel discoveryeInfo;
+
+  @override
+  void initState() {
+    super.initState();
+    discoveryeInfo = DiscoveryInvoiceModel.fromJson(Get.arguments);
+    amountController.text = '';
+  }
+
+  @override
+  void dispose() {
+    amountController.dispose();
+    super.dispose();
+  }
+
+  void _togglePayment(bool value) {
     setState(() {
-      selectedClass = className;
+      isAvailable = value;
+      int totalPrice = discoveryeInfo.totalPrice;
+      if (isAvailable) {
+        amount = totalPrice;
+        amountController.text = amount.toStringAsFixed(2);
+      } else {
+        amount = 0;
+        amountController.text = '';
+      }
     });
   }
 
-  final HomeController homeController = Get.put(HomeController());
-
   @override
   Widget build(BuildContext context) {
-    return Container(
+    int totalPrice = discoveryeInfo.totalPrice;
+    return 
+    Container(
       margin: const EdgeInsets.all(10),
       //padding: const EdgeInsets.all(AppDefaults.padding),
       decoration: BoxDecoration(
@@ -105,7 +136,7 @@ class _InvoiceDecouverteDetailsComponentState
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('Hotel',
+                      Text(discoveryeInfo.name,
                           style: AppColors.interBold(
                             size: 12,
                           )),
@@ -143,12 +174,12 @@ class _InvoiceDecouverteDetailsComponentState
               ),
             ],
           ),
-          buildRowText('Visite', 'Standard'),
+          buildRowText('Visite', discoveryeInfo.classe),
           buildRowText('Localisation', 'Yamoussoukro'),
-          buildRowText('Période de location', '04 Nov - 07 Nov'),
+          buildRowText('Période de location', discoveryeInfo.reservationPeriod),
           const AppDivider(),
-          buildRowText('Coût journalier', '2000'),
-          buildRowText('Coût total', '360000'),
+          buildRowText('Coût journalier', discoveryeInfo.price),
+          buildRowText('Coût total', discoveryeInfo.totalPriceOperation),
           const SizedBox(
             height: AppDefaults.padding,
           ),

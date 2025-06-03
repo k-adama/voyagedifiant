@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
+import 'package:get/get_utils/src/extensions/internacionalization.dart';
 import 'package:get/route_manager.dart';
 import 'package:voyagedifiant/core/constants/app_colors.dart';
 import 'package:voyagedifiant/core/constants/app_defaults.dart';
 import 'package:voyagedifiant/core/models/hotel.dart';
-import 'package:voyagedifiant/core/routes/app_pages.dart';
 import 'package:voyagedifiant/core/widgets/buttons/app_button.dart';
 import 'package:voyagedifiant/core/widgets/components/appbar/app_bar.dart';
 import 'package:voyagedifiant/core/widgets/components/appbar/drawer_page.component.dart';
@@ -31,6 +31,9 @@ class _SejourDetailsState extends State<SejourDetails> {
 
   @override
   Widget build(BuildContext context) {
+    final currentLocale = Get.locale?.languageCode ?? 'fr';
+    final detail = currentLocale == 'en' ? hotel!.detailsEn : hotel!.detailsFr;
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: const PreferredSize(
@@ -120,7 +123,7 @@ class _SejourDetailsState extends State<SejourDetails> {
                   height: 10,
                 ),
                 Text(
-                  hotel!.details,
+                  detail,
                   style: AppColors.interNormal(
                     size: 12,
                   ),
@@ -166,8 +169,10 @@ class _SejourDetailsState extends State<SejourDetails> {
                     alignment: Alignment.centerRight,
                     widthFactor: 0.5,
                     child: AppCustomButton(
-                      onPressed: () {
-                        Get.toNamed(Routes.INVOICE_SEJOUR_PAGE);
+                      onPressed: () async{
+                         homeController.goToHotelInvoicePage(
+                            hotel, selectedClass);
+                        //Get.toNamed(Routes.INVOICE_SEJOUR_PAGE);
                       },
                       borderRadius: const BorderRadius.all(Radius.circular(8)),
                       buttonText: "Réserver maintenant",
