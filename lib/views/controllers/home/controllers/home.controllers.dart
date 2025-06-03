@@ -832,10 +832,10 @@ class HomeController extends GetxController {
   }
 
   void goToHotelInvoicePage(HotelModel? hotel, String? selectedClass) {
-    if (startDate == null || endDate == null) {
+    if (startDate == null || startTime == null) {
       Get.snackbar(
         'Période requise',
-        'Veuillez choisir une période de réservation',
+        'Veuillez choisir au moins une date et une heure de début',
         snackPosition: SnackPosition.TOP,
         backgroundColor: Colors.red,
         colorText: Colors.white,
@@ -867,7 +867,9 @@ class HomeController extends GetxController {
       price = hotel?.priceSuite.toString() ?? '0';
     }
 
-    final int numberOfDays = endDate!.difference(startDate!).inDays + 1;
+    //final int numberOfDays = endDate!.difference(startDate!).inDays + 1;
+    final int numberOfDays =
+        endDate != null ? endDate!.difference(startDate!).inDays + 1 : 1;
     final int dailyPrice = int.tryParse(price) ?? 0;
     final int totalPrice = dailyPrice * numberOfDays;
     // final String lieuDeRassemblement = selectedLieu.value;
